@@ -54,9 +54,9 @@ router.get('/edit/:id', async(req, res)=>{
 
 router.post('/edit/:id', async(req, res)=>{
     try{
-        const {nombre, apellido, fecha_nac} = req.body;
+        const {nombre, apellido, correo, telefono, fecha_nac} = req.body;
         const {id} = req.params;
-        const editPersona = {nombre, apellido, fecha_nac};
+        const editPersona = {nombre, apellido, correo, telefono, fecha_nac};
         await pool.query('UPDATE PERSONAS SET ? WHERE id = ?' , [editPersona,id]);
         res.redirect('/list');
     }

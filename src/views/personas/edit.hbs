@@ -7,18 +7,28 @@
             <div class="card-body">
                 <form action="/edit/{{persona.id}}" method="post">
                 <div class="input-group mt-2">
-                    <label for="name" class="input-group-text">Nombre</label>
-                    <input class="form-control" type="text" name="name" id="name" value="{{persona.name}}" placeholder="Ejemplo: Luciano"
+                    <label for="nombre" class="input-group-text">Nombre</label>
+                    <input class="form-control" type="text" name="nombre" id="nombre" value="{{persona.nombre}}" placeholder="Ejemplo: Luciano"
                     autofocus required>
                 </div>
-                 <div class="input-group mt-2">
-                    <label for="lastname" class="input-group-text">Apellido</label>
-                    <input class="form-control" type="text" name="lastname" id="lastname" placeholder="Ejemplo: Diaz Franco" value="{{persona.lastname}}"
+                <div class="input-group mt-2">
+                    <label for="apellido" class="input-group-text">Apellido</label>
+                    <input class="form-control" type="text" name="apellido" id="apellido" placeholder="Ejemplo: Diaz Franco" value="{{persona.apellido}}"
                    required>
                 </div>
-                 <div class="input-group mt-2">
-                    <label for="name" class="input-group-text">Edad</label>
-                    <input class="form-control" type="number" name="age" id="age" value="{{persona.age}}" required>
+                <div class="input-group mt-2">
+                    <label for="correo" class="input-group-text">Correo</label>
+                    <input class="form-control" type="text" name="correo" id="correo" placeholder="Ejemplo: Diaz Franco" value="{{persona.correo}}"
+                   required>
+                </div>
+                <div class="input-group mt-2">
+                    <label for="telefono" class="input-group-text">Telefono</label>
+                    <input class="form-control" type="number" name="telefono" id="telefono" placeholder="Ejemplo: Diaz Franco" value="{{persona.telefono}}"
+                   required>
+                </div>
+                <div class="input-group mt-2">
+                    <label for="fecha_nac" class="input-group-text">fecha_nac</label>
+                    <input class="form-control" type="date" name="fecha_nac" id="fecha_nac" value="{{persona.fecha_nac}}" required>
                 </div>
                 <div class="form-group mt-4 d-grid gap-2">
                     <button class="btn btn-success">Actualizar</button>
