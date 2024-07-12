@@ -7,16 +7,20 @@
                     <tr class="table-dark">
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
-                        <th scope="col">Edad</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">telefono</th>
+                        <th scope="col">Fecha_nac</th>
                         <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     {{#each personas}}
                         <tr>
-                            <td>{{name}}</td>
-                            <td>{{lastname}}</td>
-                            <td>{{age}}</td>
+                            <td>{{nombre}}</td>
+                            <td>{{apellido}}</td>
+                            <td>{{correo}}</td>
+                            <td>{{telefono}}</td>
+                            <td>{{fecha_nac}}</td>
                             <td>
                                 <div class="btn-group">
                                     <a href="/edit/{{id}}" class="btn btn-warning p-2">
@@ -28,9 +32,9 @@
                         </tr>
                     {{/each}}
                 </tbody>
-                <tfoot>
-                    <tr class="table-dark ">
-                        <td colspan="4">Registro de Persona</td>
+                <tfoot >
+                    <tr class="table-dark " >
+                        <td colspan="6">Registro de Persona</td>
                     </tr>
                 </tfoot>
             </table>

@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import pool from '../database.js'
+import moment from 'moment';
 
 const router = Router();
 
@@ -9,9 +10,9 @@ router.get('/add', (req, res)=>{
 
 router.post('/add', async(req, res)=>{
     try{
-        const{name, lastname, age} =req.body;
+        const{nombre, apellido,correo, telefono, fecha_nac} =req.body;
         const newPersona = {
-            name, lastname, age
+            nombre, apellido, correo, telefono, fecha_nac
         }
         await pool.query('INSERT INTO PERSONAS SET ?',[newPersona]);
         res.redirect('/list');
@@ -24,7 +25,14 @@ router.post('/add', async(req, res)=>{
 router.get('/list', async(req, res)=>{
     try{
         const [result] = await pool.query('SELECT * FROM personas');
-        res.render('personas/list', { personas: result });
+        // Formatear las fechas antes de pasarlas al template
+        const personas = result.map(persona => {
+            return {
+                ...persona,
+                fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
+            };
+        });
+        res.render('personas/list', { personas });
     }
     catch(err){
         res.status(500).json({message:err.message});
@@ -46,9 +54,9 @@ router.get('/edit/:id', async(req, res)=>{
 
 router.post('/edit/:id', async(req, res)=>{
     try{
-        const {name, lastname, age} = req.body;
+        const {nombre, apellido, fecha_nac} = req.body;
         const {id} = req.params;
-        const editPersona = {name, lastname, age};
+        const editPersona = {nombre, apellido, fecha_nac};
         await pool.query('UPDATE PERSONAS SET ? WHERE id = ?' , [editPersona,id]);
         res.redirect('/list');
     }
