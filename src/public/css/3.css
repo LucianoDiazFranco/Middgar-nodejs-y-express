@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    background-image:  url("/Imagenes/scoutfondo.jpg");
+}
+
+header {
+    background: linear-gradient(#aeaeae);
+    /*padding: 20px;*/
+    text-align: center;
+    color: white;
+}
+header h1 {
+    margin: 0;
+}
+header nav {
+    display: flex;
+    justify-content: center;
+    background-color: #aeaeae;
+}
+nav a {
+    padding: 14px 20px;
+    display: block;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}
+nav a:hover {
+    background-color: #aeaeae;
+}
+.content {
+    
+    text-align: center;
+    padding: 30px 20px;
+    /*background-image: url("./Imagenes/scoutfondo.jpg");*/
+    background-size: cover;
+    background-position: center;
+    color: rgb(107, 0, 0);
+    
+    
+}
+.container {
+    display: flex;
+    justify-content: space-evenly; /* Distribuye los elementos con espacio entre ellos */
+    margin-top: 200px;
+}
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+.button {
+    background: rgb(36,0,0);
+    background: linear-gradient(344deg, rgba(36,0,0,1) 0%, rgba(255,25,25,1) 100%, rgba(0,212,255,1) 100%);
+    border: none;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.logo {
+    position:absolute;
+    top: 0px; /* Ajusta este valor según sea necesario */
+    right: 1300px; /* Ajusta este valor según sea necesario */
+    width: 40px; /* Ajusta el tamaño de la imagen según sea necesario */
+}

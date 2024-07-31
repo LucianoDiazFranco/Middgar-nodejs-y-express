@@ -1,0 +1,119 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+header {
+    background: linear-gradient(#FFEA32);
+    /*padding: 5px;*/
+    text-align: center;
+    color: #FFEA32;
+}
+header h1 {
+    margin: 0;
+}
+header nav {
+    display: flex;
+    justify-content:center;
+    background-color: #FFEA32;
+}
+nav a {
+    padding: 14px 20px;
+    display: block;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    text-decoration: none;
+}
+nav a:hover {
+    background-color: #aeaeae;
+}
+
+
+
+.banner h1, .banner h2 {
+    margin: 10px 0;
+}
+
+.content {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.members {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 3);
+    width: 80%;
+    
+}
+
+.activities input, .members input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.activities .buttons, .members button {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.activities .buttons button, .members button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #ffcc00;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.activities ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activities ul li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.members table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.members table th, .members table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.members table th {
+    background-color: #f5f5f5;
+}
+
+.members table td button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.logo {
+    position:absolute;
+    top: 0px; 
+    right: 1300px; 
+    width: 40px; 
+}
