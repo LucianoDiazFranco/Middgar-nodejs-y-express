@@ -6,7 +6,7 @@ CREATE TABLE user(
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     contrasenia VARCHAR(50) NOT NULL,
-    rol VARCHAR(20) NOT NULL,
+    rol VARCHAR(20) NOT NULL
 );
 CREATE TABLE persona(
     dni INT PRIMARY KEY NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE familiar(
     id_familiar INT PRIMARY KEY,
     dni INT NOT NULL,
     cantidad_hijos INT,
-    telefono INT NOT NULL
+    telefono INT NOT NULL,
     relacion VARCHAR(30),
     FOREIGN KEY (dni) REFERENCES persona(dni)
 );
@@ -56,8 +56,8 @@ CREATE TABLE pacto_familiar(
 CREATE TABLE pagos(
     id_pagos INT AUTO_INCREMENT PRIMARY KEY,
     dni INT,
-    fecha DATENOT NOT NULL,
-    monto FLOATNOT NOT NULL,
+    fecha DATE NOT NULL,
+    monto FLOAT NOT NULL,
     acreditado BOOLEAN NOT NULL,
     comprobante BOOLEAN NOT NULL,
     concepto VARCHAR(50) NOT NULL,
@@ -86,7 +86,7 @@ CREATE TABLE registro_actividad(
     cantidad_participantes INT NOT NULL,
     cantidad_educadores INT NOT NULL,
     cantidad_colaboradores INT,
-    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad),
+    FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad)
 ); 
 CREATE TABLE planilla_riesgo(
     id_planilla INT AUTO_INCREMENT PRIMARY KEY,
@@ -97,18 +97,20 @@ CREATE TABLE planilla_riesgo(
     diagnostico VARCHAR (100) NOT NULL,
     adulto_responsable VARCHAR(50),
     FOREIGN KEY (id_actividad) REFERENCES actividad(id_actividad),
-    FOREIGN KEY (id_beneficiario) REFERENCES beneficiario(id_beneficiario),
+    FOREIGN KEY (id_beneficiario) REFERENCES beneficiario(id_beneficiario)
 );
 CREATE TABLE documentacion(
     id_documentacion INT AUTO_INCREMENT PRIMARY KEY,
-    legajo INT FOREIGN KEY,
+    dni INT NOT NULL,
+    legajo INT,
     autorizacion_padre BOOLEAN,
     vacunas BOOLEAN,
     uso_de_imagen BOOLEAN,
     autorizacion_salida BOOLEAN,
     permiso_retiro BOOLEAN,
     permiso_acampe BOOLEAN,
-    vencimiento DATETIME, 
+    vencimiento DATETIME,
+    FOREIGN KEY (dni) REFERENCES persona(dni)
 );
 
-SELECT * FROM personas;
+SELECT * FROM user;
