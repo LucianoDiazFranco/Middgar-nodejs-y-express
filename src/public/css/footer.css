@@ -100,10 +100,10 @@ input[type="text"] {
 }
 
 input.submitbutton.ripplelink {
-    background: #e67e22;
+    background: rgb(142,15,15);
+    background: linear-gradient(0deg, rgba(142,15,15,1) 59%, rgba(233,86,86,1) 100%);
     border: 3px solid rgba(0,0,0,0.1);
     color: #fff;
-    border-color: #e67e22;
     box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2);
     transition-delay: 0s;
     width: 100%;

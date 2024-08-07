@@ -77,5 +77,12 @@ router.get('/delete/:id',  async(req, res)=>{
         
     }
 })
+router.get('/manada', (req, res)=>{res.render('paginas/manada')  })
+router.get('/unidad', (req, res)=>{res.render('paginas/unidad')  })
+router.get('/caminantes', (req, res)=>{res.render('paginas/caminantes')  })
+router.get('/rovers', (req, res)=>{res.render('paginas/rovers')  })
+router.get('/inicio_secion', (req, res)=>{res.render('paginas/inicio_secion')  })
+
+
 
 export default router;
