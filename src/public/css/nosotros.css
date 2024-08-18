@@ -14,6 +14,9 @@
     display: flex;
     flex-direction: row; /* Asegura que los items se coloquen uno al lado del otro */
 
+
+
+    
 }
 .item {
   flex: 1; /* Hace que ambos divs tomen un espacio igual. Puedes ajustar este valor según tus necesidades */
