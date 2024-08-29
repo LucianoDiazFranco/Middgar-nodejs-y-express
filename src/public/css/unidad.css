@@ -2,29 +2,29 @@
 
 
 
-.banner {
+.banner1 {
     text-align: center;
     padding: 20px;
-    background-color: #e7d31a;
+    background-color: #036400;
 }
 
-.banner img {
+.banner1 img {
     max-width: 100px;
     display: block;
     margin: 0 auto;
 }
 
-.banner h1, .banner h2 {
+.banner1 h1, .banner1 h2 {
     margin: 10px 0;
 }
 
-.content {
+.content1 {
     display: flex;
     justify-content: space-around;
     padding: 20px;
 }
 
-.activities{
+.activities1{
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -32,7 +32,7 @@
     width: 80%;
 }
 
-.activities input, .members input {
+.activities1 input, .members input {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -40,28 +40,28 @@
     border-radius: 4px;
 }
 
-.activities .buttons, .members button {
+.activities1 .buttons1, .members button {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.activities .buttons button, .members button {
+.activities1 .buttons1 button, .members button {
     padding: 10px 15px;
     border: none;
-    background-color: #ffcc00;
+    background-color: #036400;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
 }
 
-.activities ul {
+.activities1 ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.activities ul li {
+.activities1 ul li {
     background-color: #f9f9f9;
     padding: 10px;
     margin-bottom: 10px;
