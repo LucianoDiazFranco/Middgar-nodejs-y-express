@@ -1,126 +1,108 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+/* Estilos para el main */
+.login-main {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: #f0f0f0;
-    background-image: url("/Imagenes/FondoAzulYRojo.png");
+    min-height: 100vh; /* Asegura que cubra toda la pantalla pero permita expansión */
+    background-image: url('/img/FondoAzulYRojo.png');
+    background-size: cover; /* Ajusta la imagen para cubrir toda la página */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-color: #162347; /* Color de respaldo en caso de que la imagen no se cargue */
 }
 
-.login-container {
+/* añade una capa oscura sobre la imagen de fondo */
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad según sea necesario */
+    z-index: 1;
+}
+  
+  /* Contenedor principal */
+  .login-container {
     display: flex;
-    flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    width: 80%;
+    max-width:75rem;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
+    /*background: linear-gradient(to right, #7e0a0a, #162347); posible opcion*/
+  }
+  
+  .logo-section {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente la imagen */
+    align-items: center; /* Centra verticalmente la imagen */
+    width: 80%; /* Incrementa el tamaño del contenedor al 80% del padre */
+    height: 80%; /* Asegura que la altura del contenedor se ajuste al contenido */
+    max-width: 31.25rem; /* Ajusta el tamaño máximo según tus necesidades */
+}
+
+.logo-image {
+    width: 20rem;
+    height: 20rem;
+}
+
+  
+ /* Card de inicio de sesión */
+.login-card {
+    flex: 1;
+    max-width: 25rem; /* 400px = 25rem */
+    background-color: #7e0a0a;
+    padding: 2rem;
+    border-radius: 0.9375rem; /* 15px = 0.9375rem */
+    text-align: center;
+    color: #fff;
+  }
+  
+  .login-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 1.25rem; /* 20px = 1.25rem */
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 0.75rem;
     background-color: #fff;
-    border-radius: 15px;
-    padding: 40px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 100%;
-    max-width: 600px;
-}
-
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.logo {
-    max-width: 100%;
-    height: auto;
-}
-
-.login-form-container {
-    background: #841414;
-    border-radius: 15px;
-    color: rgb(0, 0, 0);
-    padding: 20px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.form-title {
-    margin: 0;
-    margin-bottom: 20px;
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.input-group {
-    margin-bottom: 15px;
-    width: 100%;
-}
-
-.input-group label {
+    color: #7e0a0a;
+    border: none;
+    border-radius: 1.25rem; /* 20px = 1.25rem */
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+  
+  .forgot-password {
     display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.input-group input {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-}
-
-.login-button {
-    width: 100%;
-    padding: 15px;
-    background-color: #ffffff;
-    border: none;
-    border-radius: 50px;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.forgot-password {
-    margin-top: 10px;
-    color: #ffffff;
+    margin-top: 1rem;
+    color: #fff;
     text-decoration: none;
-}
-
-.create-account-button {
+  }
+  
+  .create-account-button {
     width: 100%;
-    padding: 10px;
-    background-color: #ffffff;
+    padding: 0.75rem;
+    background-color: #fff;
+    color: #7e0a0a;
     border: none;
-    border-radius: 15px;
-    font-size: 16px;
+    border-radius: 1.25rem; /* 20px = 1.25rem */
+    font-size: 1rem;
     cursor: pointer;
-    margin-top: 20px;
-}
-
-.login-form-container button a {
-    color:black;
-    text-decoration: none;
-
-}
-
-
-@media (min-width: 600px) {
-    .login-container {
-        flex-direction: row;
-    }
-
-    .logo-container {
-        margin-bottom: 0;
-        flex: 1;
-    }
-
-    .login-form-container {
-        flex: 1;
-        padding: 40px;
-    }
-
-    .form-title {
-        font-size: 36px;
-    }
-}
+    margin-top: 1rem;
+  }
+  

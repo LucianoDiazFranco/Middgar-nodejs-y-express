@@ -82,7 +82,6 @@ router.get('/unidad', (req, res)=>{res.render('paginas/unidad')  })
 router.get('/caminantes', (req, res)=>{res.render('paginas/caminantes')  })
 router.get('/rovers', (req, res)=>{res.render('paginas/rovers')  })
 router.get('/inicio_secion', (req, res)=>{res.render('paginas/inicio_secion')  })
-
-
+router.get('/index', (req, res)=>{res.render('paginas/index')})
 
 export default router;
