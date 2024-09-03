@@ -1,0 +1,153 @@
+#fondos2 {
+    background-image: url('/img/FondoAzulYRojo.png');
+    background-size: cover; /* Ajusta la imagen para cubrir toda la página */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    min-height: 100vh; /* Cambia a min-height para permitir expansión en pantallas más pequeñas */
+    display: flex; /* Centrar contenido dentro del main */
+    flex-direction: column; /* Asegura que los elementos se coloquen uno debajo del otro */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    gap: 2rem; /* Agrega espaciado entre los contenedores */
+  }
+  
+  .container1, .container2, .container3, .container4 {
+    display: flex;
+    flex-direction: row; /* Asegura que los items se coloquen uno al lado del otro */
+    width: 100%; /* Asegura que los contenedores ocupen todo el ancho disponible */
+    max-width: 80%; /* Ajusta el tamaño del contenedor según tus necesidades */
+  }
+  
+  .item {
+    flex: 1; /* Hace que ambos divs tomen un espacio igual. Puedes ajustar este valor según tus necesidades */
+    justify-content: left; /* Centra los elementos dentro del contenedor */
+    align-items: left; /* Alinea los elementos verticalmente */
+    padding-left: 1rem;
+  }
+  
+  p {
+    color: white;
+    font-size: 1.70rem; /* Tamaño de la fuente basado en rem */
+    font-family: "Palanquin Dark", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    text-align: left;
+  }
+  
+  img {
+    max-width: 100%; /* Asegura que la imagen no exceda el tamaño del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+  }
+  
+  #imagenes {
+    padding-right: 1rem;
+  }
+  
+  #textos {
+    justify-content: center;
+    align-items: center;
+  }
+
+  .container1 {
+    display: flex;
+    flex-direction: row; /* Asegura que los items se coloquen uno al lado del otro */
+    width: 100%; /* Asegura que los contenedores ocupen todo el ancho disponible */
+    max-width: 80%; /* Ajusta el tamaño del contenedor según tus necesidades */
+    animation: slideIn 1s ease-out; /* Añade la animación */
+  }
+  
+  .container2 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 80%;
+    animation: slideInFromLeftToRight 1s ease-out;
+  }
+  
+  #fondos2 {
+    background-image: url('/img/FondoAzulYRojo.png');
+    background-size: cover; /* Ajusta la imagen para cubrir toda la página */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    min-height: 100vh; /* Cambia a min-height para permitir expansión en pantallas más pequeñas */
+    display: flex; /* Centrar contenido dentro del main */
+    flex-direction: column; /* Asegura que los elementos se coloquen uno debajo del otro */
+    justify-content: center; /* Centrar horizontalmente */
+    align-items: center; /* Centrar verticalmente */
+    gap: 2rem; /* Agrega espaciado entre los contenedores */
+  }
+  
+  .container1, .container2, .container3, .container4 {
+    display: flex;
+    flex-direction: row; /* Asegura que los items se coloquen uno al lado del otro */
+    width: 100%; /* Asegura que los contenedores ocupen todo el ancho disponible */
+    max-width: 80%; /* Ajusta el tamaño del contenedor según tus necesidades */
+  }
+  
+  .item {
+    flex: 1; /* Hace que ambos divs tomen un espacio igual. Puedes ajustar este valor según tus necesidades */
+    justify-content: left; /* Centra los elementos dentro del contenedor */
+    align-items: left; /* Alinea los elementos verticalmente */
+    padding-left: 1rem;
+  }
+  
+  p {
+    color: white;
+    font-size: 1.70rem; /* Tamaño de la fuente basado en rem */
+    font-family: "Palanquin Dark", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    text-align: left;
+  }
+  
+  img {
+    max-width: 100%; /* Asegura que la imagen no exceda el tamaño del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+  }
+  
+  #imagenes {
+    padding-right: 1rem;
+  }
+  
+  #textos {
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  .container1 {
+    display: flex;
+    flex-direction: row; /* Asegura que los items se coloquen uno al lado del otro */
+    width: 100%; /* Asegura que los contenedores ocupen todo el ancho disponible */
+    max-width: 80%; /* Ajusta el tamaño del contenedor según tus necesidades */
+    animation: slideIn 1s ease-out; /* Añade la animación */
+  }
+  
+  @keyframes slideInFromLeftToRight {
+    0% {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(100%);
+    }
+  }
+  
+  .container2 {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 80%;
+    animation: slideInFromLeftToRight 1s ease-out;
+  }

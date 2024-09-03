@@ -28,7 +28,7 @@ app.use(express.json());
 
 //Routes
 app.get('/', (req, res)=>{
-    res.render('inicio/inicio_secion');
+    res.render('paginas/inicio_secion');
 })
 
 app.use(personasRoutes);
