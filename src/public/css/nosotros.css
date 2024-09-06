@@ -25,7 +25,7 @@
     padding-left: 1rem;
   }
   
-  p {
+  .parrafo{
     color: white;
     font-size: 1.70rem; /* Tamaño de la fuente basado en rem */
     font-family: "Palanquin Dark", sans-serif;
@@ -91,7 +91,7 @@
     padding-left: 1rem;
   }
   
-  p {
+  .parrafo{
     color: white;
     font-size: 1.70rem; /* Tamaño de la fuente basado en rem */
     font-family: "Palanquin Dark", sans-serif;

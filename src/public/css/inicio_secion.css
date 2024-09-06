@@ -12,13 +12,12 @@
 }
 
 /* añade una capa oscura sobre la imagen de fondo */
-.background-overlay {
+.background-fondo {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Ajusta la opacidad según sea necesario */
+    height: 100%; /* Ajusta la opacidad según sea necesario */
     z-index: 1;
 }
   
@@ -40,14 +39,14 @@
     display: flex;
     justify-content: center; /* Centra horizontalmente la imagen */
     align-items: center; /* Centra verticalmente la imagen */
-    width: 80%; /* Incrementa el tamaño del contenedor al 80% del padre */
-    height: 80%; /* Asegura que la altura del contenedor se ajuste al contenido */
-    max-width: 31.25rem; /* Ajusta el tamaño máximo según tus necesidades */
+    width: 50%; /* Incrementa el tamaño del contenedor al 80% del padre */
+    height: 50%; /* Asegura que la altura del contenedor se ajuste al contenido */
+    max-width: 25rem; /* Ajusta el tamaño máximo según tus necesidades */
 }
 
 .logo-image {
-    width: 20rem;
-    height: 20rem;
+    width: 10rem;
+    height: 10rem;
 }
 
   
@@ -63,8 +62,11 @@
   }
   
   .login-title {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     margin-bottom: 1rem;
+    color: #000000;
+    font-family: "Palanquin Dark", sans-serif;
+    font-weight: 500;
   }
   
   .input-field {
@@ -73,18 +75,21 @@
     margin-bottom: 1rem;
     border: none;
     border-radius: 1.25rem; /* 20px = 1.25rem */
+
   }
   
   .login-button {
     width: 100%;
     padding: 0.75rem;
     background-color: #fff;
-    color: #7e0a0a;
+    color: #000000;
     border: none;
     border-radius: 1.25rem; /* 20px = 1.25rem */
-    font-size: 1rem;
+    font-size: 1.5rem;
     cursor: pointer;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-family: "Palanquin Dark", sans-serif;
+    font-weight: 500;
   }
   
   .forgot-password {
@@ -98,11 +103,16 @@
     width: 100%;
     padding: 0.75rem;
     background-color: #fff;
-    color: #7e0a0a;
+    color: #000000;
     border: none;
     border-radius: 1.25rem; /* 20px = 1.25rem */
-    font-size: 1rem;
+    font-size: 1.1rem;
     cursor: pointer;
     margin-top: 1rem;
+    font-family: "Palanquin Dark", sans-serif;
+    font-weight: 500;
+  }
+  .create-account-button a {
+    color: #000000;
   }
   

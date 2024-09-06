@@ -85,7 +85,7 @@ transition: all 250ms ease-in-out 0s;
     margin: auto;
 }
 
-input[type="text"] {
+.Email{
     background: rgba(255,255,255,0.075);
     padding: 10px 15px;
     color: #aaa;
