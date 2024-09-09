@@ -1,22 +1,53 @@
+#fondo3 {
+    background-image: url('/img/FondoAzulYRojo.png');
+    background-size: cover; /* Ajusta la imagen para cubrir toda la página */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    min-height: 100vh; /* Cambia a min-height para permitir expansión en pantallas más pequeñas */
+   
+    
+    
+  }
+  
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: black;
+}
+
+
+h1 {
+    font-size: 36px;
+    margin: 0;
+    text-align: center;
+    background-color: #f5f5f5;
+    padding: 20px 0;
+    
+}
+
 .profile-container {
     display: flex;
-    height: calc(100vh - 60px);
+    justify-content: space-between;
+    padding: 50px;
+    height: calc(100vh - 100px); /* Ajusta el alto para incluir el header */
+    align-items: flex-start;
+}
+
+.profile-left, .profile-right {
+    width: 45%;
 }
 
 .profile-left {
-    background-color: #8b1e1e;
-    width: 50%;
-    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: white;
 }
 
-.profile-right {
-    background-color: #1e316e;
-    width: 50%;
-    padding: 20px;
-}
 
 .profile-picture img {
     width: 100px;
@@ -24,22 +55,25 @@
     margin-bottom: 20px;
 }
 
-h1 {
-    font-size: 36px;
-    margin: 10px 0;
-}
-
 .edit-profile {
     background-color: transparent;
-    border: 1px solid white;
-    color: white;
-    padding: 10px;
-    margin: 20px 0;
+    border: none;
+    color: rgb(230, 230, 230);
+    font-weight: bold;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
 }
 
-h2, h3 {
-    margin-top: 30px;
+.edit-profile img {
+    width: 30px;
+    margin-left: 10px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
 }
 
 ul {
@@ -48,5 +82,16 @@ ul {
 }
 
 ul li {
+    font-size: 18px;
     margin: 10px 0;
+}
+
+.profile-right h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.profile-right p {
+    font-size: 18px;
+    margin: 5px 0;
 }

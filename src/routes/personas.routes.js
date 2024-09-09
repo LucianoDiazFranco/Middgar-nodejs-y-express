@@ -83,6 +83,7 @@ router.get('/caminantes', (req, res)=>{res.render('paginas/caminantes')  })
 router.get('/rovers', (req, res)=>{res.render('paginas/rovers')  })
 router.get('/inicio_secion', (req, res)=>{res.render('paginas/inicio_secion')  })
 router.get('/nosotros', (req, res)=>{res.render('paginas/nosotros')  })
+router.get('/miperfil', (req, res)=>{res.render('paginas/miperfil')  })
 
 
 
