@@ -5,7 +5,6 @@ import {join, dirname, extname}  from "path";
 import { fileURLToPath } from "url";
 import personasRoutes from './routes/personas.routes.js'
 
-
 //Inicialization
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -32,7 +31,6 @@ app.get('/', (req, res)=>{
 })
 
 app.use(personasRoutes);
-
 //Public Files
 app.use(express.static(join(__dirname + '/public')));
 

@@ -1,0 +1,72 @@
+.banner1 {
+    text-align: center;
+    padding: 20px;
+    background-color: #036400;
+}
+
+.banner1 img {
+    max-width: 100px;
+    display: block;
+    margin: 0 auto;
+}
+
+.banner1 h1, .banner1 h2 {
+    margin: 10px 0;
+}
+
+.content1 {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.activities1{
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 3);
+    width: 80%;
+}
+
+.activities1 input, .members input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.activities1 .buttons1, .members button {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.activities1 .buttons1 button, .members button {
+    padding: 10px 15px;
+    border: none;
+    background-color: #036400;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.activities1 ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.activities1 ul li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.logo {
+    position:absolute;
+    top: 0px; 
+    right: 1300px; 
+    width: 40px; 
+}
