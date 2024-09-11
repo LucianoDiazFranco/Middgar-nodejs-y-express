@@ -116,3 +116,9 @@
     color: #000000;
   }
   
+.error{
+  color: #ff5151;
+}
+.escondido{
+  display: none;
+}
