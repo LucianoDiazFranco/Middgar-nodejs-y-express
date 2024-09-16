@@ -85,6 +85,7 @@ router.get('/inicio_secion', (req, res)=>{res.render('paginas/inicio_secion')  }
 router.get('/registro', (req, res)=>{res.render('paginas/registro')  })
 router.get('/rec_password', (req, res)=>{res.render('paginas/rec_password')  })
 router.get('/nosotros', (req, res)=>{res.render('paginas/nosotros')  })
+router.get('/miperfil', (req, res)=>{res.render('paginas/miperfil')  })
 
 router.get('/index', (req, res)=>{res.render('paginas/index')})
 

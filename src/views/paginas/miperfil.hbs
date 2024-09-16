@@ -1,28 +1,42 @@
-<main class="profile-container" id="fondo3"></main>
-    
-        <section class="profile-left">
-            <div class="profile-picture">
-                <img src="/img/ImagenDeUsuario.png" alt="Foto de perfil" />
-            </div>
-            <button class="edit-profile">
-                Editar perfil <img src="/img/lapiz.png" alt="Editar" />
-            </button>
-            <h2>Documentos</h2>
-            <ul>
-                <li>Autorización Salidas cercanas</li>
-                <li>Autorización de Uso de Imagen</li>
-                <li>Legajo</li>
-                <li>Ficha Médica</li>
-            </ul>
-        </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargar Múltiples PDFs</title>
+</head>
+<body>
+    <h2>Cargar Múltiples Archivos PDF</h2>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
+        <button type="submit">Cargar archivos</button>
+    </form>
 
-        <section class="profile-right">
-            <h3>Relación:</h3>
-            <p>Diaz Franco Luciano</p>
-            <p>Diaz Franco Maximiliano</p>
+    <div id="status"></div>
 
-            <h3>Último pago realizado:</h3>
-            <p>Sábado, 29/06/2024 (Total 15.000$)</p>
-            <p>Mes: Junio</p>
-        </section>
-</main>
+    <script>
+        const form = document.getElementById("uploadForm");
+
+        form.addEventListener("submit", async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData();
+            const pdfUploader = document.getElementById("pdfUploader");
+
+            // Añadir cada archivo al FormData
+            for (let i = 0; i < pdfUploader.files.length; i++) {
+                formData.append("pdfs", pdfUploader.files[i]);
+            }
+
+            // Enviar los archivos al servidor
+            const response = await fetch("/upload", {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.text();
+            document.getElementById("status").innerText = result;
+        });
+    </script>
+</body>
+</html>
