@@ -1,9 +1,7 @@
 document.getElementById("registro-form").addEventListener("submit",async(e)=>{
     e.preventDefault();
     console.log(e.target.children.user.value)
-
-})
-/*    const res= await fetch("http://localhost:3000/api/registro",{
+    const res= await fetch("http://localhost:3000/api/registro",{
         method:"POST",
         headers:{
             "Content-type" : "application/json"
@@ -12,4 +10,5 @@ document.getElementById("registro-form").addEventListener("submit",async(e)=>{
             user: e.target.children.user.value,
             email: e.target.children.email.value
         })
-    }) */
+    })
+})
