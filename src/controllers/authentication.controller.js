@@ -1,15 +1,46 @@
 import bcryptjs from "bcryptjs";
+import jsonwebtoken from "jsonwebtoken";
+import dotenv from "dotenv";
 
+dotenv.config();
 
 //no utilizamos bs pero lo realizamos localmente
 const usuarios = [{
-    user: "gf",
-    email: "teste@exemplo.us",
-    password: "$2a$06$UhcqmNJj1DDJy4kyFwaxveUg0oAN.zXRQ.nkLk7bwXKemf.RSXwS."
+    user: "t",
+    email: "t@gmail.com",
+    password: "a"
 }]
 
-function login (req,res){
+async function login (req,res){
+    console.log(req.body);
+    const user = req.body.user;
+    const password = req.body.password;
+     // Verificar si los campos están completos
+    if(!user || !password){
+        return res.status(400).send({status:"Error",message:"Los campos estan imcompletos"})
+    }
+    // Buscar el usuario
+    const usuarioARevisar = usuarios.find(usuario => usuario.user ===user)
+    if(!usuarioARevisar){
+        return res.status(400).send({status:"Error",message:"Error durante el login"})
+    }
+    // Comparar las contraseñas
+    const loginCorrecto = await bcryptjs.compare(password,usuarioARevisar.password);
+    if(!loginCorrecto){
+        return res.status(400).send({status:"Error",message:"Error durante el login"})
+    }
+    // Generar el token JWT
+    const token = jsonwebtoken.sign({user:usuarioARevisar.user},
+    process.env.JWT_SECRET,
+    {expiresIn:process.env.JWT_EXPIRATION});
 
+    // Configuración de cookies
+    const cookieOption={
+        expires:new Date(Date.now()+ process.env.JWT_COOKIE_EXPIRES*24*60*60*1000),
+        path:"/"
+    }
+    res.cookie("jwt",token,cookieOption);
+    res.send({status:"ok",message:"Usuario Logeado",redirect:"/admin"})
 }
 
 async function registro (req,res){//validamos que haya una contraseña en el formulario
