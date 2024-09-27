@@ -1,4 +1,5 @@
 import express from "express"
+import cookieParser from "cookie-parser";
 import morgan from 'morgan';
 import { engine } from 'express-handlebars';
 import {join, dirname, extname}  from "path";
@@ -24,6 +25,7 @@ app.set('view engine', '.hbs');
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
+app.use(cookieParser());
 
 //Routes
 app.get('/', (req, res)=>{
