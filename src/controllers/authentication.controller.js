@@ -6,8 +6,8 @@ dotenv.config();
 
 //no utilizamos bs pero lo realizamos localmente
 const usuarios = [{
-    user: "y",
-    email: "y@gmail.com",
+    user: "t",
+    email: "a@gmail.com",
     password: await bcryptjs.hash("a", 6) // Encriptamos la contraseña await bcryptjs.hash("y", 6) // Encriptamos la contraseña "y"
 }]
 
