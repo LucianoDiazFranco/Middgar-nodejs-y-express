@@ -13,6 +13,7 @@ const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const uploadsDir = join(__dirname, 'uploads');
 
+
 // Configuración del puerto
 app.set("port", process.env.PORT || 3000);
 
