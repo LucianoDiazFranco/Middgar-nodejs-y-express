@@ -4,12 +4,14 @@ import morgan from "morgan";
 import { engine } from "express-handlebars";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
+import fs from 'fs';
 import personasRoutes from "./routes/personas.routes.js";
 import multer from "multer";
 
 // Inicialización
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
+const uploadsDir = join(__dirname, 'uploads');
 
 // Configuración del puerto
 app.set("port", process.env.PORT || 3000);
@@ -38,7 +40,6 @@ const storage = multer.diskStorage({
         cb(null, Date.now() + '-' + file.originalname);  // Cambiar el nombre del archivo para evitar conflictos
     }
 });
-
 const upload = multer({ storage: storage });
 
 // Ruta principal: Renderizar la página de inicio de sesión
@@ -54,10 +55,24 @@ app.post('/upload', upload.array('pdfs', 10), (req, res) => {
     res.send('Archivos cargados y guardados exitosamente.');
 });
 
+// ** Ruta para listar archivos PDF en la carpeta uploads **
+app.get('/list-pdfs', (req, res) => {
+    // Leer los archivos en la carpeta 'uploads'
+    fs.readdir(uploadsDir, (err, files) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error al leer la carpeta de archivos' });
+        }
+        // Filtrar solo archivos PDF
+        const pdfFiles = files.filter(file => file.endsWith('.pdf'));
+        res.json(pdfFiles);
+    });
+});
+
 // Rutas para manejar otras funcionalidades (e.g. rutas de personas)
 app.use(personasRoutes);
 
-// Servir archivos estáticos desde la carpeta 'public'
+// Servir archivos estáticos desde la carpeta 'uploads' y 'public'
+app.use('/uploads', express.static(uploadsDir));
 app.use(express.static(join(__dirname, 'public')));
 
 // Ejecutar servidor en el puerto definido
