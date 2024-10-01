@@ -133,17 +133,28 @@
     animation: slideIn 1s ease-out; /* Añade la animación */
   }
   
-  @keyframes slideInFromLeftToRight {
+  /*@keyframes slideInFromLeftToRight {
     0% {
       opacity: 0;
       transform: translateX(-100%);
     }
     100% {
       opacity: 1;
-      transform: translateX(100%);
+      transform: translateX(0%);
     }
+  }*/
+  .container1, .container2 {
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+
+  .container1.active, .container2.active {
+    opacity: 1;
+    transform: translateX(0);
   }
-  
+
+
   .container2 {
     display: flex;
     flex-direction: row;
