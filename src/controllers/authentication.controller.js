@@ -8,7 +8,7 @@ dotenv.config();
 export const usuarios = [{
     user: "t",
     email: "a@gmail.com",
-    password:  await bcryptjs.hash("a", 6) // Encriptamos la contraseña await bcryptjs.hash("y", 6) // Encriptamos la contraseña "y"
+    password: await bcryptjs.hash("a", 6) // Encriptamos la contraseña await bcryptjs.hash("y", 6) // Encriptamos la contraseña "y"
 }]
 
 async function login (req,res){

@@ -1,34 +1,54 @@
 <main id="fondos2">
   <div class="container1">
-    <div class="item" id="imagenes">
+    <div class="item pt-4" id="imagenes">
       <img src="/img/nosotros1.png" alt="Midgar">
     </div>
-    <div class="item" id="textos">
-      <p>Midgar es una aplicación web creada con el propósito de ayudar a todos los hermanos Scout en la gestión eficiente de sus actividades diarias. Esta plataforma está diseñada para simplificar el registro de documentos, usuarios, actividades, cuotas, y muchas otras funciones, brindando una mejor organización y claridad en la información introducida.</p>
+    <div class="item pt-5" id="textos">
+      <p class="parrafo">Midgar es una aplicación web creada con el propósito de ayudar a todos los hermanos Scout en la gestión eficiente de sus actividades diarias. Esta plataforma está diseñada para simplificar el registro de documentos, usuarios, actividades, cuotas, y muchas otras funciones, brindando una mejor organización y claridad en la información introducida.</p>
     </div>
   </div>
   <div class="container2">
-    <div class="item" id="textos">
-      <p>Este proyecto fue desarrollado como el proyecto final de nuestra carrera, con el objetivo de crear una aplicación que pueda resolver una problemática real. Las personas involucradas en este proyecto son Scouts, tanto en el pasado como en el presente, lo que nos permitió abordar la problemática con una perspectiva auténtica y profunda</p>
+    <div class="item item pt-5 " id="textos">
+      <p class="parrafo">Este proyecto fue desarrollado como el proyecto final de nuestra carrera, con el objetivo de crear una aplicación que pueda resolver una problemática real. Las personas involucradas en este proyecto son Scouts, tanto en el pasado como en el presente, lo que nos permitió abordar la problemática con una perspectiva auténtica y profunda</p>
     </div>
     <div>
-      <img src="/img/nostros2.png" alt="Objetivo">
+      <img src="/img/nosotros2.png" alt="Objetivo">
     </div>
   </div>
-  <div class="container3">
+  <div class="container1">
     <div class="item" id="imagenes">
         <img src="/img/nosotros3.png" alt="SerScout">
     </div>
-    <div class="item" id="textos">
-        <p>Este proyecto fue desarrollado como el proyecto final de nuestra carrera, con el objetivo de crear una aplicación que pueda resolver una problemática real. Las personas involucradas en este proyecto son Scouts, tanto en el pasado como en el presente, lo que nos permitió abordar la problemática con una perspectiva auténtica y profunda</p>
+    <div class="item pt-5" id="textos">
+        <p class="parrafo">Este proyecto fue desarrollado como el proyecto final de nuestra carrera, con el objetivo de crear una aplicación que pueda resolver una problemática real. Las personas involucradas en este proyecto son Scouts, tanto en el pasado como en el presente, lo que nos permitió abordar la problemática con una perspectiva auténtica y profunda</p>
     </div>
   </div>
-  <div class="container4">
-    <div class="item" id="textos">
+  <div class="container2">
+    <div class="item item pt-5 " id="textos">
       <p class="parrafo">Este proyecto fue desarrollado como el proyecto final de nuestra carrera, con el objetivo de crear una aplicación que pueda resolver una problemática real. Las personas involucradas en este proyecto son Scouts, tanto en el pasado como en el presente, lo que nos permitió abordar la problemática con una perspectiva auténtica y profunda</p>
     </div>
-    <div class="item" id="imagenes">
-      <img src="/img/nosotros4.png" alt="MadreTeresa">
+    <div class="item item pb-5 ">
+      <img src="/img/nosotros4.png" alt="Objetivo">
     </div>
   </div>
+  </div>
 </main>
+<script>//animacion mientras es scroliamos hacia abajo
+  const containers = document.querySelectorAll('.container1, .container2');
+
+  const isInViewport = (element) => {
+    const rect = element.getBoundingClientRect();
+    return rect.top >= 0 && rect.bottom <= window.innerHeight;
+  };
+
+  const handleScroll = () => {
+    containers.forEach(container => {
+      if (isInViewport(container)) {
+        container.classList.add('active');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('load', handleScroll); // Para activar al cargar la página
+</script>

@@ -1,0 +1,62 @@
+<main></main>
+        <section class="banner">
+            <img src="/img/Manada.png" alt="Logo Lobatos y Lobeznas">
+            <h1>El mundo de la fantasía y los juegos te están llamando</h1>
+            <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
+        </section>
+        <section class="content">
+            <div class="activities">
+                <input type="text" placeholder="Buscar...">
+                <div class="buttons">
+                    <a href="/manada"><button>📄</button></a>
+                    <a href="/add"><button>Agregar</button></a>
+                    </div>
+                        <div class="row mt-5">
+                        {{#if personas}}
+                        <table class="table text-left">
+                            <thead>
+                                <tr class="titulo">
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">Apellido</th>
+                                    <th scope="col">Correo</th>
+                                    <th scope="col">telefono</th>
+                                    <th scope="col">Fecha_nac</th>
+                                    <th scope="col">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each personas}}
+                                    <tr>
+                                        <td>{{nombre}}</td>
+                                        <td>{{apellido}}</td>
+                                        <td>{{correo}}</td>
+                                        <td>{{telefono}}</td>
+                                        <td>{{fecha_nac}}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="/edit/{{id}}" class="btn btn-warning p-2">
+                                                <i class="fa-solid fa-pencil"></i></a>
+                                                <a href="/delete/{{id}}" class="btn btn-danger p-2">
+                                                <i class="fa-solid fa-trash"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    {{else}}
+                        <div class="card text-center mx-auto" style="width: 350px;">
+                            <div class="card-header">
+                                <h3>Debes crear una persona</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Presiona este boton para que puedas registrar a una persona en la aplicacion</p>
+                                <a href="/add" class="btn btn-primary">Ir a crear</a>
+                            </div>
+                        </div>
+                    {{/if}}
+                </div>
+            </div>
+            
+        </section>
+</main>

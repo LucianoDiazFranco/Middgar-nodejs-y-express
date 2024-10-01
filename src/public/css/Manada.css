@@ -51,6 +51,20 @@
     font-weight: bold;
 }
 
+.buttons input[type="file"] {
+    display: none;
+}
+
+.upload-label {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
 .activities ul {
     list-style: none;
     padding: 0;
@@ -101,77 +115,21 @@ nav a {
 nav a:hover {
     background-color: #aeaeae;
 }
-
-.banner {
-    text-align: center;
-    padding: 20px;
-    background-color: #e7d31a;
+.status-message {
+    margin-top: 20px; /* Espacio superior */
+    padding: 10px; /* Espacio interior */
+    border-radius: 5px; /* Bordes redondeados */
+    display: none; /* Ocultar por defecto */
 }
 
-.banner img {
-    max-width: 100px;
-    display: block;
-    margin: 0 auto;
+.status-message.success {
+    background-color: #d4edda; /* Fondo verde claro */
+    color: #155724; /* Texto verde oscuro */
+    border: 1px solid #c3e6cb; /* Borde verde */
 }
 
-.banner h1, .banner h2 {
-    margin: 10px 0;
+.status-message.error {
+    background-color: #f8d7da; /* Fondo rojo claro */
+    color: #721c24; /* Texto rojo oscuro */
+    border: 1px solid #f5c6cb; /* Borde rojo */
 }
-
-.content {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-}
-
-.activities{
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 3);
-    width: 80%;
-}
-
-.activities input, .members input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.activities .buttons, .members button {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.activities .buttons button, .members button {
-    padding: 10px 15px;
-    border: none;
-    background-color: #ffcc00;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.activities ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.activities ul li {
-    background-color: #f9f9f9;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-}
-
-.logo {
-    position:absolute;
-    top: 0px; 
-    right: 1300px; 
-    width: 40px; 
-}
-

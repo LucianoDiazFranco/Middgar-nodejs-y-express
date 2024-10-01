@@ -1,0 +1,61 @@
+.perfilh1{
+    text-align: center;
+    padding: 20px 0;
+    color: rgb(0, 0, 0);
+    font-size: 24px;
+    margin: 0;
+}
+
+.containerr {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+input[type="checkbox"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+
+    font-size: 16px;
+}
+
+input[type="checkbox"] {
+    width: auto;
+}
+
+.accidente-options input[type="text"] {
+    width: 95%;
+    margin-top: 5px;
+}
+
+.enviar {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}

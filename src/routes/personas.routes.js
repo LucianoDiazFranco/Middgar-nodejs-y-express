@@ -33,7 +33,7 @@ router.get('/list', async(req, res)=>{
                 fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
             };
         });
-        res.render('usuarios/list', { personas });
+        res.render('paginas/manada_add', { personas });
     }
     catch(err){
         res.status(500).json({message:err.message});
