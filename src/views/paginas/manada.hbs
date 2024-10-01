@@ -8,20 +8,90 @@
             <div class="activities">
                 <input type="text" placeholder="Buscar...">
                 <div class="buttons">
-                    <button>📄</button>
-                    <button>👥</button>
-                    <button><a href="https://docs.google.com/forms/d/e/1FAIpQLSfBPkCSDpTEHuunePnQk79gbh8LSsgpihL8QsdL7hnZh9vqug/viewform?usp=sf_link " target="_blank">Agregar Planilla de Riesgo</a></button>
+                    <label for="pdfUploader" class="upload-label">📄 Cargar PDFs</label>
+                    <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
+                    <a href="/planilla_riesgo"><button>Agregar Planilla de Riesgo</button></a>
+                    <a href="/manada_add"><button>👥</button></a>
                 </div>
-                <ul>
-                    <li>Campamento 15/06/2024</li>
-                    <li>Actividad 08/06/2024</li>
-                    <li>Salida al Museo 01/06/2024</li>
-                    <li>Actividad 25/05/2024</li>
-                    <li>Actividad 18/05/2024</li>
-                    <li>Acantonamiento 11/05/2024</li>
-                    <li>Planilla de riesgo 11/05/2024</li>
-                </ul>
+                    <ul id="pdf-list">
+                    </ul> <!--Mostrar los PDF -->
             </div>
             
         </section>
 </main>
+<!-- Formulario oculto para subir archivos -->
+<form id="uploadForm" enctype="multipart/form-data" style="display: none;">
+    <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
+</form>
+
+<div id="status" class="status-message"></div>
+
+<script>
+    const form = document.getElementById("uploadForm");
+    const pdfUploader = document.getElementById("pdfUploader");
+    const pdfList = document.getElementById("pdf-list");
+
+    // Función para cargar los archivos PDF desde el servido
+    async function loadPDFs() {
+        try {
+            const response = await fetch('/list-pdfs');
+            const pdfFiles = await response.json();
+            
+            pdfList.innerHTML = ''; // Limpiar la lista antes de cargar nuevos elementos
+
+            // Añadir cada archivo PDF a la lista
+            pdfFiles.forEach(file => {
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `/uploads/${file}`;
+                link.textContent = file;
+                link.target = '_blank'; // Abrir en nueva pestaña
+                li.appendChild(link);
+                pdfList.appendChild(li);
+            });
+        } catch (error) {
+            console.error('Error al cargar los archivos PDF:', error);
+        }
+    }
+
+    // Cargar PDFs cuando se carga la página
+    window.addEventListener('load', loadPDFs);
+
+    pdfUploader.addEventListener("change", async function () {
+        const formData = new FormData();
+
+        // Añadir cada archivo al FormData
+        for (let i = 0; i < pdfUploader.files.length; i++) {
+            formData.append("pdfs", pdfUploader.files[i]);
+        }
+
+        // Enviar los archivos al servidor
+        const response = await fetch("/upload", {
+            method: "POST",
+            body: formData
+        });
+
+        const statusMessage = document.getElementById("status");
+        
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            statusMessage.innerText = `Error: ${errorMessage}`;
+            statusMessage.className = "status-message error"; // Clase de error
+            statusMessage.style.display = "block"; // Mostrar mensaje
+            return;
+        }
+
+        const result = await response.text();
+        statusMessage.innerText = result;
+        statusMessage.className = "status-message success"; // Clase de éxito
+        statusMessage.style.display = "block"; // Mostrar mensaje
+
+        // Ocultar el mensaje después de unos segundos
+        setTimeout(() => {
+            statusMessage.style.display = "none"; // Ocultar mensaje
+        }, 3000); // Tiempo en milisegundos
+
+        // Recargar la lista de PDFs después de subir nuevos archivos
+        loadPDFs();
+    });
+</script>
