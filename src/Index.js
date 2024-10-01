@@ -5,6 +5,7 @@ import { engine } from 'express-handlebars';
 import {join, dirname, extname}  from "path";
 import { fileURLToPath } from "url";
 import personasRoutes from './routes/personas.routes.js'
+import routes from './routes/routes.js'
 
 //Inicialization
 const app = express();
@@ -33,6 +34,7 @@ app.get('/', (req, res)=>{
 })
 
 app.use(personasRoutes);
+app.use(routes);
 //Public Files
 app.use(express.static(join(__dirname + '/public')));
 

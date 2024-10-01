@@ -6,9 +6,9 @@ dotenv.config();
 
 
 function soloAdmin(req,res,next){
-   const logueado =revisarCookie(req);
+    const logueado =revisarCookie(req);
    if(logueado) return next(); // si no sos admin te manda a /
-   return res.redirect("/")
+    return res.redirect("/")
 }
 function soloPublico(req,res,next){
     const logueado =revisarCookie(req);

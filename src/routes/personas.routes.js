@@ -1,22 +1,82 @@
 import { Router } from 'express'
 import pool from '../database.js'
 import moment from 'moment';
-import {methods as authentication} from "../controllers/authentication.controller.js"
-import {methods as authorization} from "../middlewares/authorization.js"
 
 const router = Router();
 
-router.get('/',authorization.soloPublico, (req, res)=>{res.render('/')});
-router.get('/manada', (req, res)=>{res.render('paginas/manada')});
-router.get('/unidad', (req, res)=>{res.render('paginas/unidad')});
-router.get('/caminantes', (req, res)=>{res.render('paginas/caminantes')});
-router.get('/rovers', (req, res)=>{res.render('paginas/rovers')});
-router.get('/inicio_secion', (req, res)=>{res.render('paginas/inicio_secion')});
-router.get('/registro',authorization.soloPublico, (req, res)=>{res.render('paginas/registro')});
-router.get('/rec_password', (req, res)=>{res.render('paginas/rec_password')});
-router.get('/nosotros', (req, res)=>{res.render('paginas/nosotros')});
-router.get('/index', (req, res)=>{res.render('paginas/index')});
-router.get('/admin',authorization.soloAdmin, (req, res)=>{res.render('paginas/admin/admin')});
-router.post('/api/login', authentication.login);
-router.post('/api/registro', authentication.registro);
+
+router.get('/add', (req, res)=>{
+    res.render('usuarios/add')  
+})
+
+router.post('/add', async(req, res)=>{
+    try{
+        const{nombre, apellido,correo, telefono, fecha_nac} =req.body;
+        const newPersona = {
+            nombre, apellido, correo, telefono, fecha_nac
+        }
+        await pool.query('INSERT INTO PERSONA SET ?',[newPersona]);
+        res.redirect('/list');
+    }
+    catch(err){
+        res.status(500).json({message:err.message});
+    }
+})
+
+router.get('/list', async(req, res)=>{
+    try{
+        const [result] = await pool.query('SELECT * FROM persona');
+        // Formatear las fechas antes de pasarlas al template
+        const personas = result.map(persona => {
+            return {
+                ...persona,
+                fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
+            };
+        });
+        res.render('usuarios/list', { personas });
+    }
+    catch(err){
+        res.status(500).json({message:err.message});
+    }
+});
+
+router.get('/edit/:id', async(req, res)=>{
+    try{
+        const {id} = req.params;
+        const [persona] = await pool.query('SELECT * FROM persona WHERE id = ?' , [id]);
+        const personaEdit = persona[0];
+        res.render('usuarios/edit', {persona: personaEdit});
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).json({message:err.message});
+    }
+} )
+
+router.post('/edit/:id', async(req, res)=>{
+    try{
+        const {nombre, apellido, correo, telefono, fecha_nac} = req.body;
+        const {id} = req.params;
+        const editPersona = {nombre, apellido, correo, telefono, fecha_nac};
+        await pool.query('UPDATE PERSONA SET ? WHERE id = ?' , [editPersona,id]);
+        res.redirect('/list');
+    }
+    catch(err){
+        console.error(err);
+        res.status(500).json({message:err.message});
+    }
+})
+
+router.get('/delete/:id',  async(req, res)=>{
+    try{
+        const {id} = req.params;
+        await pool.query('DELETE FROM persona WHERE id = ?', [id]);
+        res.redirect('/list');
+    }
+    catch(err){
+        res.status(500).json({message:err.message}); 
+        
+    }
+})
+
 export default router;

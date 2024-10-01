@@ -6,19 +6,15 @@ CREATE TABLE user(
     id_user INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     contrasenia VARCHAR(50) NOT NULL,
-    rol VARCHAR(20) NOT NULL
+    rol VARCHAR(20) NOT NULL --tabla dudosa
 );
 CREATE TABLE persona(
-    dni INT PRIMARY KEY NOT NULL,
-    id_user INT,
-    nombre VARCHAR(30) NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
-    correo VARCHAR(30) NOT NULL,
-    fecha_nacimiento DATE,
-    direccion VARCHAR(50),
-    localidad VARCHAR(30),
-    estado BOOLEAN NOT NULL,
-    telefono INT,
+    correo VARCHAR(100) NOT NULL,
+    telefono INT NOT NULL,
+    fecha_nac DATE NOT NULL
     FOREIGN KEY (id_user) REFERENCES user(id_user)
 );
 CREATE TABLE educador(
