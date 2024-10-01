@@ -11,7 +11,8 @@ import multer from "multer";
 // Inicialización
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const uploadsDir = join(__dirname, 'uploads');
+//const uploadsDir = join(__dirname, 'uploads');
+const uploadsDir = join(__dirname, '..', 'uploads');
 
 
 // Configuración del puerto
