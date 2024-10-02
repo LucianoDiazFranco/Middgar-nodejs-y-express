@@ -31,7 +31,7 @@
     const pdfUploader = document.getElementById("pdfUploader");
     const pdfList = document.getElementById("pdf-list");
 
-    // Función para cargar los archivos PDF desde el servido
+    // Función para cargar los archivos PDF desde el servidor
     async function loadPDFs() {
         try {
             const response = await fetch('/list-pdfs');
@@ -46,11 +46,42 @@
                 link.href = `/uploads/${file}`;
                 link.textContent = file;
                 link.target = '_blank'; // Abrir en nueva pestaña
+
+                // Crear botón de eliminar
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = '❌'; // Ícono de borrar
+                deleteButton.className = 'delete-btn';
+                deleteButton.setAttribute('data-filename', file); // Asignar el nombre del archivo al botón
+                
+                // Evento para eliminar el archivo al hacer clic
+                deleteButton.addEventListener('click', async function() {
+                    if (confirm(`¿Estás seguro de que quieres eliminar el archivo ${file}?`)) {
+                        await deletePDF(file);  // Llamar a la función de eliminación
+                    }
+                });
+
                 li.appendChild(link);
+                li.appendChild(deleteButton);
                 pdfList.appendChild(li);
             });
         } catch (error) {
             console.error('Error al cargar los archivos PDF:', error);
+        }
+    }
+
+    // Función para eliminar un archivo PDF
+    async function deletePDF(filename) {
+        try {
+            const response = await fetch(`/delete-pdf/${filename}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                loadPDFs();  // Recargar la lista de PDFs después de la eliminación
+            } else {
+                console.error('Error al eliminar el archivo');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud de eliminación:', error);
         }
     }
 
@@ -60,9 +91,16 @@
     pdfUploader.addEventListener("change", async function () {
         const formData = new FormData();
 
-        // Añadir cada archivo al FormData
+        // Obtener la fecha actual en formato YYYY-MM-DD
+        const today = new Date();
+        const dateString = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+
+        // Añadir cada archivo al FormData con la fecha en el nombre
         for (let i = 0; i < pdfUploader.files.length; i++) {
-            formData.append("pdfs", pdfUploader.files[i]);
+            const file = pdfUploader.files[i];
+            const newFileName = `${dateString}-${file.name}`; // Prefijar la fecha al nombre del archivo
+            const renamedFile = new File([file], newFileName, { type: file.type });
+            formData.append("pdfs", renamedFile);
         }
 
         // Enviar los archivos al servidor

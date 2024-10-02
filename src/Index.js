@@ -8,8 +8,9 @@ import personasRoutes from './routes/personas.routes.js'
 import routes from './routes/routes.js'
 import fs from 'fs';
 import multer from "multer";
+import { unlink } from 'fs/promises';
 
-// Inicialización
+// Inicialización 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const uploadsDir = join(__dirname, '..', 'uploads');
@@ -44,7 +45,7 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/');  // Carpeta donde se guardarán los PDFs
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname);  // Cambiar el nombre del archivo para evitar conflictos
+        cb(null, file.originalname);  // Cambiar el nombre del archivo para evitar conflictos
     }
 });
 const upload = multer({ storage: storage });
@@ -80,3 +81,16 @@ app.use(express.static(join(__dirname + '/public')));
 app.listen(app.get("port"), () =>
     console.log("Server listening on port", app.get("port"))
 );
+
+// Ruta para eliminar un archivo PDF
+app.delete('/delete-pdf/:filename', async (req, res) => {
+    const filename = req.params.filename;
+    const filePath = join(uploadsDir, filename);
+
+    try {
+        await unlink(filePath);  // Eliminar el archivo
+        res.status(200).send(`Archivo ${filename} eliminado.`);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al eliminar el archivo' });
+    }
+});
