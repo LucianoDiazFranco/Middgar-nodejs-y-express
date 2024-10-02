@@ -6,7 +6,8 @@
         </section>
         <section class="content">
             <div class="activities">
-                <input type="text" placeholder="Buscar...">
+                <input type="text" id="search" placeholder="Buscar por nombre...">
+                <button id="searchButton">Buscar</button>
                 <div class="buttons">
                     <a href="/manada"><button>📄</button></a>
                     <a href="/add"><button>Agregar</button></a>
@@ -60,3 +61,10 @@
             
         </section>
 </main>
+
+<script>
+    document.getElementById('searchButton').addEventListener('click', function() {
+        const searchValue = document.getElementById('search').value;
+        window.location.href = `/list?search=${searchValue}`;
+    });
+</script>
