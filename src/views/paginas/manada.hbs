@@ -1,24 +1,24 @@
 <main>
-        <section class="banner">
-            <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas">
-            <h1>El mundo de la fantasía y los juegos te están llamando</h1>
-            <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
-        </section>
-        <section class="content">
-            <div class="activities">
-                <input type="text" placeholder="Buscar...">
-                <div class="buttons">
-                    <label for="pdfUploader" class="upload-label">📄 Cargar PDFs</label>
-                    <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
-                    <a href="/planilla_riesgo"><button>Agregar Planilla de Riesgo</button></a>
-                    <a href="/list"><button>👥</button></a>
-                </div>
-                    <ul id="pdf-list">
-                    </ul> <!--Mostrar los PDF -->
+    <section class="banner">
+        <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas">
+        <h1>El mundo de la fantasía y los juegos te están llamando</h1>
+        <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
+    </section>
+    <section class="content">
+        <div class="activities">
+            <input type="text" placeholder="Buscar...">
+            <div class="buttons">
+                <label for="pdfUploader" class="upload-label">📄 Cargar PDFs</label>
+                <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
+                <a href="/planilla_riesgo"><button>Agregar Planilla de Riesgo</button></a>
+                <a href="/list"><button>👥</button></a>
             </div>
+            <ul id="pdf-list">
+            </ul> <!-- Mostrar los PDF -->
         </div>
     </section>
 </main>
+
 <!-- Formulario oculto para subir archivos -->
 <form id="uploadForm" enctype="multipart/form-data" style="display: none;">
     <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
@@ -90,15 +90,25 @@
 
     pdfUploader.addEventListener("change", async function () {
         const formData = new FormData();
+        const statusMessage = document.getElementById("status");
 
-        // Obtener la fecha actual en formato YYYY-MM-DD
-        const today = new Date();
-        const dateString = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
-
-        // Añadir cada archivo al FormData con la fecha en el nombre
+        // Validar que solo se suban archivos PDF
         for (let i = 0; i < pdfUploader.files.length; i++) {
             const file = pdfUploader.files[i];
-            const newFileName = `${dateString}-${file.name}`; // Prefijar la fecha al nombre del archivo
+
+            if (file.type !== "application/pdf") {
+                statusMessage.innerText = `Error: El archivo ${file.name} no es un PDF. Solo se permiten archivos PDF.`;
+                statusMessage.className = "status-message error"; // Clase de error
+                statusMessage.style.display = "block"; // Mostrar mensaje
+                return; // Detener el proceso si se detecta un archivo no permitido
+            }
+
+            // Obtener la fecha actual en formato YYYY-MM-DD
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+
+            // Prefijar la fecha al nombre del archivo
+            const newFileName = `${dateString}-${file.name}`;
             const renamedFile = new File([file], newFileName, { type: file.type });
             formData.append("pdfs", renamedFile);
         }
@@ -109,8 +119,6 @@
             body: formData
         });
 
-        const statusMessage = document.getElementById("status");
-        
         if (!response.ok) {
             const errorMessage = await response.text();
             statusMessage.innerText = `Error: ${errorMessage}`;
