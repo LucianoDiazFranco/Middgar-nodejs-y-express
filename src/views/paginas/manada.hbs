@@ -1,39 +1,30 @@
 <main>
-    <section class="banner">
-        <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas">
-        <h1>El mundo de la fantasía y los juegos te están llamando</h1>
-        <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
-    </section>
-    
-    <section class="content">
-        <div class="activities">
-            <input type="text" placeholder="Buscar...">
-            <div class="buttons">
-                
-                <label for="pdfUploader" class="upload-label">📄 Cargar PDFs</label>
-                <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
-                
-                <button>👥</button>
-                <button>
-                    <a href="/planilladeriesgo" target="_blank">
-                        Agregar Planilla de Riesgo
-                    </a>
-                </button>
+        <section class="banner">
+            <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas">
+            <h1>El mundo de la fantasía y los juegos te están llamando</h1>
+            <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
+        </section>
+        <section class="content">
+            <div class="activities">
+                <input type="text" placeholder="Buscar...">
+                <div class="buttons">
+                    <label for="pdfUploader" class="upload-label">📄 Cargar PDFs</label>
+                    <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
+                    <a href="/planilla_riesgo"><button>Agregar Planilla de Riesgo</button></a>
+                    <a href="/list"><button>👥</button></a>
+                </div>
+                    <ul id="pdf-list">
+                    </ul> <!--Mostrar los PDF -->
             </div>
-           
-
-            <h3>Archivos PDF</h3>
-            <ul id="pdf-list"></ul> <!--Mostrar los PDF -->
         </div>
     </section>
 </main>
-
 <!-- Formulario oculto para subir archivos -->
 <form id="uploadForm" enctype="multipart/form-data" style="display: none;">
     <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
 </form>
 
-<div id="status"></div>
+<div id="status" class="status-message"></div>
 
 <script>
     const form = document.getElementById("uploadForm");
@@ -80,8 +71,25 @@
             body: formData
         });
 
+        const statusMessage = document.getElementById("status");
+        
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            statusMessage.innerText = `Error: ${errorMessage}`;
+            statusMessage.className = "status-message error"; // Clase de error
+            statusMessage.style.display = "block"; // Mostrar mensaje
+            return;
+        }
+
         const result = await response.text();
-        document.getElementById("status").innerText = result;
+        statusMessage.innerText = result;
+        statusMessage.className = "status-message success"; // Clase de éxito
+        statusMessage.style.display = "block"; // Mostrar mensaje
+
+        // Ocultar el mensaje después de unos segundos
+        setTimeout(() => {
+            statusMessage.style.display = "none"; // Ocultar mensaje
+        }, 3000); // Tiempo en milisegundos
 
         // Recargar la lista de PDFs después de subir nuevos archivos
         loadPDFs();
