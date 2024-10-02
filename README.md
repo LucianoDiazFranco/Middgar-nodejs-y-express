@@ -1,7 +1,7 @@
-#Middgar
+# Middgar
 Midgar es una aplicación web creada con el propósito de ayudar a todos los hermanos Scout en la gestión eficiente de sus actividades diarias. Esta plataforma está diseñada para simplificar el registro de documentos, usuarios, actividades, cuotas, y muchas otras funciones, brindando una mejor organización y claridad en la información introducida❤️
 
-##Que es un grupo Scout ?
+## Que es un grupo Scout ?
 Es una organización sin fines de lucro que busca educar a niños y jóvenes, con un sistema de base en valores y juegos. 😊
 
 
