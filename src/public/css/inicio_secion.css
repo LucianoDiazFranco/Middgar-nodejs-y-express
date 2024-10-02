@@ -1,0 +1,118 @@
+/* Estilos para el main */
+.login-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Asegura que cubra toda la pantalla pero permita expansión */
+    background-image: url('/img/FondoAzulYRojo.png');
+    background-size: cover; /* Ajusta la imagen para cubrir toda la página */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-color: #162347; /* Color de respaldo en caso de que la imagen no se cargue */
+}
+
+/* añade una capa oscura sobre la imagen de fondo */
+.background-fondo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Ajusta la opacidad según sea necesario */
+    z-index: 1;
+}
+  
+  /* Contenedor principal */
+  .login-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-width:75rem;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1.25rem;
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
+    /*background: linear-gradient(to right, #7e0a0a, #162347); posible opcion*/
+  }
+  
+  .logo-section {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente la imagen */
+    align-items: center; /* Centra verticalmente la imagen */
+    width: 50%; /* Incrementa el tamaño del contenedor al 80% del padre */
+    height: 50%; /* Asegura que la altura del contenedor se ajuste al contenido */
+    max-width: 25rem; /* Ajusta el tamaño máximo según tus necesidades */
+}
+
+.logo-image {
+    width: 10rem;
+    height: 10rem;
+}
+
+  
+ /* Card de inicio de sesión */
+.login-card {
+    flex: 1;
+    max-width: 25rem; /* 400px = 25rem */
+    background-color: #7e0a0a;
+    padding: 2rem;
+    border-radius: 0.9375rem; /* 15px = 0.9375rem */
+    text-align: center;
+    color: #fff;
+  }
+  
+  .login-title {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    color: #000000;
+    font-family: "Palanquin Dark", sans-serif;
+    font-weight: 500;
+  }
+  
+  .input-field {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 1.25rem; /* 20px = 1.25rem */
+
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #fff;
+    color: #000000;
+    border: none;
+    border-radius: 1.25rem; /* 20px = 1.25rem */
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    font-family: "Palanquin Dark", sans-serif;
+    font-weight: 500;
+  }
+  
+  .forgot-password {
+    display: block;
+    margin-top: 1rem;
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .create-account-button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #fff;
+    color: #000000;
+    border: none;
+    border-radius: 1.25rem; /* 20px = 1.25rem */
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    font-family: "Palanquin Dark", sans-serif;
+    font-weight: 500;
+  }
+  .create-account-button a {
+    color: #000000;
+  }
+  

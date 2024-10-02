@@ -1,0 +1,89 @@
+<main>
+    <section class="banner">
+        <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas">
+        <h1>El mundo de la fantasía y los juegos te están llamando</h1>
+        <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
+    </section>
+    
+    <section class="content">
+        <div class="activities">
+            <input type="text" placeholder="Buscar...">
+            <div class="buttons">
+                
+                <label for="pdfUploader" class="upload-label">📄 Cargar PDFs</label>
+                <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
+                
+                <button>👥</button>
+                <button>
+                    <a href="/planilladeriesgo" target="_blank">
+                        Agregar Planilla de Riesgo
+                    </a>
+                </button>
+            </div>
+           
+
+            <h3>Archivos PDF</h3>
+            <ul id="pdf-list"></ul> <!--Mostrar los PDF -->
+        </div>
+    </section>
+</main>
+
+<!-- Formulario oculto para subir archivos -->
+<form id="uploadForm" enctype="multipart/form-data" style="display: none;">
+    <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
+</form>
+
+<div id="status"></div>
+
+<script>
+    const form = document.getElementById("uploadForm");
+    const pdfUploader = document.getElementById("pdfUploader");
+    const pdfList = document.getElementById("pdf-list");
+
+    // Función para cargar los archivos PDF desde el servido
+    async function loadPDFs() {
+        try {
+            const response = await fetch('/list-pdfs');
+            const pdfFiles = await response.json();
+            
+            pdfList.innerHTML = ''; // Limpiar la lista antes de cargar nuevos elementos
+
+            // Añadir cada archivo PDF a la lista
+            pdfFiles.forEach(file => {
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `/uploads/${file}`;
+                link.textContent = file;
+                link.target = '_blank'; // Abrir en nueva pestaña
+                li.appendChild(link);
+                pdfList.appendChild(li);
+            });
+        } catch (error) {
+            console.error('Error al cargar los archivos PDF:', error);
+        }
+    }
+
+    // Cargar PDFs cuando se carga la página
+    window.addEventListener('load', loadPDFs);
+
+    pdfUploader.addEventListener("change", async function () {
+        const formData = new FormData();
+
+        // Añadir cada archivo al FormData
+        for (let i = 0; i < pdfUploader.files.length; i++) {
+            formData.append("pdfs", pdfUploader.files[i]);
+        }
+
+        // Enviar los archivos al servidor
+        const response = await fetch("/upload", {
+            method: "POST",
+            body: formData
+        });
+
+        const result = await response.text();
+        document.getElementById("status").innerText = result;
+
+        // Recargar la lista de PDFs después de subir nuevos archivos
+        loadPDFs();
+    });
+</script>
