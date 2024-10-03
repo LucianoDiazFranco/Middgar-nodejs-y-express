@@ -1,5 +1,5 @@
 {
-  "name": "node-crud",
+  "name": "crud",
   "version": "1.0.0",
   "main": "Index.js",
   "type": "module",
@@ -9,15 +9,20 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "express": "^4.19.2",
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
     "express-handlebars": "^7.1.3",
+    "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",
     "morgan": "^1.10.0",
-    "mysql2": "^3.10.2"
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.11.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
-  }
+  },
+  "description": ""
 }
