@@ -20,7 +20,7 @@
     padding: 20px;
 }
 
-.activities{
+.activities {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -76,14 +76,26 @@
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 4px;
+    display: flex; /* Usar flexbox para organizar los elementos */
+    justify-content: space-between; /* Separar los elementos dentro del li */
+    align-items: center; /* Centrar verticalmente */
+}
+
+.activities ul li button.delete-btn {
+    margin-left: auto; /* Mover el botón al extremo derecho */
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
 .logo {
-    position:absolute;
+    position: absolute;
     top: 0px; 
     right: 1300px; 
     width: 40px; 
 }
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -93,18 +105,20 @@ body {
 
 header {
     background: linear-gradient(#FFEA32);
-    /*padding: 5px;*/
     text-align: center;
     color: #FFEA32;
 }
+
 header h1 {
     margin: 0;
 }
+
 header nav {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     background-color: #FFEA32;
 }
+
 nav a {
     padding: 14px 20px;
     display: block;
@@ -112,9 +126,11 @@ nav a {
     text-align: center;
     text-decoration: none;
 }
+
 nav a:hover {
     background-color: #aeaeae;
 }
+
 .status-message {
     margin-top: 20px; /* Espacio superior */
     padding: 10px; /* Espacio interior */
