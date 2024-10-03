@@ -30,8 +30,8 @@ router.get('/list', async(req, res)=>{
         let params = []; // lista a todas las personas de la tabla
 
         if (search) {
-            query += ' WHERE nombre LIKE ?'; // utiliza like para comparar con la columna nombre
-            params.push(`%${search}%`);//compara lo que entra al search(el imput)
+            query += ' WHERE nombre LIKE ? OR apellido LIKE ?'; // utiliza like para comparar con la columna nombre
+            params.push(`%${search}%`, `%${search}%`);//compara lo que entra al search(el imput)
         }
         
 
@@ -44,8 +44,18 @@ router.get('/list', async(req, res)=>{
                 fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
             };
         });
+        
+         // Si no hay resultados, pasar un mensaje de error
+        let errorMessage = null;
+        let successMessage = null;
+        if (personas.length === 0) {
+            errorMessage = "No se encontraron resultados para tu búsqueda.";
+        }
+        else {
+        successMessage = `Se encontraron ${personas.length} resultados.`;
+        }
 
-        res.render('paginas/manada_add', { personas });
+        res.render('paginas/manada_add', { personas, errorMessage, successMessage});
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
