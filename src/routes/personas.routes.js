@@ -24,8 +24,19 @@ router.post('/add', async(req, res)=>{
 })
 
 router.get('/list', async(req, res)=>{
-    try{
-        const [result] = await pool.query('SELECT * FROM persona');
+    try {
+        const { search } = req.query;
+        let query = 'SELECT * FROM persona';
+        let params = []; // lista a todas las personas de la tabla
+
+        if (search) {
+            query += ' WHERE nombre LIKE ?'; // utiliza like para comparar con la columna nombre
+            params.push(`%${search}%`);//compara lo que entra al search(el imput)
+        }
+        
+
+        const [result] = await pool.query(query, params);
+
         // Formatear las fechas antes de pasarlas al template
         const personas = result.map(persona => {
             return {
@@ -33,10 +44,10 @@ router.get('/list', async(req, res)=>{
                 fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
             };
         });
+
         res.render('paginas/manada_add', { personas });
-    }
-    catch(err){
-        res.status(500).json({message:err.message});
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 
