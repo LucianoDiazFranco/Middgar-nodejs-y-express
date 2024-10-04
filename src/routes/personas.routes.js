@@ -30,7 +30,7 @@ router.get('/list', async(req, res)=>{
         let params = []; // lista a todas las personas de la tabla
 
         if (search) {
-            query += ' WHERE nombre LIKE ? OR apellido LIKE ?'; // utiliza like para comparar con la columna nombre
+            query += ' WHERE DNI LIKE ? OR nombre LIKE ?'; // utiliza like para comparar con la columna nombre
             params.push(`%${search}%`, `%${search}%`);//compara lo que entra al search(el imput)
         }
         
