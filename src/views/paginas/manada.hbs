@@ -1,6 +1,6 @@
 <main>
     <section class="banner">
-        <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas">
+        <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas" class="img-border">
         <h1>El mundo de la fantasía y los juegos te están llamando</h1>
         <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
     </section>
@@ -8,10 +8,10 @@
         <div class="activities">
             <input type="text" placeholder="Buscar...">
             <div class="buttons">
-                <label for="pdfUploader" class="upload-label">📄 Cargar PDFs</label>
+                <label for="pdfUploader" class="upload-label icon-button"><i class="fa-solid fa-file-pdf"></i> Cargar PDF</label>
                 <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
-                <a href="/planilla_riesgo"><button>Agregar Planilla de Riesgo</button></a>
-                <a href="/list"><button>👥</button></a>
+                <a href="/planilla_riesgo"><button class="icon-button"><i class="fa-solid fa-file"></i> Planilla de Riesgo</button></a>
+                <a href="/list"><button class="icon-button"><i class="fa-solid fa-user"></i> Miembros</button></a>
             </div>
             <ul id="pdf-list">
             </ul> <!-- Mostrar los PDF -->

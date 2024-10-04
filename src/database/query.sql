@@ -10,10 +10,10 @@ CREATE TABLE user(
 );
 CREATE TABLE persona(
     id INT AUTO_INCREMENT PRIMARY KEY,
+    DNI INT NOT NULL,
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
     correo VARCHAR(100) NOT NULL,
-    telefono INT NOT NULL,
     fecha_nac DATE NOT NULL
     FOREIGN KEY (id_user) REFERENCES user(id_user)
 );

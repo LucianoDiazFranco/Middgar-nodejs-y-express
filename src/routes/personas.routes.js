@@ -11,9 +11,9 @@ router.get('/add', (req, res)=>{
 
 router.post('/add', async(req, res)=>{
     try{
-        const{nombre, apellido,correo, telefono, fecha_nac} =req.body;
+        const{DNI, nombre, apellido,correo, fecha_nac} =req.body;
         const newPersona = {
-            nombre, apellido, correo, telefono, fecha_nac
+            DNI, nombre, apellido, correo, fecha_nac
         }
         await pool.query('INSERT INTO PERSONA SET ?',[newPersona]);
         res.redirect('/list');
@@ -76,9 +76,9 @@ router.get('/edit/:id', async(req, res)=>{
 
 router.post('/edit/:id', async(req, res)=>{
     try{
-        const {nombre, apellido, correo, telefono, fecha_nac} = req.body;
+        const {DNI, nombre, apellido, correo, fecha_nac} = req.body;
         const {id} = req.params;
-        const editPersona = {nombre, apellido, correo, telefono, fecha_nac};
+        const editPersona = {DNI, nombre, apellido, correo, fecha_nac};
         await pool.query('UPDATE PERSONA SET ? WHERE id = ?' , [editPersona,id]);
         res.redirect('/list');
     }

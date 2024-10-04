@@ -1,7 +1,7 @@
 .banner2 {
     text-align: center;
     padding: 20px;
-    background-color: #1a40e7;
+    background-color: #2d75e2;
 }
 
 .banner2 img {
@@ -45,7 +45,7 @@
 .activities2 .buttons2 button, .members button {
     padding: 10px 15px;
     border: none;
-    background-color: #1a40e7;
+    background-color: #2d75e2;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;

@@ -7,6 +7,11 @@
             <div class="card-body">
                 <form action="/edit/{{persona.id}}" method="post">
                 <div class="input-group mt-2">
+                    <label for="DNI" class="input-group-text">DNI</label>
+                    <input class="form-control" type="number" name="DNI" id="DNI" placeholder="Ejemplo: 42596459" value="{{persona.DNI}}"
+                   required>
+                </div>
+                <div class="input-group mt-2">
                     <label for="nombre" class="input-group-text">Nombre</label>
                     <input class="form-control" type="text" name="nombre" id="nombre" value="{{persona.nombre}}" placeholder="Ejemplo: Luciano"
                     autofocus required>
@@ -19,11 +24,6 @@
                 <div class="input-group mt-2">
                     <label for="correo" class="input-group-text">Correo</label>
                     <input class="form-control" type="text" name="correo" id="correo" placeholder="Ejemplo: Diaz Franco" value="{{persona.correo}}"
-                   required>
-                </div>
-                <div class="input-group mt-2">
-                    <label for="telefono" class="input-group-text">Telefono</label>
-                    <input class="form-control" type="number" name="telefono" id="telefono" placeholder="Ejemplo: Diaz Franco" value="{{persona.telefono}}"
                    required>
                 </div>
                 <div class="input-group mt-2">
