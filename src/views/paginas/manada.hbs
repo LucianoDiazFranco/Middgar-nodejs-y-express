@@ -50,9 +50,10 @@
 
                 // Crear botón de eliminar
                 const deleteButton = document.createElement('button');
-                deleteButton.innerHTML = '❌'; // Ícono de borrar
+                deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>'; // Ícono de borrar de Font Awesome
                 deleteButton.className = 'delete-btn';
                 deleteButton.setAttribute('data-filename', file); // Asignar el nombre del archivo al botón
+
                 
                 // Evento para eliminar el archivo al hacer clic
                 deleteButton.addEventListener('click', async function() {
