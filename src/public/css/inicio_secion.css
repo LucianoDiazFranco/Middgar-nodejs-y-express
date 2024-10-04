@@ -75,9 +75,8 @@
     margin-bottom: 1rem;
     border: none;
     border-radius: 1.25rem; /* 20px = 1.25rem */
-
   }
-  
+
   .login-button {
     width: 100%;
     padding: 0.75rem;
@@ -91,6 +90,10 @@
     font-family: "Palanquin Dark", sans-serif;
     font-weight: 500;
   }
+  .login-button:hover{
+    background-color:  #f14545;
+  }
+  
   
   .forgot-password {
     display: block;
@@ -116,9 +119,15 @@
     color: #000000;
   }
   
+  .create-account-button:hover{
+    background-color:  #f14545;
+  }
+  
 .error{
   color: #ff5151;
 }
 .escondido{
   display: none;
 }
+
+  

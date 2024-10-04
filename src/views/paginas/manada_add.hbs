@@ -1,26 +1,28 @@
 <main></main>
         <section class="banner">
-            <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas">
+            <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas" class="img-border">
             <h1>El mundo de la fantasía y los juegos te están llamando</h1>
             <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
         </section>
         <section class="content">
             <div class="activities">
-                <input type="text" id="search" placeholder="Buscar por nombre...">
-                <button id="searchButton">Buscar</button>
-                <div class="buttons">
-                    <a href="/manada"><button>📄</button></a>
-                    <a href="/add"><button>Agregar</button></a>
+                <div class="search-container">
+                    <input type="text" id="search" placeholder="Buscar por nombre o Dni...">
+                    <button id="searchButton" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <div class="buttons">
+                        <a href="/manada"><button class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
+                        <a href="/add"><button class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
                     </div>
-                        <div class="row mt-5">
+                </div>
+                    <div class="row mt-1">
                         {{#if personas}}
                         <table class="table text-left">
-                            <thead>
+                            <thead class="o">
                                 <tr class="titulo">
+                                    <th scope="col">DNI</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Apellido</th>
                                     <th scope="col">Correo</th>
-                                    <th scope="col">telefono</th>
                                     <th scope="col">Fecha_nac</th>
                                     <th scope="col">Acciones</th>
                                 </tr>
@@ -28,10 +30,10 @@
                             <tbody>
                                 {{#each personas}}
                                     <tr>
+                                        <td>{{DNI}}</td>
                                         <td>{{nombre}}</td>
                                         <td>{{apellido}}</td>
                                         <td>{{correo}}</td>
-                                        <td>{{telefono}}</td>
                                         <td>{{fecha_nac}}</td>
                                         <td>
                                             <div class="btn-group">
@@ -80,15 +82,16 @@
     });
     window.onload = function() {
         const errorMessage = document.getElementById('error-message');
+        const successMessage  = document.getElementById('success-message');
         if (errorMessage) {
             setTimeout(() => {
                 errorMessage.style.display = 'none';
             }, 3000);
         }
         if (successMessage) {
-        setTimeout(() => {
-            successMessage.style.display = 'none';
-        }, 3000);
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
         }
     };
     

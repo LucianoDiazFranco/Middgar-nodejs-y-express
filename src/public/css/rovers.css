@@ -45,7 +45,7 @@
 .activities3 .buttons3 button, .members button {
     padding: 10px 15px;
     border: none;
-    background-color: #c00f0f;
+    background-color: #f14545;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
@@ -69,4 +69,7 @@
     top: 0px; 
     right: 1300px; 
     width: 40px; 
+}
+.img-border3{
+    border: 0.2rem solid #ab3535;
 }
