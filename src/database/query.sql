@@ -9,13 +9,11 @@ CREATE TABLE user(
     rol VARCHAR(20) NOT NULL --tabla dudosa
 );
 CREATE TABLE persona(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    DNI INT NOT NULL,
+    DNI INT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
     correo VARCHAR(100) NOT NULL,
     fecha_nac DATE NOT NULL
-    FOREIGN KEY (id_user) REFERENCES user(id_user)
 );
 CREATE TABLE educador(
     id_educador INT AUTO_INCREMENT PRIMARY KEY,
@@ -107,6 +105,13 @@ CREATE TABLE documentacion(
     permiso_acampe BOOLEAN,
     vencimiento DATETIME,
     FOREIGN KEY (dni) REFERENCES persona(dni)
+);
+
+CREATE TABLE Doc_PDF (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    fecha DATE NOT NULL,
+    identifier VARCHAR(100) NOT NULL UNIQUE
 );
 
 SELECT * FROM user;

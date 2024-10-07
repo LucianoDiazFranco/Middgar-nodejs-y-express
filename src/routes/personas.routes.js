@@ -77,27 +77,38 @@ router.get('/edit/:DNI', async(req, res)=>{
     }
 } )
 
-router.post('/edit/:DNI', async(req, res)=>{
-    try{
-        const {nombre, apellido, correo, fecha_nac, nuevoDNI} = req.body;
-        const {DNI} = req.params;
+router.post('/edit/:DNI', async (req, res) => {
+    try {
+        const { nombre, apellido, correo, fecha_nac, nuevoDNI } = req.body;
+        const { DNI } = req.params;
 
-        // Verifica si el nuevo DNI ya existe
-        const [dniExists] = await pool.query('SELECT * FROM persona WHERE DNI = ?', [nuevoDNI]);
-        if (dniExists.length > 0 && nuevoDNI !== DNI) {
-            // Si el nuevo DNI ya existe en otro registro, lanzamos un error
-            return res.status(400).json({ message: 'El nuevo DNI ya está en uso.' });
+        // Verificar si el DNI está siendo cambiado
+        if (nuevoDNI !== DNI) {
+            const [dniExists] = await pool.query('SELECT * FROM persona WHERE DNI = ?', [nuevoDNI]);
+
+            // Si el nuevo DNI ya está en uso, mostrar un mensaje de error sin actualizar nada
+            if (dniExists.length > 0) {
+                const personaEdit = { DNI: nuevoDNI, nombre, apellido, correo, fecha_nac };
+                return res.render('usuarios/edit', {
+                    persona: personaEdit,
+                    errorMessage: 'El DNI ya está en uso. Por favor, elige otro.'
+                });
+            }
         }
 
-        const editPersona = {nombre, apellido, correo, fecha_nac, DNI: nuevoDNI};
-        await pool.query('UPDATE PERSONA SET ? WHERE DNI = ?' , [editPersona,DNI]);
+        // Si no hubo cambio en el DNI o el nuevo DNI es válido, proceder con la actualización
+        await pool.query('UPDATE persona SET DNI = ?, nombre = ?, apellido = ?, correo = ?, fecha_nac = ? WHERE DNI = ?', 
+                         [nuevoDNI, nombre, apellido, correo, fecha_nac, DNI]);
+
         res.redirect('/list');
-    }
-    catch(err){
+    } catch (err) {
         console.error(err);
-        res.status(500).json({message:err.message});
+        res.status(500).json({ message: err.message });
     }
-})
+});
+
+
+
 
 router.get('/delete/:DNI',  async(req, res)=>{
     try{
