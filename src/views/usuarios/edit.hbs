@@ -5,11 +5,10 @@
                 <h3 class="text-uppercase">Editando a una persona</h3>
             </div>
             <div class="card-body">
-                <form action="/edit/{{persona.id}}" method="post">
+                <form action="/edit/{{persona.DNI}}" method="post">
                 <div class="input-group mt-2">
-                    <label for="DNI" class="input-group-text">DNI</label>
-                    <input class="form-control" type="number" name="DNI" id="DNI" placeholder="Ejemplo: 42596459" value="{{persona.DNI}}"
-                   required>
+                    <label for="nuevoDNI" class="input-group-text">Nuevo DNI</label>
+                    <input class="form-control" type="number" name="nuevoDNI" id="nuevoDNI" placeholder="Ejemplo: 42596459" value="{{persona.DNI}}" required>
                 </div>
                 <div class="input-group mt-2">
                     <label for="nombre" class="input-group-text">Nombre</label>
@@ -24,7 +23,7 @@
                 <div class="input-group mt-2">
                     <label for="correo" class="input-group-text">Correo</label>
                     <input class="form-control" type="text" name="correo" id="correo" placeholder="Ejemplo: Diaz Franco" value="{{persona.correo}}"
-                   required>
+                    required>
                 </div>
                 <div class="input-group mt-2">
                     <label for="fecha_nac" class="input-group-text">fecha_nac</label>

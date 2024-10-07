@@ -61,11 +61,14 @@ router.get('/list', async(req, res)=>{
     }
 });
 
-router.get('/edit/:id', async(req, res)=>{
+router.get('/edit/:DNI', async(req, res)=>{
     try{
-        const {id} = req.params;
-        const [persona] = await pool.query('SELECT * FROM persona WHERE id = ?' , [id]);
-        const personaEdit = persona[0];
+        const {DNI} = req.params;
+        const [persona] = await pool.query('SELECT * FROM persona WHERE DNI = ?' , [DNI]);
+        const personaEdit = {
+            ...persona[0],
+            fecha_nac: moment(persona[0].fecha_nac).format('YYYY-MM-DD') // Formateamos la fecha
+        };
         res.render('usuarios/edit', {persona: personaEdit});
     }
     catch(err){
@@ -74,12 +77,20 @@ router.get('/edit/:id', async(req, res)=>{
     }
 } )
 
-router.post('/edit/:id', async(req, res)=>{
+router.post('/edit/:DNI', async(req, res)=>{
     try{
-        const {DNI, nombre, apellido, correo, fecha_nac} = req.body;
-        const {id} = req.params;
-        const editPersona = {DNI, nombre, apellido, correo, fecha_nac};
-        await pool.query('UPDATE PERSONA SET ? WHERE id = ?' , [editPersona,id]);
+        const {nombre, apellido, correo, fecha_nac, nuevoDNI} = req.body;
+        const {DNI} = req.params;
+
+        // Verifica si el nuevo DNI ya existe
+        const [dniExists] = await pool.query('SELECT * FROM persona WHERE DNI = ?', [nuevoDNI]);
+        if (dniExists.length > 0 && nuevoDNI !== DNI) {
+            // Si el nuevo DNI ya existe en otro registro, lanzamos un error
+            return res.status(400).json({ message: 'El nuevo DNI ya está en uso.' });
+        }
+
+        const editPersona = {nombre, apellido, correo, fecha_nac, DNI: nuevoDNI};
+        await pool.query('UPDATE PERSONA SET ? WHERE DNI = ?' , [editPersona,DNI]);
         res.redirect('/list');
     }
     catch(err){
@@ -88,10 +99,10 @@ router.post('/edit/:id', async(req, res)=>{
     }
 })
 
-router.get('/delete/:id',  async(req, res)=>{
+router.get('/delete/:DNI',  async(req, res)=>{
     try{
-        const {id} = req.params;
-        await pool.query('DELETE FROM persona WHERE id = ?', [id]);
+        const {DNI} = req.params;
+        await pool.query('DELETE FROM persona WHERE DNI = ?', [DNI]);
         res.redirect('/list');
     }
     catch(err){
