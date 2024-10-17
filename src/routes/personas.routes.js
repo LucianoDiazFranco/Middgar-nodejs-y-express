@@ -95,7 +95,6 @@ router.post('/edit/:DNI', async (req, res) => {
                 });
             }
         }
-
         // Si no hubo cambio en el DNI o el nuevo DNI es válido, proceder con la actualización
         await pool.query('UPDATE persona SET DNI = ?, nombre = ?, apellido = ?, correo = ?, fecha_nac = ? WHERE DNI = ?', 
                          [nuevoDNI, nombre, apellido, correo, fecha_nac, DNI]);

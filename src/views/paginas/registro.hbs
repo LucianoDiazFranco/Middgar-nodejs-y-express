@@ -6,13 +6,16 @@
     </section>
     <section class="register-card">
       <h1 id="tipografia" class="register-title">Crea tu cuenta</h1>
-      <form id="registro-form" class="registro-form">
-        <input type="text" id="user" class="input-registro" placeholder="Nombre de Usuario">
-        <input type="email" id="email" class="input-registro" placeholder="Correo Electrónico">
-        <input type="password" id="password" class="input-registro" placeholder="Contraseña">
+      <form id="registro-form" method="POST" action="/register" class="registro-form">
+        <input type="text" id="user" name="name" class="input-registro" placeholder="Nombre de Usuario" required>
+        <input type="email" id="email" name="email" class="input-registro" placeholder="Correo Electrónico" required>
+        <input type="password" id="password" name="password" class="input-registro" placeholder="Contraseña">
         <button id="tipografia" type="submit" class="register-button">Registrarte</button>
+        {{#if error}}
+          <p class="text-red-500 font-bold text-lg mt-3">{{error}}</p>
+        {{/if}}
       </form>
-      <p class="error escondido">Error al Registrarse</p>
+
       <p class="already-account">¿Tienes una cuenta? <a href="/inicio_secion">Ingresar</a></p>
     </section>
   </div>
