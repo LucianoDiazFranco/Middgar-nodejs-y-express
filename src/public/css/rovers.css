@@ -73,3 +73,10 @@
 .img-border3{
     border: 0.2rem solid #ab3535;
 }
+#boton4{
+    background-color: #f14545;
+}
+#boton4:hover {
+    background-color: #ab3535; /* Fondo más oscuro al hacer hover */
+    color: white; /* Texto blanco al hacer hover */
+}

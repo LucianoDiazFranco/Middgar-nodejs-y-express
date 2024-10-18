@@ -164,3 +164,21 @@ nav a:hover {
     border-radius: 4px;
     cursor: pointer;
 }
+#planillaRiesgoButton1 i {
+    margin-right: 5px;
+    color: black; /* Asegurar que el ícono sea negro */
+    font-size: 1.3rem;
+}
+
+#planillaRiesgoButton1:hover {
+    background-color: #ffcc00; /* Fondo más oscuro al hacer hover */
+    color: white; /* Texto blanco al hacer hover */
+}
+
+#boton1{
+    background-color: #ffcc00;
+}
+#boton1:hover{
+    background-color: #e4b704; /* Fondo más oscuro al hacer hover */
+    color: white; /* Texto blanco al hacer hover */
+}

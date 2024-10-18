@@ -9,13 +9,11 @@ CREATE TABLE user(
     rol VARCHAR(20) NOT NULL --tabla dudosa
 );
 CREATE TABLE persona(
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    DNI INT NOT NULL,
+    DNI INT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
     correo VARCHAR(100) NOT NULL,
     fecha_nac DATE NOT NULL
-    FOREIGN KEY (id_user) REFERENCES user(id_user)
 );
 CREATE TABLE educador(
     id_educador INT AUTO_INCREMENT PRIMARY KEY,

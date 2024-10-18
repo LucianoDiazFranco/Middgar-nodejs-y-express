@@ -136,6 +136,9 @@ nav a:hover {
     border-radius: 4px;
     cursor: pointer;
     margin-left: 0.5rem; /* Espacio entre el input y el botón de búsqueda */
+}#searchButton:hover {
+    background-color: #e4b704; /* Fondo más oscuro al hacer hover */
+    color: white; /* Texto blanco al hacer hover */
 }
 
 .buttons {
@@ -145,4 +148,11 @@ nav a:hover {
 
 .buttons a {
     margin-left: 0.5rem; /* Espacio entre los botones */
+}
+#lapiz{
+    background-color: #ffcc00;
+}
+#lapiz:hover {
+    background-color: #e4b704; /* Fondo más oscuro al hacer hover */
+    color: white; /* Texto blanco al hacer hover */
 }

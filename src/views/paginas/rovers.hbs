@@ -4,24 +4,27 @@
             <h1>El servicio, ayudar a los demás, el trabajo en comunidad y llevar a cabo grandes proyectos.</h1>
             <h2>rovers: 17 a 22 años</h2>
         </section>
-        <section class="content3">
-            <div class="activities3">
-                <input type="text" placeholder="Buscar...">
-                <div class="buttons3">
-                    <button>📄</button>
-                    <button>👥</button>
-                    <button><a href="https://docs.google.com/forms/d/e/1FAIpQLSfBPkCSDpTEHuunePnQk79gbh8LSsgpihL8QsdL7hnZh9vqug/viewform?usp=sf_link " target="_blank">Agregar Planilla de Riesgo</a></button>
-                </div>
-                <ul>
-                    <li>Campamento 15/06/2024</li>
-                    <li>Actividad 08/06/2024</li>
-                    <li>Salida al Museo 01/06/2024</li>
-                    <li>Actividad 25/05/2024</li>
-                    <li>Actividad 18/05/2024</li>
-                    <li>Acantonamiento 11/05/2024</li>
-                    <li>Planilla de riesgo 11/05/2024</li>
-                </ul>
-            </div>
-            
         </section>
+        <section class="content1">
+        <div class="activities">
+            <input type="text" placeholder="Buscar...">
+        <div class="buttons">
+        <label for="pdfUploader" id="boton4" class="upload-label-uni icon-button">
+            <i class="fa-solid fa-file-pdf"></i> Cargar PDF
+        </label>
+        <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
+        <a href="/planilla_riesgo"><button id="boton4" class="icon-button"><i class="fa-solid fa-file"></i> Planilla de Riesgo </button>
+        <a href="/listaRovers"> <button id="boton4" class="icon-button"> <i class="fa-solid fa-user"></i> Miembros </button>
+        </a>
+        </div>
+    <ul id="pdf-list"></ul>
+    <div id="status" class="status-message"></div>
+</div>
+
+<!-- Formulario oculto -->
+<form id="uploadForm" enctype="multipart/form-data" style="display: none;">
+    <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
+</form>               
+            
+</section>
 </main>

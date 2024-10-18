@@ -12,6 +12,7 @@ router.get('/',authorization.soloPublico, (req, res)=>{res.render('/')});
 router.get('/manada', (req, res)=>{res.render('paginas/manada')});
 router.get('/manada_add', (req, res)=>{res.render('paginas/manada_add')});
 router.get('/unidad', (req, res)=>{res.render('paginas/unidad')});
+router.get('/unidad_add', (req, res)=>{res.render('paginas/unidad_add')});
 router.get('/caminantes', (req, res)=>{res.render('paginas/caminantes')});
 router.get('/rovers', (req, res)=>{res.render('paginas/rovers')});
 router.get('/inicio_secion', (req, res)=>{res.render('paginas/inicio_secion')});
