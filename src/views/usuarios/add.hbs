@@ -1,48 +1,34 @@
 <div class="container p-4">
     <div class="row">
-        <div class="col-md mx-auto">
+        <div class="col-md-12 mx-auto">
             <div class="card text-center">
-                <h3 class="text-uppercase">Crear a una persona</h3>
-            </div>   
-            <div class="card-body " style="width: 300px;">
-                <form action="/add" method="post" class="mx-auto">
-                <div class="input-group mt-2">
-                    <label for="telefono" class="input-group-text p-1">DNI<label>
-                    <input class="form-control " type="number" name="DNI" id="DNI" placeholder="Ejemplo: 46853156"
-                    required>
-                </div>
-                <div class="input-group mt-2">
-                    <label for="nombre" class="input-group-text">Nombre</label>
-                    <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Ejemplo: Luciano"
-                    autofocus required>
-                </div>
-                <div class="input-group mt-2">
-                    <label for="apellido" class="input-group-text">Apellido</label>
-                    <input class="form-control" type="text" name="apellido" id="apellido" placeholder="Ejemplo: Diaz Franco"
-                    required>
-                </div>
-                <div class="input-group mt-2">
-                    <label for="correo" class="input-group-text">Correo</label>
-                    <input class="form-control" type="text" name="correo" id="correo" placeholder="Ejemplo: @gmail.com"
-                    required>
-                </div>
-                <div class="input-group mt-2">
-                    <label for="fecha_nac" class="input-group-text">Fecha de nac.</label>
-                    <input class="form-control" type="date" name="fecha_nac" id="fecha_nac"  required>
-                </div>
-                <div class="input-group mt-2">
-                    <label for="Rama" class="input-group-text">Rama</label>
-                    <select class="form-select" name="Rama" id="Rama" required>
-                        <option value="" disabled selected>Opciones</option>
-                        <option value="Manada">Manada</option>
-                        <option value="Unidad">Unidad</option>
-                        <option value="Caminantes">Caminantes</option>
-                        <option value="Rovers">Rovers</option>
-                    </select>
-                </div>
-                <div class="form-group mt-4 d-grid gap-2">
-                    <button class="btn btn-success">Crear</button>
-                </div>
+                <h3 class="text-uppercase">CREAR A UN USUARIO</h3>
+            </div>
+            <div class="card-body">
+                <form action="/add" method="post">
+                    <div class="input-group mt-2">
+                        <label for="DNI" class="input-group-text">DNI</label>
+                        <input class="form-control" type="number" name="DNI" id="DNI" placeholder="Ejemplo: 46853156" required>
+                    </div>
+                    <div class="input-group mt-2">
+                        <label for="nombre" class="input-group-text">Nombre</label>
+                        <input class="form-control" type="text" name="nombre" id="nombre" placeholder="Ejemplo: Luciano" autofocus required>
+                    </div>
+                    <div class="input-group mt-2">
+                        <label for="apellido" class="input-group-text">Apellido</label>
+                        <input class="form-control" type="text" name="apellido" id="apellido" placeholder="Ejemplo: Diaz Franco" required>
+                    </div>
+                    <div class="input-group mt-2">
+                        <label for="correo" class="input-group-text">Correo</label>
+                        <input class="form-control" type="text" name="correo" id="correo" placeholder="Ejemplo: @gmail.com" required>
+                    </div>
+                    <div class="input-group mt-2">
+                        <label for="fecha_nac" class="input-group-text">Fecha de nac.</label>
+                        <input class="form-control" type="date" name="fecha_nac" id="fecha_nac" required>
+                    </div>
+                    <div class="form-group mt-4 d-grid gap-2">
+                        <button class="btn btn-success">Crear</button>
+                    </div>
                 </form>
             </div>
         </div>

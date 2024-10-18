@@ -27,10 +27,13 @@
                 <li><a class="dropdown-item bg-dark text-light" href="#">Mi Perfil</a></li>
                 <li><a class="dropdown-item bg-dark text-light" href="#">Documentos</a></li>
                 <li><a class="dropdown-item bg-dark text-light" href="#">Pagos</a></li>
+                <li><a href="/logout" class="nav-link">Logout</a></li>
             </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/inicio_secion">inicio secion</a>
+          {{#if name}} 
+              <p class="">{{name}}</p>
+          {{/if}}
         </li>
       </ul>
     </div>

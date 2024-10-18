@@ -2,18 +2,25 @@ import express from "express"
 import cookieParser from "cookie-parser";
 import morgan from 'morgan';
 import { engine } from 'express-handlebars';
+import mysql2 from 'mysql2';
+import session from 'express-session';
+import bodyParser from 'body-parser';
 import {join, dirname, extname}  from "path";
 import { fileURLToPath } from "url";
-import personasRoutes from './routes/personas.routes.js'
-import routes from './routes/routes.js'
 import fs from 'fs';
 import multer from "multer";
 import { unlink } from 'fs/promises';
+import routes from './routes/routes.js'
+import personasRoutes from './routes/personas.routes.js'
+import docRoutes from './routes/doc.routes.js';
+import loginRoutes from './routes/login.routes.js';
 
 // Inicialización 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const uploadsDir = join(__dirname, '..', 'uploads');
+
+
 
 // Configuración del puerto
 app.set("port", process.env.PORT || 3000);
@@ -33,11 +40,39 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(session({
+    secret: 'secret',
+    resave: true,
+    saveUninitialized: true
+}));
 
 // Ruta principal: Renderizar la página de inicio de sesión
 app.get('/', (req, res)=>{
-    res.render('paginas/inicio_secion');
+    if(req.session.loggedin == true){
+
+        res.render('paginas/index', {name: req.session.name});
+
+    } else{
+        res.redirect('/inicio_secion');
+    } 
+    //res.render('paginas/inicio_secion');
 })
+
+app.use(routes);
+app.use(personasRoutes);
+app.use(docRoutes);
+app.use(loginRoutes);
+
+// Servir archivos estáticos desde la carpeta 'uploads' y 'public'
+app.use('/uploads', express.static(uploadsDir));
+app.use(express.static(join(__dirname + '/public')));
+
+// Ejecutar servidor en el puerto definido
+app.listen(app.get("port"), () =>
+    console.log("Server listening on port", app.get("port"))
+);
+
 
 // ** Configuración de Multer para manejar la carga de archivos **
 const storage = multer.diskStorage({
@@ -70,17 +105,6 @@ app.get('/list-pdfs', (req, res) => {
         res.json(pdfFiles);
     });
 });
-
-app.use(routes);
-app.use(personasRoutes);
-// Servir archivos estáticos desde la carpeta 'uploads' y 'public'
-app.use('/uploads', express.static(uploadsDir));
-app.use(express.static(join(__dirname + '/public')));
-
-// Ejecutar servidor en el puerto definido
-app.listen(app.get("port"), () =>
-    console.log("Server listening on port", app.get("port"))
-);
 
 // Ruta para eliminar un archivo PDF
 app.delete('/delete-pdf/:filename', async (req, res) => {

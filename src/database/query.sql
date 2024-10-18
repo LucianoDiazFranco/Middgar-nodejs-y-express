@@ -107,4 +107,11 @@ CREATE TABLE documentacion(
     FOREIGN KEY (dni) REFERENCES persona(dni)
 );
 
+CREATE TABLE Doc_PDF (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    fecha DATE NOT NULL,
+    identifier VARCHAR(100) NOT NULL UNIQUE
+);
+
 SELECT * FROM user;
