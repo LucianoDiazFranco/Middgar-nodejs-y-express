@@ -39,9 +39,9 @@
                                             <div class="btn-group">
                                                 <a href="/edit/{{DNI}}" class="btn p-2" id="lapiz2">
                                                 <i class="fa-solid fa-pencil"></i></a>
-                                                <a href="/deleteUnidad/{{DNI}}" class="btn btn-danger p-2">
+                                                <a href="/deleteUnidad/{{DNI}}" class="btn  p-2" id="lapiz4">
                                                 <i class="fa-solid fa-trash"></i></a>
-                                                <a href="/pasarRama/{{DNI}}" class="btn btn-danger p-2">
+                                                <a href="/pasarRama/{{DNI}}" class="btn  p-2" id="lapizpase">
                                                 <i class="fa-sharp-duotone fa-solid fa-shuffle"></i></a>
                                             </div>
                                         </td>
@@ -80,7 +80,7 @@
 <script>
     document.getElementById('searchButton').addEventListener('click', function() {
         const searchValue = document.getElementById('search').value;
-        window.location.href = `/lista?search=${searchValue}`;
+        window.location.href = `/list?search=${searchValue}`;
     });
     window.onload = function() {
         const errorMessage = document.getElementById('error-message');
@@ -96,5 +96,4 @@
             }, 3000);
         }
     };
-    
 </script>

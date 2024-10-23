@@ -32,3 +32,11 @@
     background-color: #ab3535; /* Fondo más oscuro al hacer hover */
     color: white; /* Texto blanco al hacer hover */
 }
+#lapizpase{
+    background-color: #2e2e2e; /* Fondo más oscuro al hacer hover */
+    color: white; /* Texto blanco al hacer hover */
+}
+#lapizpase:hover{
+    background-color: #dadada; /* Fondo más oscuro al hacer hover */
+    color: #2e2e2e; /* Texto blanco al hacer hover */
+}
