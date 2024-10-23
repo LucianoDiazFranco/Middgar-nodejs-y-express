@@ -70,3 +70,24 @@
     right: 1300px; 
     width: 40px; 
 }
+
+
+.icon-button-alt:hover {
+    background-color: #2d75e2; /* Hover verde más oscuro */
+}
+
+.upload-label-uni {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #2d75e2;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+#boton3{
+    background-color: #2d75e2;
+}
+#boton3:hover {
+    background-color: #2d75e2; /* Fondo más oscuro al hacer hover */
+    color: white; /* Texto blanco al hacer hover */
+}

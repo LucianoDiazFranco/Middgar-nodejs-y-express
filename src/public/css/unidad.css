@@ -20,11 +20,11 @@
     padding: 20px;
 }
 
-.activities1{
+.activities1 {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 3);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     width: 80%;
 }
 
@@ -36,40 +36,56 @@
     border-radius: 4px;
 }
 
-.activities1 .buttons1, .members button {
+.buttons1 {
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
 }
 
-.activities1 .buttons1 button, .members button {
-    padding: 10px 15px;
+.icon-button-alt {
+    padding: 10px;
+    background-color: #068002; /* Fondo verde */
+    color: white;
     border: none;
-    background-color: #068002;
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
+    transition: background-color 0.3s ease;
 }
 
-.activities1 ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+.icon-button-alt i {
+    margin-right: 5px;
+    font-size: 1.3rem;
 }
 
-.activities1 ul li {
-    background-color: #f9f9f9;
+.icon-button-alt:hover {
+    background-color: #045a02; /* Hover verde más oscuro */
+}
+
+.upload-label-uni {
     padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 4px;
+    font-size: 16px;
+    background-color: #068002;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
 }
 
-.logo {
-    position:absolute;
-    top: 0px; 
-    right: 1300px; 
-    width: 40px; 
+.img-border2 {
+    border: 0.2rem solid #296c26;
 }
-.img-border2{
-    border: 0.2rem solid   #296c26;
+
+
+/* Estilo exclusivo para el botón "Planilla de Riesgo" usando el ID */
+#planillaRiesgoButton {
+    background-color: #068002; /* Fondo verde */
+    color: black; /* Texto negro */
+    border: 2px solid #068002; /* Borde verde oscuro */
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+
+

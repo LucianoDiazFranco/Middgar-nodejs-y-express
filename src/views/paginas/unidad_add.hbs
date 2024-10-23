@@ -1,6 +1,6 @@
 <main></main>
-        <section class="banner">
-            <img src="/img/logomanada.png" alt="Logo Lobatos y Lobeznas" class="img-border">
+        <section class="banner1">
+            <img src="/img/logounidad.png" alt="Unidad" class="img-border2">
             <h1>El mundo de la fantasía y los juegos te están llamando</h1>
             <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
         </section>
@@ -8,17 +8,17 @@
             <div class="activities">
                 <div class="search-container">
                     <input type="text" id="search" placeholder="Buscar por nombre o Dni...">
-                    <button id="searchButton" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button id="searchButton1" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
                     <div class="buttons">
-                        <a href="/manada"><button id="boton1" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
-                        <a href="/add"><button id="boton1" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
+                        <a href="/unidad"><button id="boton2" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
+                        <a href="/add"><button id="boton2" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
                     </div>
                 </div>
                     <div class="row mt-1">
                         {{#if personas}}
                         <table class="table text-left">
                             <thead class="o">
-                                <tr class="titulo">
+                                <tr class="titulo2">
                                     <th scope="col">DNI</th>
                                     <th scope="col">Nombre</th>
                                     <th scope="col">Apellido</th>
@@ -37,7 +37,7 @@
                                         <td>{{fecha_nac}}</td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="/edit/{{DNI}}" class="btn p-2" id="lapiz">
+                                                <a href="/edit/{{DNI}}" class="btn p-2" id="lapiz2">
                                                 <i class="fa-solid fa-pencil"></i></a>
                                                 <a href="/delete/{{DNI}}" class="btn btn-danger p-2">
                                                 <i class="fa-solid fa-trash"></i></a>
@@ -80,7 +80,7 @@
 <script>
     document.getElementById('searchButton').addEventListener('click', function() {
         const searchValue = document.getElementById('search').value;
-        window.location.href = `/list?search=${searchValue}`;
+        window.location.href = `/lista?search=${searchValue}`;
     });
     window.onload = function() {
         const errorMessage = document.getElementById('error-message');

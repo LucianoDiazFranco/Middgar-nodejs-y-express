@@ -1,27 +1,145 @@
 <main>
-        <section class="banner1">
-            <img src="/img/logounidad.png" alt="Unidad" class="img-border2">
-            <h1>La aventura de explorar, la vida en la naturaleza y el compartir con grupos de amigos te esperan.</h1>
-            <h2>Unidad:11 a 14 años </h2>
-        </section>
-        <section class="content1">
-            <div class="activities1">
-                <input type="text" placeholder="Buscar...">
-                <div class="buttons1">
-                    <button>📄</button>
-                    <button>👥</button>
-                    <button><a href="https://docs.google.com/forms/d/e/1FAIpQLSfBPkCSDpTEHuunePnQk79gbh8LSsgpihL8QsdL7hnZh9vqug/viewform?usp=sf_link " target="_blank">Agregar Planilla de Riesgo</a></button>
-                </div>
-                <ul>
-                    <li>Campamento 15/06/2024</li>
-                    <li>Actividad 08/06/2024</li>
-                    <li>Salida al Museo 01/06/2024</li>
-                    <li>Actividad 25/05/2024</li>
-                    <li>Actividad 18/05/2024</li>
-                    <li>Acantonamiento 11/05/2024</li>
-                    <li>Planilla de riesgo 11/05/2024</li>
-                </ul>
-            </div>
+    <section class="banner1">
+        <img src="/img/logounidad.png" alt="Unidad" class="img-border2">
+        <h1>La aventura de explorar, la vida en la naturaleza y el compartir con grupos de amigos te esperan.</h1>
+        <h2>Unidad:11 a 14 años </h2>
+    </section>
+    <section class="content1">
+        <div class="activities">
+            <input type="text" placeholder="Buscar...">
+        <div class="buttons">
+        <label for="pdfUploader" id="boton2" class="upload-label-uni icon-button">
+            <i class="fa-solid fa-file-pdf"></i> Cargar PDF
+        </label>
+        <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
+        <a href="/planilla_riesgo"><button id="boton2" class="icon-button"><i class="fa-solid fa-file"></i> Planilla de Riesgo </button>
+        <a href="/lista"> <button id="boton2" class="icon-button"> <i class="fa-solid fa-user"></i> Miembros </button>
+        </a>
+    </div>
+    <ul id="pdf-list"></ul>
+    <div id="status" class="status-message"></div>
+</div>
+
+<!-- Formulario oculto -->
+<form id="uploadForm" enctype="multipart/form-data" style="display: none;">
+    <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
+</form>               
             
         </section>
 </main>
+<script>
+    const form = document.getElementById("uploadForm");
+    const pdfUploader = document.getElementById("pdfUploader");
+    const pdfList = document.getElementById("pdf-list");
+
+    // Función para cargar los archivos PDF desde el servidor
+    async function loadPDFs() {
+        try {
+            const response = await fetch('/list-pdfs');
+            const pdfFiles = await response.json();
+            
+            pdfList.innerHTML = ''; // Limpiar la lista antes de cargar nuevos elementos
+
+            // Añadir cada archivo PDF a la lista
+            pdfFiles.forEach(file => {
+                const li = document.createElement('li');
+                const link = document.createElement('a');
+                link.href = `/uploads/${file}`;
+                link.textContent = file;
+                link.target = '_blank'; // Abrir en nueva pestaña
+
+                // Crear botón de eliminar
+                const deleteButton = document.createElement('button');
+                deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>'; // Ícono de borrar de Font Awesome
+                deleteButton.className = 'delete-btn';
+                deleteButton.setAttribute('data-filename', file); // Asignar el nombre del archivo al botón
+
+                
+                // Evento para eliminar el archivo al hacer clic
+                deleteButton.addEventListener('click', async function() {
+                    if (confirm(`¿Estás seguro de que quieres eliminar el archivo ${file}?`)) {
+                        await deletePDF(file);  // Llamar a la función de eliminación
+                    }
+                });
+
+                li.appendChild(link);
+                li.appendChild(deleteButton);
+                pdfList.appendChild(li);
+            });
+        } catch (error) {
+            console.error('Error al cargar los archivos PDF:', error);
+        }
+    }
+
+    // Función para eliminar un archivo PDF
+    async function deletePDF(filename) {
+        try {
+            const response = await fetch(`/delete-pdf/${filename}`, {
+                method: 'DELETE'
+            });
+            if (response.ok) {
+                loadPDFs();  // Recargar la lista de PDFs después de la eliminación
+            } else {
+                console.error('Error al eliminar el archivo');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud de eliminación:', error);
+        }
+    }
+
+    // Cargar PDFs cuando se carga la página
+    window.addEventListener('load', loadPDFs);
+
+    pdfUploader.addEventListener("change", async function () {
+        const formData = new FormData();
+        const statusMessage = document.getElementById("status");
+
+        // Validar que solo se suban archivos PDF
+        for (let i = 0; i < pdfUploader.files.length; i++) {
+            const file = pdfUploader.files[i];
+
+            if (file.type !== "application/pdf") {
+                statusMessage.innerText = `Error: El archivo ${file.name} no es un PDF. Solo se permiten archivos PDF.`;
+                statusMessage.className = "status-message error"; // Clase de error
+                statusMessage.style.display = "block"; // Mostrar mensaje
+                return; // Detener el proceso si se detecta un archivo no permitido
+            }
+
+            // Obtener la fecha actual en formato YYYY-MM-DD
+            const today = new Date();
+            const dateString = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
+
+            // Prefijar la fecha al nombre del archivo
+            const newFileName = `${dateString}-${file.name}`;
+            const renamedFile = new File([file], newFileName, { type: file.type });
+            formData.append("pdfs", renamedFile);
+        }
+
+        // Enviar los archivos al servidor
+        const response = await fetch("/upload", {
+            method: "POST",
+            body: formData
+        });
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            statusMessage.innerText = `Error: ${errorMessage}`;
+            statusMessage.className = "status-message error"; // Clase de error
+            statusMessage.style.display = "block"; // Mostrar mensaje
+            return;
+        }
+
+        const result = await response.text();
+        statusMessage.innerText = result;
+        statusMessage.className = "status-message success"; // Clase de éxito
+        statusMessage.style.display = "block"; // Mostrar mensaje
+
+        // Ocultar el mensaje después de unos segundos
+        setTimeout(() => {
+            statusMessage.style.display = "none"; // Ocultar mensaje
+        }, 3000); // Tiempo en milisegundos
+
+        // Recargar la lista de PDFs después de subir nuevos archivos
+        loadPDFs();
+    });
+</script>

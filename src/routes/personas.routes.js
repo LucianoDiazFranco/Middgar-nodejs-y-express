@@ -11,9 +11,9 @@ router.get('/add', (req, res)=>{
 
 router.post('/add', async(req, res)=>{
     try{
-        const{DNI, nombre, apellido,correo, fecha_nac} =req.body;
+        const{DNI, nombre, apellido,correo, fecha_nac, Rama} =req.body;
         const newPersona = {
-            DNI, nombre, apellido, correo, fecha_nac
+            DNI, nombre, apellido, correo, fecha_nac,Rama
         }
         await pool.query('INSERT INTO PERSONA SET ?',[newPersona]);
         res.redirect('/list');
@@ -26,7 +26,7 @@ router.post('/add', async(req, res)=>{
 router.get('/list', async(req, res)=>{
     try {
         const { search } = req.query;
-        let query = 'SELECT * FROM persona';
+        let query = 'SELECT * FROM persona WHERE Rama = "Manada"';
         let params = []; // lista a todas las personas de la tabla
 
         if (search) {
@@ -56,6 +56,123 @@ router.get('/list', async(req, res)=>{
         }
 
         res.render('paginas/manada_add', { personas, errorMessage, successMessage});
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+//////////////////////LOGICA UNIDADA ////////////////////
+router.get('/lista', async(req, res)=>{
+    try {
+        const { search } = req.query;
+        let query = 'SELECT * FROM persona WHERE Rama = "Unidad"';
+        let params = []; // lista a todas las personas de la tabla
+
+        if (search) {
+            query += ' WHERE DNI LIKE ? OR nombre LIKE ?'; // utiliza like para comparar con la columna nombre
+            params.push(`%${search}%`, `%${search}%`);//compara lo que entra al search(el imput)
+        }
+        
+
+        const [result] = await pool.query(query, params);
+
+        // Formatear las fechas antes de pasarlas al template
+        const personas = result.map(persona => {
+            return {
+                ...persona,
+                fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
+            };
+        });
+        
+         // Si no hay resultados, pasar un mensaje de error
+        let errorMessage = null;
+        let successMessage = null;
+        if (personas.length === 0) {
+            errorMessage = "No se encontraron resultados para tu búsqueda.";
+        }
+        else {
+        successMessage = `Se encontraron ${personas.length} resultados.`;
+        }
+
+        res.render('paginas/unidad_add', { personas, errorMessage, successMessage});
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+//////////////////////LOGICA Caminantes ////////////////////
+router.get('/listaCaminantes', async(req, res)=>{
+    try {
+        const { search } = req.query;
+        let query = 'SELECT * FROM persona WHERE Rama = "Caminantes"';
+        let params = []; // lista a todas las personas de la tabla
+
+        if (search) {
+            query += ' WHERE DNI LIKE ? OR nombre LIKE ?'; // utiliza like para comparar con la columna nombre
+            params.push(`%${search}%`, `%${search}%`);//compara lo que entra al search(el imput)
+        }
+        
+
+        const [result] = await pool.query(query, params);
+
+        // Formatear las fechas antes de pasarlas al template
+        const personas = result.map(persona => {
+            return {
+                ...persona,
+                fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
+            };
+        });
+        
+         // Si no hay resultados, pasar un mensaje de error
+        let errorMessage = null;
+        let successMessage = null;
+        if (personas.length === 0) {
+            errorMessage = "No se encontraron resultados para tu búsqueda.";
+        }
+        else {
+        successMessage = `Se encontraron ${personas.length} resultados.`;
+        }
+
+        res.render('paginas/caminantes_add', { personas, errorMessage, successMessage});
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+////////////////////LOGICA Rover//////////////////////////
+router.get('/listaRovers', async(req, res)=>{
+    try {
+        const { search } = req.query;
+        let query = 'SELECT * FROM persona WHERE Rama = "Rovers"';
+        let params = []; // lista a todas las personas de la tabla
+
+        if (search) {
+            query += ' WHERE DNI LIKE ? OR nombre LIKE ?'; // utiliza like para comparar con la columna nombre
+            params.push(`%${search}%`, `%${search}%`);//compara lo que entra al search(el imput)
+        }
+        
+
+        const [result] = await pool.query(query, params);
+
+        // Formatear las fechas antes de pasarlas al template
+        const personas = result.map(persona => {
+            return {
+                ...persona,
+                fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
+            };
+        });
+        
+         // Si no hay resultados, pasar un mensaje de error
+        let errorMessage = null;
+        let successMessage = null;
+        if (personas.length === 0) {
+            errorMessage = "No se encontraron resultados para tu búsqueda.";
+        }
+        else {
+        successMessage = `Se encontraron ${personas.length} resultados.`;
+        }
+
+        res.render('paginas/rovers_add', { personas, errorMessage, successMessage});
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -120,5 +237,35 @@ router.get('/delete/:DNI',  async(req, res)=>{
         
     }
 })
+
+router.get('/pasarRama/:DNI', async (req, res) => {
+    try {
+        const { DNI } = req.params;
+
+        // Obtener la rama actual de la persona
+        const [persona] = await pool.query('SELECT Rama FROM persona WHERE DNI = ?', [DNI]);
+        let nuevaRama;
+
+        // Cambiar la rama a la siguiente
+        if (persona[0].Rama === 'Manada') {
+            nuevaRama = 'Unidad';
+        } else if (persona[0].Rama === 'Unidad') {
+            nuevaRama = 'Caminantes';
+        } else if (persona[0].Rama === 'Caminantes') {
+            nuevaRama = 'Rovers';
+        } else {
+            nuevaRama = 'Rovers'; // Mantener en la última rama o agragar la funcion de dirigentes
+        }
+
+        await pool.query('UPDATE persona SET Rama = ? WHERE DNI = ?', [nuevaRama, DNI]);
+
+        res.redirect('/list');
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: err.message });
+    }
+});
+///////////////////////////////////////////////
+
 
 export default router;
