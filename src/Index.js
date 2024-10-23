@@ -2,7 +2,6 @@ import express from "express"
 import cookieParser from "cookie-parser";
 import morgan from 'morgan';
 import { engine } from 'express-handlebars';
-import mysql2 from 'mysql2';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import {join, dirname, extname}  from "path";
