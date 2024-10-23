@@ -46,7 +46,7 @@ export const register = (req, res) => {
 
 export const storeUser = async (req, res) => {
     const data = req.body;
-    console.log("Correo recibido:", email);
+    console.log("Correo recibido:", data.email);
     try {
         // Verifica si el usuario ya existe
         const [rows] = await pool.query('SELECT * FROM users WHERE email = ?', [data.email]);
