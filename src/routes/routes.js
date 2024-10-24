@@ -16,6 +16,7 @@ router.get('/registro', (req, res)=>{res.render('paginas/registro', { hideNavFoo
 router.get('/rec_password', (req, res)=>{res.render('paginas/rec_password', { hideNavFooter: true })});
 router.get('/nosotros', (req, res)=>{res.render('paginas/nosotros')});
 router.get('/miperfil', (req, res)=>{res.render('paginas/miperfil')});
-router.get('/planilla_riesgo', (req, res)=>{res.render('paginas/planilla_riesgo')});
+router.get('/addPlanillas', (req, res)=>{res.render('paginas/addPlanillas')});
+router.get('/listPlanillas', (req, res)=>{res.render('paginas/listPlanillas')});
 router.get('/index', (req, res)=>{res.render('paginas/index')});
 export default router;

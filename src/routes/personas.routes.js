@@ -223,9 +223,6 @@ router.post('/edit/:DNI', async (req, res) => {
     }
 });
 
-
-
-
 router.get('/delete/:DNI',  async(req, res)=>{
     try{
         const {DNI} = req.params;
