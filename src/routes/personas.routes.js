@@ -201,7 +201,6 @@ router.get('/edit/:DNI', async(req, res)=>{
         res.status(500).json({message:err.message});
     }
 } )
-
 router.post('/edit/:DNI', async (req, res) => {
     try {
         const { nombre, apellido, correo, fecha_nac, nuevoDNI } = req.body;
