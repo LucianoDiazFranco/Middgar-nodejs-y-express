@@ -14,6 +14,9 @@
                         <a href="/add"><button id="boton3" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
                     </div>
                 </div>
+                <div>
+                    <h3>Usuarios Activos: <span id="contadorUsuariosCaminantes"></span></h3>
+                </div>
                     <div class="row mt-1">
                         {{#if personas}}
                         <table class="table text-left">
@@ -82,6 +85,14 @@
         const searchValue = document.getElementById('search').value;
         window.location.href = `/listaCaminante?search=${searchValue}`;
     });
+    // Llamada a la ruta para obtener el contador de usuarios
+    fetch('/contadorUsuariosCaminantes')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('contadorUsuariosCaminantes').textContent = data.totalUsuarios;
+        })
+        .catch(error => console.error('Error al obtener el contador:', error));
+
     window.onload = function() {
         const errorMessage = document.getElementById('error-message');
         const successMessage  = document.getElementById('success-message');

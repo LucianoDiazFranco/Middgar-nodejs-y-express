@@ -14,9 +14,8 @@
                         <a href="/add"><button id="boton2" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
                     </div>
                 </div>
-                <!-- Agregar el indicador de miembros activos -->
-                <div class="active-members">
-                    <h3>Total de miembros activos: {{totalMiembrosActivos}}</h3>
+                <div>
+                    <h3>Usuarios Activos: <span id="contadorUsuariosManada"></span></h3>
                 </div>
                     <div class="row mt-1">
                         {{#if personas}}
@@ -86,6 +85,14 @@
         const searchValue = document.getElementById('search').value;
         window.location.href = `/list?search=${searchValue}`;
     });
+    // Llamada a la ruta para obtener el contador de usuarios
+    fetch('/contadorUsuariosManada')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('contadorUsuariosManada').textContent = data.totalUsuarios;
+        })
+        .catch(error => console.error('Error al obtener el contador:', error));
+
     window.onload = function() {
         const errorMessage = document.getElementById('error-message');
         const successMessage  = document.getElementById('success-message');
@@ -100,4 +107,5 @@
             }, 3000);
         }
     };
+    
 </script>

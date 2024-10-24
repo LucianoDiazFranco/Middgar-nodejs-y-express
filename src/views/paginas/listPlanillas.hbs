@@ -1,0 +1,43 @@
+<main>
+    <section class="banner">
+        <h1>Listado de Planillas de Riesgo</h1>
+    </section>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Buscar...">
+        <button id="searchButton" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <div class="buttons">
+            <a href="/manada"><button id="boton1" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
+            <a href="/addPlanillas"><button id="boton1" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
+        </div>
+    </div>
+    <section class="content">
+        <table class="table text-left">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha de Actividad</th>
+                    <th>Lugar</th>
+                    <th>Beneficiarios</th>
+                    <th>Educadores</th>
+                    <th>IM a Cargo</th>
+                    <th>Accidente</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each planillas}}
+                    <tr>
+                        <td>{{this.id}}</td>
+                        <td>{{this.fecha_actividad}}</td>
+                        <td>{{this.lugar_actividad}}</td>
+                        <td>{{this.cantidad_beneficiarios}}</td>
+                        <td>{{this.cantidad_educadores}}</td>
+                        <td>{{this.im_a_cargo}}</td>
+                        <td>{{this.accidente_sucedido}}</td>
+                        <td>{{this.descripcion_accidente}}</td>
+                    </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </section>
+</main>
