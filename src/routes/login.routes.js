@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { login, auth, register, storeUser, logout} from '../controllers/LoginController.js';
 
 
+
 const router = Router();
 
 router.get('/login', login);

@@ -29,6 +29,13 @@
     background-color: #2d75e2;
 }
 #lapiz3:hover {
-    background-color: #2d75e2; /* Fondo más oscuro al hacer hover */
+    background-color: #14458d; /* Fondo más oscuro al hacer hover */
+    color: white; /* Texto blanco al hacer hover */
+}
+#lapiz4{
+    background-color: #f14545;
+}
+#lapiz4:hover {
+    background-color: #ab3535; /* Fondo más oscuro al hacer hover */
     color: white; /* Texto blanco al hacer hover */
 }
