@@ -40,7 +40,6 @@ router.post('/add', async (req, res) => {
     }
 });
 
-
 router.get('/list', async (req, res) => {      //////// LIST DE MANADA
     try {
         const { search } = req.query;
@@ -75,7 +74,6 @@ router.get('/list', async (req, res) => {      //////// LIST DE MANADA
         res.status(500).json({ message: err.message });
     }
 });
-
 
 //////////////////////LOGICA UNIDADA- LISTAR USUARIOS ////////////////////
 router.get('/lista', async (req, res) => {
@@ -301,5 +299,6 @@ router.get('/pasarRama/:DNI', async (req, res) => {  ///////////// LOGICA PASAR 
 });
 ///////////////////////////////////////////////
 
+/////////////LOGICA DE CONTADOR DE MIEMBROS/////
 
 export default router;

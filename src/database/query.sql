@@ -3,9 +3,9 @@ CREATE DATABASE midgar;
 USE midgar;
 
 CREATE TABLE user(
-    id_user INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
-    contrasenia VARCHAR(50) NOT NULL,
+    email VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    password VARCHAR(50) NOT NULL,
     rol VARCHAR(20) NOT NULL --tabla dudosa
 );
 CREATE TABLE persona(
@@ -13,7 +13,9 @@ CREATE TABLE persona(
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
     correo VARCHAR(100) NOT NULL,
-    fecha_nac DATE NOT NULL
+    fecha_nac DATE NOT NULL,
+    rama VARCHAR (50) NOT NULL,
+    activo INT NOT NULL
 );
 CREATE TABLE educador(
     id_educador INT AUTO_INCREMENT PRIMARY KEY,
