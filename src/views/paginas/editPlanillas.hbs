@@ -1,43 +1,37 @@
 <main>
     <section class="banner">
-        <h1>Generar Planilla de Riesgo</h1>
+        <h1>Editar Planilla de Riesgo</h1>
     </section>
     <section class="content">
         <div class="form-container">
-            <form action="/addPlanillas" method="post">
+            <form action="/editarPlanilla/{{planilla.id}}" method="POST">
                 <div class="input-group mt-2">
                     <label for="fecha_actividad" class="input-group-text">Fecha de la actividad</label>
-                    <input class="form-control" type="date" name="fecha_actividad" id="fecha_actividad" required>
+                    <input class="form-control" type="date" name="fecha_actividad" id="fecha_actividad" value="{{planilla.fecha_actividad}}" required>
                 </div>
-
                 <div class="input-group mt-2">
                     <label for="lugar_actividad" class="input-group-text">Lugar de la actividad</label>
-                    <input class="form-control" type="text" name="lugar_actividad" id="lugar_actividad" placeholder="Ej: Campamento" required>
+                    <input class="form-control" type="text" name="lugar_actividad" id="lugar_actividad" placeholder="Ej: Campamento" value="{{planilla.lugar_actividad}}" required>
                 </div>
-
                 <div class="input-group mt-2">
                     <label for="cantidad_beneficiarios" class="input-group-text">Cantidad de beneficiarios</label>
-                    <input class="form-control" type="number" name="cantidad_beneficiarios" id="cantidad_beneficiarios" placeholder="Ej: 20" required>
+                    <input class="form-control" type="number" name="cantidad_beneficiarios" id="cantidad_beneficiarios" placeholder="Ej: 20" value="{{planilla.cantidad_beneficiarios}}" required>
                 </div>
-
                 <div class="input-group mt-2">
                     <label for="cantidad_educadores" class="input-group-text">Cantidad de educadores</label>
-                    <input class="form-control" type="number" name="cantidad_educadores" id="cantidad_educadores" placeholder="Ej: 5" required>
+                    <input class="form-control" type="number" name="cantidad_educadores" id="cantidad_educadores" placeholder="Ej: 5" value="{{planilla.cantidad_educadores}}" required>
                 </div>
-
                 <div class="input-group mt-2">
                     <label for="im_a_cargo" class="input-group-text">IM a cargo de la actividad</label>
-                    <input class="form-control" type="text" name="im_a_cargo" id="im_a_cargo" placeholder="Ej: Nombre del responsable" required>
+                    <input class="form-control" type="text" name="im_a_cargo" id="im_a_cargo" placeholder="Ej: Nombre del responsable" value="{{planilla.im_a_cargo}}" required>
                 </div>
-
                 <div class="input-group mt-2">
                     <label for="elementos_seguridad" class="input-group-text">Elementos de seguridad</label>
-                    <input class="form-control" type="text" name="elementos_seguridad" id="elementos_seguridad" placeholder="Ej: Botiquín, Extintor">
+                    <input class="form-control" type="text" name="elementos_seguridad" id="elementos_seguridad" placeholder="Ej: Botiquín, Extintor" value="{{planilla.elementos_seguridad}}" required>
                 </div>
-
                 <div class="input-group mt-2">
                     <label for="accidente_sucedido" class="input-group-text">Accidente sucedido</label>
-                    <select class="form-select" name="accidente_sucedido" id="accidente_sucedido" required>
+                    <select class="form-select" name="accidente_sucedido" id="accidente_sucedido" value="{{planilla.accidente_sucedido}}" required>
                         <option value="" disabled selected>Selecciona una opción</option>
                         <option value="Golpe/lastimadura">Golpe/lastimadura</option>
                         <option value="Quemaduras">Quemaduras</option>
@@ -47,26 +41,13 @@
                 </div>
                 <div class="input-group mt-2">
                     <label for="descripcion_accidente" class="input-group-text">Descripción del Accidente</label>
-                    <textarea class="form-control" name="descripcion_accidente" id="descripcion_accidente" placeholder="Describe lo sucedido"></textarea>
+                    <textarea class="form-control" name="descripcion_accidente" id="descripcion_accidente" placeholder="Describe lo sucedido" value="{{planilla.descripcion_accidente}}"></textarea>
                 </div>
-
+                <!-- Resto de los campos... -->
                 <div class="form-group mt-4 d-grid gap-2">
-                    <button class="btn btn-success">Generar Planilla de Riesgo</button>
+                    <button class="btn btn-success">Guardar Cambios</button>
                 </div>
             </form>
         </div>
     </section>
 </main>
-
-<script>
-    document.getElementById('accidente_sucedido').addEventListener('change', function() {
-        const accidente = this.value;
-        const descripcionGroup = document.getElementById('descripcion_accidente_group');
-        
-        if (accidente === 'Otros') {
-            descripcionGroup.style.display = 'block';
-        } else {
-            descripcionGroup.style.display = 'none';
-        }
-    });
-</script>

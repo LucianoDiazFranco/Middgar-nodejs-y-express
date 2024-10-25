@@ -12,8 +12,9 @@ CREATE TABLE persona(
     nombre VARCHAR(50) NOT NULL,
     apellido VARCHAR(50) NOT NULL,
     correo VARCHAR(100) NOT NULL,
-    fecha_nac DATE NOT NULL
-    rama VARCHAR(50) NOT NULL
+    fecha_nac DATE NOT NULL,
+    rama VARCHAR(50) NOT NULL,
+    activo INT NOT NULL
 );
 CREATE TABLE planillaDeRiesgo (
     id INT AUTO_INCREMENT PRIMARY KEY,

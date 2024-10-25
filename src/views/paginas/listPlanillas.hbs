@@ -2,42 +2,93 @@
     <section class="banner">
         <h1>Listado de Planillas de Riesgo</h1>
     </section>
-    <div class="search-container">
+    <div class="search-container1">
         <input type="text" id="search" placeholder="Buscar...">
-        <button id="searchButton" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button id="searchButton1" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
         <div class="buttons">
             <a href="/manada"><button id="boton1" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
-            <a href="/addPlanillas"><button id="boton1" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
+            <a href="/listManada"><button id="boton5" class="icon-button"><i class="fa-solid fa-user"></i></button></a>
+            <a href="/addPlanillas"><button id="boton5" class="icon-button"><i class="fa-solid fa-file-circle-plus"></i></button></a>           
         </div>
     </div>
     <section class="content">
         <table class="table text-left">
-            <thead>
+            <thead id="tablaPlanilla" class="textoss">
                 <tr>
-                    <th>ID</th>
-                    <th>Fecha de Actividad</th>
-                    <th>Lugar</th>
-                    <th>Beneficiarios</th>
-                    <th>Educadores</th>
-                    <th>IM a Cargo</th>
-                    <th>Accidente</th>
-                    <th>Descripción</th>
+                    <th class="textoss">Fecha de Actividad</th>
+                    <th class="textoss">Lugar</th>
+                    <th class="textoss">Beneficiarios</th>
+                    <th class="textoss">Educadores</th>
+                    <th class="textoss">IM a Cargo</th>
+                    <th class="textoss">Accidente</th>
+                    <th class="textoss">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each planillas}}
                     <tr>
-                        <td>{{this.id}}</td>
-                        <td>{{this.fecha_actividad}}</td>
-                        <td>{{this.lugar_actividad}}</td>
-                        <td>{{this.cantidad_beneficiarios}}</td>
-                        <td>{{this.cantidad_educadores}}</td>
-                        <td>{{this.im_a_cargo}}</td>
-                        <td>{{this.accidente_sucedido}}</td>
-                        <td>{{this.descripcion_accidente}}</td>
-                    </tr>
+                        <td class="textoss2">{{this.fecha_actividad}}</td>
+                        <td class="textoss2">{{this.lugar_actividad}}</td>
+                        <td class="textoss2">{{this.cantidad_beneficiarios}}</td>
+                        <td class="textoss2">{{this.cantidad_educadores}}</td>
+                        <td class="textoss2">{{this.im_a_cargo}}</td>
+                        <td class="textoss2">{{this.accidente_sucedido}}</td>
+                        <td>
+                            <div class="btn-group">
+                                <button id="lapiz" class="btn p-2"  onclick="verDetallesPlanilla({{json this}})" data-bs-toggle="modal" data-bs-target="#modalDetalles"><i class="fa-solid fa-eye"></i>
+                                </button>
+                                <a href="/editarPlanilla/{{id}}" class="btn p-2" id="lapizpase">
+                                <i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="/ocultarPlanilla/{{id}}" class="btn p-2" id="lapiz4"><i class="fa-solid fa-trash"></i></a>
+                            </div> 
+                        </td>
                 {{/each}}
             </tbody>
         </table>
     </section>
+    <!-- Modal para ver los detalles de la planilla -->
+    <div class="modal fade" id="modalDetalles" tabindex="-1" aria-labelledby="modalDetallesLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalDetallesLabel">Detalles de la Planilla de Riesgo</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div> 
+                <div class="modal-body">
+                    <p ><strong >Fecha de Actividad:</strong> <span id="detalleFechaActividad" ></span></p>
+                    <p><strong>Lugar de Actividad:</strong> <span id="detalleLugarActividad"></span></p>
+                    <p><strong>Cantidad de Beneficiarios:</strong> <span id="detalleCantidadBeneficiarios"></span></p>
+                    <p><strong>Cantidad de Educadores:</strong> <span id="detalleCantidadEducadores"></span></p>
+                    <p><strong>IM a Cargo:</strong> <span id="detalleImACargo"></span></p>
+                    <p><strong>Elementos de Seguridad:</strong> <span id="detalleElementosSeguridad"></span></p>
+                    <p><strong>Accidente Sucedido:</strong> <span id="detalleAccidenteSucedido"></span></p>
+                    <p><strong>Descripción del Accidente:</strong> <span id="detalleDescripcionAccidente"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+        
+
 </main>
+<script>
+    function verDetallesPlanilla(planilla) {
+        // Llenar el modal con la información de la planilla seleccionada
+        document.getElementById('detalleFechaActividad').textContent = planilla.fecha_actividad;
+        document.getElementById('detalleLugarActividad').textContent = planilla.lugar_actividad;
+        document.getElementById('detalleCantidadBeneficiarios').textContent = planilla.cantidad_beneficiarios;
+        document.getElementById('detalleCantidadEducadores').textContent = planilla.cantidad_educadores;
+        document.getElementById('detalleImACargo').textContent = planilla.im_a_cargo;
+        document.getElementById('detalleElementosSeguridad').textContent = planilla.elementos_seguridad;
+        document.getElementById('detalleAccidenteSucedido').textContent = planilla.accidente_sucedido;
+        document.getElementById('detalleDescripcionAccidente').textContent = planilla.descripcion_accidente;
+    }
+</script>
+

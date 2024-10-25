@@ -18,5 +18,6 @@ router.get('/nosotros', (req, res)=>{res.render('paginas/nosotros')});
 router.get('/miperfil', (req, res)=>{res.render('paginas/miperfil')});
 router.get('/addPlanillas', (req, res)=>{res.render('paginas/addPlanillas')});
 router.get('/listPlanillas', (req, res)=>{res.render('paginas/listPlanillas')});
+router.get('/editPlanillas', (req, res)=>{res.render('paginas/editPlanillas')});
 router.get('/index', (req, res)=>{res.render('paginas/index')});
 export default router;

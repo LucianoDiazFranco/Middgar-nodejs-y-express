@@ -13,14 +13,14 @@ router.post('/add', async (req, res) => {
     try {
         const { DNI, nombre, apellido, correo, fecha_nac, Rama } = req.body;
         const newPersona = {
-            DNI, nombre, apellido, correo, fecha_nac, Rama
+            DNI, nombre, apellido, correo, fecha_nac, Rama,  activo: 1  // Establecer el campo activo en 1
         };
         await pool.query('INSERT INTO PERSONA SET ?', [newPersona]);
 
         // Redirigir según la rama seleccionada
         switch (Rama) {
             case 'Manada':
-                res.redirect('/list');
+                res.redirect('/listManada');
                 break;
             case 'Unidad':
                 res.redirect('/lista');
@@ -40,7 +40,7 @@ router.post('/add', async (req, res) => {
     }
 });
 
-router.get('/list', async (req, res) => {      //////// LIST DE MANADA
+router.get('/listManada', async (req, res) => {      //////// LIST DE MANADA
     try {
         const { search } = req.query;
         let query = 'SELECT * FROM persona WHERE activo = 1 AND Rama = "Manada"'; // Solo usuarios activos en la Rama Manada
@@ -297,10 +297,8 @@ router.get('/pasarRama/:DNI', async (req, res) => {  ///////////// LOGICA PASAR 
         res.status(500).json({ message: err.message });
     }
 });
-///////////////////////////////////////////////
 
 /////////////LOGICA DE CONTADOR DE MIEMBROS/////
-// Contar usuarios activos en la rama "Manada"
 router.get('/contadorUsuariosManada', async (req, res) => {
     try {
         const [result] = await pool.query('SELECT COUNT(*) AS total FROM persona WHERE Rama = "Manada" AND activo = 1');
@@ -312,11 +310,11 @@ router.get('/contadorUsuariosManada', async (req, res) => {
     }
 });
 
-router.get('/opa', async (req, res) => {
+router.get('/contadorUnidad', async (req, res) => {
     try {
         const [result] = await pool.query('SELECT COUNT(*) AS total FROM persona WHERE Rama = "Unidad" AND activo = 1');
-        const totalUsuarios = result[0].total;
-        res.json({ totalUsuarios });
+        const totalUsuarioss = result[0].total;
+        res.json({ totalUsuarioss });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al obtener el contador de usuarios' });

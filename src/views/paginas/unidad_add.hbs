@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div>
-                    <h3>Usuarios Activos: <span id="contadorUsuariosManada"></span></h3>
+                    <h3>Usuarios Activos: <span id="contadorUnidad"></span></h3>
                 </div>
                     <div class="row mt-1">
                         {{#if personas}}
@@ -86,10 +86,10 @@
         window.location.href = `/list?search=${searchValue}`;
     });
     // Llamada a la ruta para obtener el contador de usuarios
-    fetch('/contadorUsuariosManada')
+    fetch('/contadorUnidad')
         .then(response => response.json())
         .then(data => {
-            document.getElementById('contadorUsuariosManada').textContent = data.totalUsuarios;
+            document.getElementById('contadorUnidad').textContent = data.totalUsuarioss;
         })
         .catch(error => console.error('Error al obtener el contador:', error));
 
