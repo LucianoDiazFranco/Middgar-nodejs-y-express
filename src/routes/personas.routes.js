@@ -79,7 +79,12 @@ router.get('/listManada', async (req, res) => {      //////// LIST DE MANADA
 router.get('/lista', async (req, res) => {
     try {
         const { search } = req.query;
-        let query = 'SELECT * FROM persona WHERE activo = 1 AND Rama = "Unidad"'; // Solo usuarios activos en la Rama Manada
+        
+        // Consulta para contar el total de usuarios activos en Unidad
+        const [countResult] = await pool.query('SELECT COUNT(*) AS totalUsuarios FROM persona WHERE activo = 1 AND Rama = "Unidad"');
+        const totalUsuariosUnidad = countResult[0].totalUsuarios;
+
+        let query = 'SELECT * FROM persona WHERE activo = 1 AND Rama = "Unidad"';
         let params = [];
 
         if (search) {
@@ -90,12 +95,10 @@ router.get('/lista', async (req, res) => {
         const [result] = await pool.query(query, params);
 
         // Formatear las fechas antes de pasarlas al template
-        const personas = result.map(persona => {
-            return {
-                ...persona,
-                fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
-            };
-        });
+        const personas = result.map(persona => ({
+            ...persona,
+            fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
+        }));
 
         let errorMessage = null;
         let successMessage = null;
@@ -105,17 +108,24 @@ router.get('/lista', async (req, res) => {
             successMessage = `Se encontraron ${personas.length} resultados.`;
         }
 
-        res.render('paginas/unidad_add', { personas, errorMessage, successMessage });
+        // Pasa el total de usuarios activos junto con otros datos
+        res.render('paginas/unidad_add', { personas, errorMessage, successMessage, totalUsuariosUnidad });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 //////////////////////LOGICA Caminantes - listar usuarios////////////////////
 router.get('/listaCaminantes', async (req, res) => {
     try {
         const { search } = req.query;
-        let query = 'SELECT * FROM persona WHERE activo = 1 AND Rama = "Caminantes"'; // Solo usuarios activos en la Rama Caminantes
+
+        // Consulta para contar el total de usuarios activos en Caminantes
+        const [countResult] = await pool.query('SELECT COUNT(*) AS totalUsuarios FROM persona WHERE activo = 1 AND Rama = "Caminantes"');
+        const totalUsuariosCaminantes = countResult[0].totalUsuarios;
+
+        let query = 'SELECT * FROM persona WHERE activo = 1 AND Rama = "Caminantes"';
         let params = [];
 
         if (search) {
@@ -126,12 +136,10 @@ router.get('/listaCaminantes', async (req, res) => {
         const [result] = await pool.query(query, params);
 
         // Formatear las fechas antes de pasarlas al template
-        const personas = result.map(persona => {
-            return {
-                ...persona,
-                fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
-            };
-        });
+        const personas = result.map(persona => ({
+            ...persona,
+            fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
+        }));
 
         let errorMessage = null;
         let successMessage = null;
@@ -141,17 +149,24 @@ router.get('/listaCaminantes', async (req, res) => {
             successMessage = `Se encontraron ${personas.length} resultados.`;
         }
 
-        res.render('paginas/caminantes_add', { personas, errorMessage, successMessage });
+        // Pasa el total de usuarios activos junto con otros datos
+        res.render('paginas/caminantes_add', { personas, errorMessage, successMessage, totalUsuariosCaminantes });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 ////////////////////LOGICA Rover//////////////////////////
 router.get('/listaRovers', async (req, res) => {
     try {
         const { search } = req.query;
-        let query = 'SELECT * FROM persona WHERE activo = 1 AND Rama = "Rovers"'; // Solo usuarios activos en la Rama Caminantes
+
+        // Consulta para contar el total de usuarios activos en Rovers
+        const [countResult] = await pool.query('SELECT COUNT(*) AS totalUsuarios FROM persona WHERE activo = 1 AND Rama = "Rovers"');
+        const totalUsuariosRovers = countResult[0].totalUsuarios;
+
+        let query = 'SELECT * FROM persona WHERE activo = 1 AND Rama = "Rovers"';
         let params = [];
 
         if (search) {
@@ -162,12 +177,10 @@ router.get('/listaRovers', async (req, res) => {
         const [result] = await pool.query(query, params);
 
         // Formatear las fechas antes de pasarlas al template
-        const personas = result.map(persona => {
-            return {
-                ...persona,
-                fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
-            };
-        });
+        const personas = result.map(persona => ({
+            ...persona,
+            fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
+        }));
 
         let errorMessage = null;
         let successMessage = null;
@@ -177,11 +190,13 @@ router.get('/listaRovers', async (req, res) => {
             successMessage = `Se encontraron ${personas.length} resultados.`;
         }
 
-        res.render('paginas/rovers_add', { personas, errorMessage, successMessage });
+        // Pasar el total de usuarios activos a la vista junto con otros datos
+        res.render('paginas/rovers_add', { personas, errorMessage, successMessage, totalUsuariosRovers });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+
 
 
 router.get('/edit/:DNI', async(req, res)=>{
@@ -310,26 +325,6 @@ router.get('/contadorUsuariosManada', async (req, res) => {
     }
 });
 
-router.get('/contadorUnidad', async (req, res) => {
-    try {
-        const [result] = await pool.query('SELECT COUNT(*) AS total FROM persona WHERE Rama = "Unidad" AND activo = 1');
-        const totalUsuarioss = result[0].total;
-        res.json({ totalUsuarioss });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error al obtener el contador de usuarios' });
-    }
-});
-router.get('/contadorUsuariosCaminantes', async (req, res) => {
-    try {
-        const [result] = await pool.query('SELECT COUNT(*) AS total FROM persona WHERE Rama = "Caminantes" AND activo = 1');
-        const totalUsuarios = result[0].total;
-        res.json({ totalUsuarios });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error al obtener el contador de usuarios' });
-    }
-});
 
 
 export default router;
