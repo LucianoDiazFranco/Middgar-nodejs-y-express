@@ -13,43 +13,15 @@
                 <a href="/listplanilla"><button id="boton1" class="icon-button"><i class="fa-solid fa-file"></i> Planilla de Riesgo</button></a>
                 <a href="/listManada"><button id="boton1" class="icon-button"><i class="fa-solid fa-user"></i> Miembros</button></a>
             </div>
-            {{#if archivos}} <!-- Verifica si hay archivos -->
-                <table class="table text-left">
-                    <thead>
-                        <tr>
-                            <th>Nombre del Archivo</th>
-                            <th>Fecha de Subida</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#each archivos}} <!-- Itera sobre los archivos -->
-                            <tr>
-                                <td><a href="/uploads/{{nombre_archivo}}" target="_blank">{{nombre_archivo}}</a></td>
-                                <td>{{fecha_subida}}</td>
-                                <td>
-                                    <button class="delete-btn" data-id="{{id}}">
-                                        <i class="fa-solid fa-trash"></i> Eliminar
-                                    </button>
-                                </td>
-                            </tr>
-                        {{/each}}
-                    </tbody>
-                </table>
-            {{else}}
-                <p>No hay archivos PDF subidos aún.</p>
-            {{/if}}
+            <ul id="pdf-list"></ul>
             <div id="status" class="status-message"></div>
         </div>
+         <!-- Formulario oculto -->
+        <form id="uploadForm" enctype="multipart/form-data" style="display: none;">
+            <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
+        </form>     
     </section>
 </main>
-
-<!-- Formulario oculto para subir archivos -->
-<form id="uploadForm" enctype="multipart/form-data" style="display: none;">
-    <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
-</form>
-
-
 
 <script>
     const form = document.getElementById("uploadForm");
@@ -59,7 +31,7 @@
     // Función para cargar los archivos PDF desde el servidor
     async function loadPDFs() {
         try {
-            const response = await fetch('/list-pdfs');
+            const response = await fetch('/pdf/list-pdfs');
             const pdfFiles = await response.json();
             
             pdfList.innerHTML = ''; // Limpiar la lista antes de cargar nuevos elementos
@@ -68,21 +40,21 @@
             pdfFiles.forEach(file => {
                 const li = document.createElement('li');
                 const link = document.createElement('a');
-                link.href = `/uploads/${file.nombre_archivo}`;
-                link.textContent = file.nombre_archivo;
+                link.href = `/uploads/${file}`;
+                link.textContent = file;
                 link.target = '_blank'; // Abrir en nueva pestaña
 
                 // Crear botón de eliminar
                 const deleteButton = document.createElement('button');
                 deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>'; // Ícono de borrar de Font Awesome
                 deleteButton.className = 'delete-btn';
-                deleteButton.setAttribute('data-id', file.id); // Asignar el nombre del archivo al botón
+                deleteButton.setAttribute('data-filename', file); // Asignar el nombre del archivo al botón
 
                 
                 // Evento para eliminar el archivo al hacer clic
                 deleteButton.addEventListener('click', async function() {
-                    if (confirm(`¿Estás seguro de que quieres eliminar el archivo ${file.nombre_archivo}?`)) {
-                        await deletePDF(file.id);  // Llamar a la función de eliminación
+                    if (confirm(`¿Estás seguro de que quieres eliminar el archivo ${file}?`)) {
+                        await deletePDF(file);  // Llamar a la función de eliminación
                     }
                 });
 
@@ -98,7 +70,7 @@
     // Función para eliminar un archivo PDF
     async function deletePDF(filename) {
         try {
-            const response = await fetch(`/delete-pdf/${filename}`, {
+            const response = await fetch(`/pdf/delete-pdf/${filename}`, {
                 method: 'DELETE'
             });
             if (response.ok) {
@@ -140,7 +112,7 @@
         }
 
         // Enviar los archivos al servidor
-        const response = await fetch("/upload", {
+        const response = await fetch("/pdf/upload", {
             method: "POST",
             body: formData
         });

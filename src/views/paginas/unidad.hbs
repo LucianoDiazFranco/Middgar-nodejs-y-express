@@ -5,27 +5,27 @@
         <h2>Unidad:11 a 14 años </h2>
     </section>
     <section class="content1">
-        <div class="activities">
-            <input type="text" placeholder="Buscar...">
-        <div class="buttons">
-        <label for="pdfUploader" id="boton2" class="upload-label-uni icon-button">
-            <i class="fa-solid fa-file-pdf"></i> Cargar PDF
-        </label>
-        <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
-        <a href="/planilla_riesgo"><button id="boton2" class="icon-button"><i class="fa-solid fa-file"></i> Planilla de Riesgo </button>
-        <a href="/lista"> <button id="boton2" class="icon-button"> <i class="fa-solid fa-user"></i> Miembros </button>
-        </a>
-    </div>
-    <ul id="pdf-list"></ul>
-    <div id="status" class="status-message"></div>
-</div>
+            <div class="activities">
+                <input type="text" placeholder="Buscar...">
+                <div class="buttons">
+                    <label for="pdfUploader" id="boton2" class="upload-label-uni icon-button">
+                        <i class="fa-solid fa-file-pdf"></i> Cargar PDF
+                    </label>
+                    <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
+                    <a href="/planilla_riesgo"><button id="boton2" class="icon-button"><i class="fa-solid fa-file"></i> Planilla de Riesgo </button>
+                    <a href="/lista"> <button id="boton2" class="icon-button"> <i class="fa-solid fa-user"></i> Miembros </button>
+                    </a>
+                </div>
+                <ul id="pdf-list"></ul>
+                <div id="status" class="status-message"></div>
+            </div>
 
-<!-- Formulario oculto -->
-<form id="uploadForm" enctype="multipart/form-data" style="display: none;">
-    <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
-</form>               
+        <!-- Formulario oculto -->
+        <form id="uploadForm" enctype="multipart/form-data" style="display: none;">
+            <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
+        </form>               
             
-        </section>
+    </section>
 </main>
 <script>
     const form = document.getElementById("uploadForm");
@@ -35,7 +35,7 @@
     // Función para cargar los archivos PDF desde el servidor
     async function loadPDFs() {
         try {
-            const response = await fetch('/list-pdfs');
+            const response = await fetch('/pdf/list-pdfs');
             const pdfFiles = await response.json();
             
             pdfList.innerHTML = ''; // Limpiar la lista antes de cargar nuevos elementos
@@ -74,7 +74,7 @@
     // Función para eliminar un archivo PDF
     async function deletePDF(filename) {
         try {
-            const response = await fetch(`/delete-pdf/${filename}`, {
+            const response = await fetch(`/pdf/delete-pdf/${filename}`, {
                 method: 'DELETE'
             });
             if (response.ok) {
@@ -116,7 +116,7 @@
         }
 
         // Enviar los archivos al servidor
-        const response = await fetch("/upload", {
+        const response = await fetch("/pdf/upload", {
             method: "POST",
             body: formData
         });
