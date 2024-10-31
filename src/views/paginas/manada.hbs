@@ -90,26 +90,19 @@
         const formData = new FormData();
         const statusMessage = document.getElementById("status");
 
-        // Validar que solo se suban archivos PDF
-        for (let i = 0; i < pdfUploader.files.length; i++) {
-            const file = pdfUploader.files[i];
+    // Validar que solo se suban archivos PDF
+    for (let i = 0; i < pdfUploader.files.length; i++) {
+        const file = pdfUploader.files[i];
 
-            if (file.type !== "application/pdf") {
-                statusMessage.innerText = `Error: El archivo ${file.name} no es un PDF. Solo se permiten archivos PDF.`;
-                statusMessage.className = "status-message error"; // Clase de error
-                statusMessage.style.display = "block"; // Mostrar mensaje
-                return; // Detener el proceso si se detecta un archivo no permitido
-            }
-
-            // Obtener la fecha actual en formato YYYY-MM-DD
-            const today = new Date();
-            const dateString = today.toISOString().split('T')[0]; // Formato YYYY-MM-DD
-
-            // Prefijar la fecha al nombre del archivo
-            const newFileName = `${dateString}-${file.name}`;
-            const renamedFile = new File([file], newFileName, { type: file.type });
-            formData.append("pdfs", renamedFile);
+        if (file.type !== "application/pdf") {
+            statusMessage.innerText = `Error: El archivo ${file.name} no es un PDF. Solo se permiten archivos PDF.`;
+            statusMessage.className = "status-message error"; // Clase de error
+            statusMessage.style.display = "block"; // Mostrar mensaje
+            return; // Detener el proceso si se detecta un archivo no permitido
         }
+
+        formData.append("pdfs", file); // Añadir el archivo directamente sin renombrar
+    }
 
         // Enviar los archivos al servidor
         const response = await fetch("/pdf/upload", {
