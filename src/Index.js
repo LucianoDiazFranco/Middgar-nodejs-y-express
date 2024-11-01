@@ -6,9 +6,6 @@ import session from 'express-session';
 import bodyParser from 'body-parser';
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import fs from 'fs';
-import multer from "multer";
-import { unlink } from 'fs/promises';
 import routes from './routes/routes.js';
 import personasRoutes from './routes/personas.routes.js';
 import docRoutes from './routes/doc.routes.js';
@@ -18,7 +15,8 @@ import doc_pdfRoutes from './routes/doc_pdf.routes.js';
 // Inicialización 
 const app = express();
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const uploadsDir = join(__dirname, '..', 'uploads');
+const uploadsDir = join(process.cwd(), 'uploads');
+
 
 // Configuración del puerto
 app.set("port", process.env.PORT || 3000);
@@ -64,6 +62,8 @@ app.use(personasRoutes);
 app.use(docRoutes);
 app.use(loginRoutes);
 app.use('/pdf', doc_pdfRoutes);
+
+
 
 // Servir archivos estáticos desde la carpeta 'uploads' y 'public'
 app.use('/uploads', express.static(uploadsDir));

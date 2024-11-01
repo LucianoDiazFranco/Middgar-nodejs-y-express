@@ -36,7 +36,7 @@
     // Función para cargar los archivos PDF desde el servidor
     async function loadPDFs() {
         try {
-            const response = await fetch('/pdf/list-pdfs');
+            const response = await fetch('/pdf/list-pdfs/Rovers');
             const pdfFiles = await response.json();
             
             pdfList.innerHTML = ''; // Limpiar la lista antes de cargar nuevos elementos
@@ -94,6 +94,8 @@
     pdfUploader.addEventListener("change", async function () {
         const formData = new FormData();
         const statusMessage = document.getElementById("status");
+
+        formData.append("rama", "Rovers");
 
         // Validar que solo se suban archivos PDF
         for (let i = 0; i < pdfUploader.files.length; i++) {

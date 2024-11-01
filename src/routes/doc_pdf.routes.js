@@ -25,11 +25,12 @@ const upload = multer({ storage });
 // Ruta para subir archivos
 router.post('/upload', upload.array('pdfs', 10), async (req, res) => {
     try {
+        const { rama } = req.body;
         const date = new Date().toISOString().split('T')[0]; // Formato de fecha para el campo `fecha`
         
         for (const file of req.files) {
             // Insertar solo el nombre original en la base de datos sin la fecha prefijada
-            await pool.query('INSERT INTO Doc_PDF (nombre, fecha) VALUES (?, ?)', [file.originalname, date]);
+            await pool.query('INSERT INTO Doc_PDF (nombre, fecha, rama) VALUES (?, ?, ?)', [file.originalname, date,rama]);
         }
         
         res.status(200).send('Archivos cargados y registrados en la base de datos exitosamente.');
@@ -40,14 +41,16 @@ router.post('/upload', upload.array('pdfs', 10), async (req, res) => {
 });
 
 // Ruta para listar archivos PDF en la carpeta 'uploads'
-router.get('/list-pdfs', (req, res) => {
-    fs.readdir(uploadsDir, (err, files) => {
-        if (err) {
-            return res.status(500).json({ error: 'Error al leer la carpeta de archivos' });
-        }
-        const pdfFiles = files.filter(file => file.endsWith('.pdf'));
+router.get('/list-pdfs/:rama', async (req, res) => {
+    const { rama } = req.params;
+    try {
+        const [documents] = await pool.query('SELECT nombre FROM Doc_PDF WHERE rama = ?', [rama]);
+        const pdfFiles = documents.map(doc => doc.nombre);
         res.json(pdfFiles);
-    });
+    } catch (error) {
+        console.error('Error al obtener los archivos PDF:', error);
+        res.status(500).json({ error: 'Error al obtener los archivos PDF' });
+    }
 });
 
 // Ruta para eliminar un archivo PDF

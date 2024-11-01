@@ -31,7 +31,7 @@
     // Función para cargar los archivos PDF desde el servidor
     async function loadPDFs() {
         try {
-            const response = await fetch('/pdf/list-pdfs');
+            const response = await fetch('/pdf/list-pdfs/Manada');
             const pdfFiles = await response.json();
             
             pdfList.innerHTML = ''; // Limpiar la lista antes de cargar nuevos elementos
@@ -70,7 +70,7 @@
     // Función para eliminar un archivo PDF
     async function deletePDF(filename) {
         try {
-            const response = await fetch(`/pdf/delete-pdf/${filename}`, {
+            const response = await fetch(`/pdf/delete-pdf/${encodeURIComponent(filename)}`, {
                 method: 'DELETE'
             });
             if (response.ok) {
@@ -90,6 +90,7 @@
         const formData = new FormData();
         const statusMessage = document.getElementById("status");
 
+        formData.append("rama", "Manada");
     // Validar que solo se suban archivos PDF
     for (let i = 0; i < pdfUploader.files.length; i++) {
         const file = pdfUploader.files[i];
