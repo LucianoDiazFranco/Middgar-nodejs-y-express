@@ -8,6 +8,9 @@ const router = Router();
 router.get('/add', (req, res)=>{
     res.render('usuarios/add')  
 })
+router.get('/listBaja', (req, res)=>{
+    res.render('usuarios/listBaja')  
+})
 
 router.post('/add', async (req, res) => {
     try {
@@ -244,7 +247,7 @@ router.get('/delete/:DNI', async (req, res) => { /// OCULTAR USUARIO MANADA
     try {
         const { DNI } = req.params;
         await pool.query('UPDATE persona SET activo = 0 WHERE DNI = ?', [DNI]);
-        res.redirect('/list');
+        res.redirect('/listManada');
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
@@ -344,5 +347,61 @@ router.get('/searchUser', async (req, res) => {
         res.status(500).json({ message: 'Error al buscar el usuario' });
     }
 });
+
+
+// Ruta para listar usuarios dados de baja por rama
+router.get('/usuariosInactivos', async (req, res) => {
+    try {
+        const { search } = req.query;
+        const { rama } = req.query; // Puedes enviar un parámetro de rama para filtrar
+        
+        let query = 'SELECT * FROM persona WHERE activo = 0';
+        const params = [];
+
+        if (rama) {
+            query += ' AND Rama = ?';
+            params.push(rama);
+        }
+
+        if (search) {
+            query += ' AND (DNI LIKE ? OR nombre LIKE ?)';
+            params.push(`%${search}%`, `%${search}%`);
+        }
+
+        const [result] = await pool.query(query, params);
+
+        const personas = result.map(persona => ({
+            ...persona,
+            fecha_nac: moment(persona.fecha_nac).format('DD/MM/YYYY')
+        }));
+
+        res.render('Usuarios/listBaja', { personas });
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+// Ruta para activar un usuario (cambiar activo a 1)
+router.patch('/activarUsuario/:DNI', async (req, res) => {
+    try {
+        const { DNI } = req.params;
+        await pool.query('UPDATE persona SET activo = 1 WHERE DNI = ?', [DNI]);
+        res.sendStatus(200);
+    } catch (err) {
+        res.status(500).json({ message: 'Error al activar el usuario' });
+    }
+});
+
+// Ruta para eliminar un usuario permanentemente
+router.delete('/eliminarUsuario/:DNI', async (req, res) => {
+    try {
+        const { DNI } = req.params;
+        await pool.query('DELETE FROM persona WHERE DNI = ?', [DNI]);
+        res.sendStatus(200);
+    } catch (err) {
+        res.status(500).json({ message: 'Error al eliminar el usuario' });
+    }
+});
+
 
 export default router;

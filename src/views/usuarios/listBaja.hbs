@@ -1,0 +1,84 @@
+<main>
+    <section class="banner">
+        <h1>Usuarios Dados de Baja</h1>
+    </section>
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Buscar por nombre o DNI...">
+        <button id="searchButton" class="icon-button" onclick="searchUser()"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <div class="buttons">
+            <select id="ramaFilter" onchange="filterByRama()">
+                <option value="">Todas las Ramas</option>
+                <option value="Manada">Manada</option>
+                <option value="Unidad">Unidad</option>
+                <option value="Caminantes">Caminantes</option>
+                <option value="Rovers">Rovers</option>
+            </select>
+        </div>
+    </div>
+    <section class="content">
+
+            {{#if personas.length}}
+            <table class="table text-left" >
+                <thead class="o">
+                    <tr class="titulo">
+                        <th scope="col">DNI</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Fecha Nac.</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each personas}}
+                    <tr>
+                        <td>{{DNI}}</td>
+                        <td>{{nombre}}</td>
+                        <td>{{apellido}}</td>
+                        <td>{{fecha_nac}}</td>
+                        <td>
+                            <button onclick="activarUsuario('{{DNI}}')">Activar</button>
+                            <button onclick="eliminarUsuario('{{DNI}}')">Eliminar</button>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+            {{else}}
+            <p>No se encontraron usuarios inactivos.</p>
+            {{/if}}
+    </section>
+</main>
+
+<script>
+    async function searchUser() {
+        const searchTerm = document.getElementById("search").value;
+        const rama = document.getElementById("ramaFilter").value;
+
+        const response = await fetch(`/usuariosInactivos?term=${encodeURIComponent(searchTerm)}&rama=${encodeURIComponent(rama)}`);
+        const html = await response.text();
+        document.body.innerHTML = html;
+    }
+
+    async function filterByRama() {
+        const rama = document.getElementById("ramaFilter").value;
+        const response = await fetch(`/usuariosInactivos?rama=${encodeURIComponent(rama)}`);
+        const html = await response.text();
+        document.body.innerHTML = html;
+    }
+
+    async function activarUsuario(dni) {
+        const response = await fetch(`/activarUsuario/${dni}`, { method: 'PATCH' });
+        if (response.ok) {
+            searchUser(); // Actualiza la lista después de activar
+        }
+    }
+
+    async function eliminarUsuario(dni) {
+        if (confirm("¿Seguro que quieres eliminar este usuario?")) {
+            const response = await fetch(`/eliminarUsuario/${dni}`, { method: 'DELETE' });
+            if (response.ok) {
+                searchUser(); // Actualiza la lista después de eliminar
+            }
+        }
+    }
+</script>
