@@ -4,16 +4,19 @@
             <h1>El servicio, ayudar a los demás, el trabajo en comunidad y llevar a cabo grandes proyectos.</h1>
             <h2>rovers: 17 a 22 años</h2>
         </section>
-        <h3>Total de Usuarios Activos en Rovers: {{totalUsuariosRovers}}</h3>
+        
         <section class="content">
             <div class="activities">
                 <div class="search-container">
                     <input type="text" id="search" placeholder="Buscar por nombre o Dni...">
-                    <button id="searchButton4" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button id="searchButton5" class="icon-button" onclick="searchUser()"><i class="fa-solid fa-magnifying-glass"></i></button>
                     <div class="buttons">
                         <a href="/rovers"><button id="boton4" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
                         <a href="/add"><button id="boton4" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
                     </div>
+                </div>
+                <div>
+                    <h3>Usuarios Activos: {{totalUsuariosRovers}}</h3>
                 </div>
                     <div class="row mt-1">
                         {{#if personas}}
@@ -31,11 +34,11 @@
                             <tbody>
                                 {{#each personas}}
                                     <tr>
-                                        <td>{{DNI}}</td>
-                                        <td>{{nombre}}</td>
-                                        <td>{{apellido}}</td>
-                                        <td>{{correo}}</td>
-                                        <td>{{fecha_nac}}</td>
+                                        <td class="textoss2">{{DNI}}</td>
+                                        <td class="textoss2">{{nombre}}</td>
+                                        <td class="textoss2">{{apellido}}</td>
+                                        <td class="textoss2">{{correo}}</td>
+                                        <td class="textoss2">{{fecha_nac}}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <a href="/edit/{{DNI}}" class="btn p-2" id="lapizpase">
@@ -79,13 +82,15 @@
 </main>
 
 <script>
-    document.getElementById('searchButton').addEventListener('click', function() {
-        const searchValue = document.getElementById('search').value;
-        window.location.href = `/listaCaminante?search=${searchValue}`;
-    });
+    function searchUser() {
+        const searchTerm = document.getElementById("search").value;
+        const url = `/listaRovers?search=${encodeURIComponent(searchTerm)}`;
+        window.location.href = url;  // Redirige a la URL con el parámetro de búsqueda
+    }
+    // Ocultar mensajes después de 3 segundos
     window.onload = function() {
         const errorMessage = document.getElementById('error-message');
-        const successMessage  = document.getElementById('success-message');
+        const successMessage = document.getElementById('success-message');
         if (errorMessage) {
             setTimeout(() => {
                 errorMessage.style.display = 'none';
@@ -97,5 +102,4 @@
             }, 3000);
         }
     };
-    
 </script>

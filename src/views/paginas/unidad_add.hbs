@@ -8,7 +8,7 @@
             <div class="activities">
                 <div class="search-container">
                     <input type="text" id="search" placeholder="Buscar por nombre o Dni...">
-                    <button id="searchButton1" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button id="searchButton4" class="icon-button" onclick="searchUser()"><i class="fa-solid fa-magnifying-glass"></i></button>
                     <div class="buttons">
                         <a href="/unidad"><button id="boton2" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
                         <a href="/add"><button id="boton2" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
@@ -31,11 +31,11 @@
                             <tbody>
                                 {{#each personas}}
                                     <tr>
-                                        <td>{{DNI}}</td>
-                                        <td>{{nombre}}</td>
-                                        <td>{{apellido}}</td>
-                                        <td>{{correo}}</td>
-                                        <td>{{fecha_nac}}</td>
+                                        <td class="textoss2">{{DNI}}</td>
+                                        <td class="textoss2">{{nombre}}</td>
+                                        <td class="textoss2">{{apellido}}</td>
+                                        <td class="textoss2">{{correo}}</td>
+                                        <td class="textoss2">{{fecha_nac}}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <a href="/edit/{{DNI}}" class="btn p-2" id="lapiz2">
@@ -79,10 +79,12 @@
 </main>
 
 <script>
-    document.getElementById('searchButton').addEventListener('click', function() {
-        const searchValue = document.getElementById('search').value;
-        window.location.href = `/list?search=${searchValue}`;
-    });
+    function searchUser() {
+        const searchTerm = document.getElementById("search").value;
+        const url = `/lista?search=${encodeURIComponent(searchTerm)}`;
+        window.location.href = url;  // Redirige a la URL con el parámetro de búsqueda
+    }
+
     // Llamada a la ruta para obtener el contador de usuarios
     fetch('/contadorUnidad')
         .then(response => response.json())
@@ -91,9 +93,10 @@
         })
         .catch(error => console.error('Error al obtener el contador:', error));
 
+    // Ocultar mensajes después de 3 segundos
     window.onload = function() {
         const errorMessage = document.getElementById('error-message');
-        const successMessage  = document.getElementById('success-message');
+        const successMessage = document.getElementById('success-message');
         if (errorMessage) {
             setTimeout(() => {
                 errorMessage.style.display = 'none';
@@ -105,5 +108,5 @@
             }, 3000);
         }
     };
-    
 </script>
+

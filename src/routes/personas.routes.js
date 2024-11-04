@@ -115,7 +115,6 @@ router.get('/lista', async (req, res) => {
     }
 });
 
-
 //////////////////////LOGICA Caminantes - listar usuarios////////////////////
 router.get('/listaCaminantes', async (req, res) => {
     try {
@@ -156,7 +155,6 @@ router.get('/listaCaminantes', async (req, res) => {
     }
 });
 
-
 ////////////////////LOGICA Rover//////////////////////////
 router.get('/listaRovers', async (req, res) => {
     try {
@@ -196,8 +194,6 @@ router.get('/listaRovers', async (req, res) => {
         res.status(500).json({ message: err.message });
     }
 });
-
-
 
 router.get('/edit/:DNI', async(req, res)=>{
     try{
@@ -292,21 +288,26 @@ router.get('/pasarRama/:DNI', async (req, res) => {  ///////////// LOGICA PASAR 
         // Obtener la rama actual de la persona
         const [persona] = await pool.query('SELECT Rama FROM persona WHERE DNI = ?', [DNI]);
         let nuevaRama;
+        let redirectPage;
 
         // Cambiar la rama a la siguiente
         if (persona[0].Rama === 'Manada') {
             nuevaRama = 'Unidad';
+            redirectPage = '/listManada';
         } else if (persona[0].Rama === 'Unidad') {
             nuevaRama = 'Caminantes';
+            redirectPage = '/lista';
         } else if (persona[0].Rama === 'Caminantes') {
             nuevaRama = 'Rovers';
+            redirectPage = '/listaCaminantes';
         } else {
             nuevaRama = 'Rovers'; // Mantener en la última rama o agragar la funcion de dirigentes
+            redirectPage = '/listaRovers';
         }
 
         await pool.query('UPDATE persona SET Rama = ? WHERE DNI = ?', [nuevaRama, DNI]);
 
-        res.redirect('/list');
+        res.redirect(redirectPage);
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: err.message });
@@ -325,6 +326,23 @@ router.get('/contadorUsuariosManada', async (req, res) => {
     }
 });
 
+//Buscar Usuarios
+router.get('/searchUser', async (req, res) => {
+    const searchTerm = req.query.term;
 
+    try {
+        const query = `
+            SELECT * FROM persona 
+            WHERE nombre LIKE ? OR DNI LIKE ?
+        `;
+        const searchValue = `%${searchTerm}%`;
+        const [results] = await pool.query(query, [searchValue, searchValue]);
+
+        res.json(results);
+    } catch (err) {
+        console.error('Error en la búsqueda:', err);
+        res.status(500).json({ message: 'Error al buscar el usuario' });
+    }
+});
 
 export default router;

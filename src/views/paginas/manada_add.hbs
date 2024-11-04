@@ -8,7 +8,7 @@
             <div class="activities">
                 <div class="search-container">
                     <input type="text" id="search" placeholder="Buscar por nombre o Dni...">
-                    <button id="searchButton" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button id="searchButton" class="icon-button" onclick="searchUser()"><i class="fa-solid fa-magnifying-glass"></i></button>
                     <div class="buttons">
                         <a href="/manada"><button id="boton1" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
                         <a href="/add"><button id="boton1" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
@@ -81,11 +81,13 @@
 </main>
 
 <script>
-    document.getElementById('searchButton').addEventListener('click', function() {
-        const searchValue = document.getElementById('search').value;
-        window.location.href = `/list?search=${searchValue}`;
-    });
-     // Llamada a la ruta para obtener el contador de usuarios
+    function searchUser() {
+        const searchTerm = document.getElementById("search").value;
+        const url = `/listManada?search=${encodeURIComponent(searchTerm)}`;
+        window.location.href = url;  // Redirige a la URL con el parámetro de búsqueda
+    }
+
+    // Llamada a la ruta para obtener el contador de usuarios
     fetch('/contadorUsuariosManada')
         .then(response => response.json())
         .then(data => {
@@ -93,9 +95,10 @@
         })
         .catch(error => console.error('Error al obtener el contador:', error));
 
+    // Ocultar mensajes después de 3 segundos
     window.onload = function() {
         const errorMessage = document.getElementById('error-message');
-        const successMessage  = document.getElementById('success-message');
+        const successMessage = document.getElementById('success-message');
         if (errorMessage) {
             setTimeout(() => {
                 errorMessage.style.display = 'none';
@@ -107,5 +110,4 @@
             }, 3000);
         }
     };
-    
 </script>

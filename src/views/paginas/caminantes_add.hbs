@@ -4,18 +4,20 @@
             <h1>El mundo de la fantasía y los juegos te están llamando</h1>
             <h2>Lobatos y Lobeznas: 7 a 11 años</h2>
         </section>
-        <h3>Total de Usuarios Activos en Caminantes: {{totalUsuariosCaminantes}}</h3>
+
         <section class="content">
             <div class="activities">
                 <div class="search-container">
                     <input type="text" id="search" placeholder="Buscar por nombre o Dni...">
-                    <button id="searchButton2" class="icon-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <button id="searchButton2" class="icon-button" onclick="searchUser()"><i class="fa-solid fa-magnifying-glass"></i></button>
                     <div class="buttons">
                         <a href="/caminantes"><button id="boton3" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
                         <a href="/add"><button id="boton3" class="icon-button"><i class="fa-solid fa-user-plus"></i></button></a>
                     </div>
                 </div>
-                
+                <div>
+                    <h3>Usuarios Activos: {{totalUsuariosCaminantes}}</h3>
+                </div>
                     <div class="row mt-1">
                         {{#if personas}}
                         <table class="table text-left">
@@ -32,11 +34,11 @@
                             <tbody>
                                 {{#each personas}}
                                     <tr>
-                                        <td>{{DNI}}</td>
-                                        <td>{{nombre}}</td>
-                                        <td>{{apellido}}</td>
-                                        <td>{{correo}}</td>
-                                        <td>{{fecha_nac}}</td>
+                                        <td class="textoss2">{{DNI}}</td>
+                                        <td class="textoss2">{{nombre}}</td>
+                                        <td class="textoss2">{{apellido}}</td>
+                                        <td class="textoss2">{{correo}}</td>
+                                        <td class="textoss2">{{fecha_nac}}</td>
                                         <td>
                                             <div class="btn-group">
                                                 <a href="/edit/{{DNI}}" class="btn p-2" id="lapiz3">
@@ -80,10 +82,11 @@
 </main>
 
 <script>
-    document.getElementById('searchButton').addEventListener('click', function() {
-        const searchValue = document.getElementById('search').value;
-        window.location.href = `/listaCaminante?search=${searchValue}`;
-    });
+    function searchUser() {
+        const searchTerm = document.getElementById("search").value;
+        const url = `/listaCaminantes?search=${encodeURIComponent(searchTerm)}`;
+        window.location.href = url;  // Redirige a la URL con el parámetro de búsqueda
+    }
     // Llamada a la ruta para obtener el contador de usuarios
     fetch('/contadorUsuariosCaminantes')
         .then(response => response.json())
@@ -92,9 +95,10 @@
         })
         .catch(error => console.error('Error al obtener el contador:', error));
 
+    // Ocultar mensajes después de 3 segundos
     window.onload = function() {
         const errorMessage = document.getElementById('error-message');
-        const successMessage  = document.getElementById('success-message');
+        const successMessage = document.getElementById('success-message');
         if (errorMessage) {
             setTimeout(() => {
                 errorMessage.style.display = 'none';
@@ -106,5 +110,4 @@
             }, 3000);
         }
     };
-    
 </script>
