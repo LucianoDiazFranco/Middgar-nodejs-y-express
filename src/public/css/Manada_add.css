@@ -156,3 +156,10 @@ nav a:hover {
     background-color: #b69308; /* Fondo más oscuro al hacer hover */
     color: white; /* Texto blanco al hacer hover */
 }
+#lapizDoc{
+    background-color: #581fde;
+}
+#lapizDoc:hover{
+    background-color: #230765;
+    color: white; /* Texto blanco al hacer hover */
+}

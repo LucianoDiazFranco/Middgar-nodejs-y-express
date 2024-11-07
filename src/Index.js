@@ -11,6 +11,7 @@ import personasRoutes from './routes/personas.routes.js';
 import docRoutes from './routes/doc.routes.js';
 import loginRoutes from './routes/login.routes.js';
 import doc_pdfRoutes from './routes/doc_pdf.routes.js';
+import docUserRoutes from './routes/docUser.routes.js';
 
 // Inicialización 
 const app = express();
@@ -62,7 +63,7 @@ app.use(personasRoutes);
 app.use(docRoutes);
 app.use(loginRoutes);
 app.use('/pdf', doc_pdfRoutes);
-
+app.use('/',docUserRoutes);
 
 
 // Servir archivos estáticos desde la carpeta 'uploads' y 'public'

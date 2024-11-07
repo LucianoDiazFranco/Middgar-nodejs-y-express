@@ -1,0 +1,39 @@
+<main>
+    <section class="bannerr">
+        <h1>Documentos de Usuario</h1>
+    </section>
+    <p>DNI del Usuario: {{dni}}</p>
+
+    <!-- Formulario para cargar un nuevo documento -->
+    <form action="/usuario/{{dni}}/documentos/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="documento" accept="application/pdf" required>
+        <button type="submit">Cargar Documento</button>
+    </form>
+
+    <h2>Lista de Documentos</h2>
+    {{#if documents.length}}
+    <ul>
+        {{#each documents}}
+        <li>
+            <a href="/uploads/{{nombre_documento}}" target="_blank">{{nombre_documento}}</a>
+            <button onclick="eliminarDocumento('{{../dni}}', '{{id}}')">Eliminar</button>
+        </li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>No hay documentos para este usuario.</p>
+    {{/if}}
+</main>
+
+<script>
+    async function eliminarDocumento(dni, id) {
+        if (confirm('¿Seguro que quieres eliminar este documento?')) {
+            const response = await fetch(`/usuario/${dni}/documentos/${id}`, { method: 'DELETE' });
+            if (response.ok) {
+                location.reload();
+            } else {
+                console.error('Error al eliminar el documento');
+            }
+        }
+    }
+</script>
