@@ -1,27 +1,31 @@
-<main>
-    <section class="bannerr">
-        <h1>Documentos de Usuario</h1>
+<main class="container my-5">
+    <section class="text-center mb-4">
+        <h1 class="text-uppercase display-4">Documentos Personales</h1>
+        <p class="lead">DNI del Usuario: {{dni}}</p>
     </section>
-    <p>DNI del Usuario: {{dni}}</p>
+    
 
     <!-- Formulario para cargar un nuevo documento -->
-    <form action="/usuario/{{dni}}/documentos/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="documento" accept="application/pdf" required>
-        <button type="submit">Cargar Documento</button>
-    </form>
+    <div class="card p-4 mb-4 shadow-sm">
+        <h3 class="card-title mb-3">Subir Documento</h3>
+        <form action="/usuario/{{dni}}/documentos/upload" method="post" enctype="multipart/form-data" class="d-flex gap-2">
+            <input type="file" name="documento" accept="application/pdf" required class="form-control">
+            <button type="submit" class="btn btn-primary">Cargar Documento</button>
+        </form>
+    </div>
 
-    <h2>Lista de Documentos</h2>
+    <h2 class="h4 mb-3">Lista de Documentos</h2>
     {{#if documents.length}}
-    <ul>
+    <ul class="list-group">
         {{#each documents}}
-        <li>
-            <a href="/uploads/{{nombre_documento}}" target="_blank">{{nombre_documento}}</a>
-            <button onclick="eliminarDocumento('{{../dni}}', '{{id}}')">Eliminar</button>
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <a href="/uploads/{{nombre_documento}}" target="_blank" class="text-decoration-none">{{nombre_documento}}</a>
+            <button onclick="eliminarDocumento('{{../dni}}', '{{id}}')" class="btn btn-danger btn-sm">Eliminar</button>
         </li>
         {{/each}}
     </ul>
     {{else}}
-    <p>No hay documentos para este usuario.</p>
+    <p class="text-muted">No hay documentos para este usuario.</p>
     {{/if}}
 </main>
 

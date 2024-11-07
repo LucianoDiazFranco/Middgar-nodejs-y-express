@@ -69,6 +69,7 @@ app.use('/',docUserRoutes);
 // Servir archivos estáticos desde la carpeta 'uploads' y 'public'
 app.use('/uploads', express.static(uploadsDir));
 app.use(express.static(join(__dirname, 'public')));
+app.use('/usuarios', express.static(join(__dirname, 'usuarios')));
 
 // Ejecutar servidor en el puerto definido
 app.listen(app.get("port"), () =>

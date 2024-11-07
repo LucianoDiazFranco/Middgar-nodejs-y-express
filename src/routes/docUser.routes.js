@@ -28,12 +28,12 @@ router.get('/documentosUsuario/:dni', async (req, res) => {
     const { dni } = req.params;
     try {
         const [documents] = await pool.query('SELECT * FROM documentosUsuario WHERE dni = ?', [dni]);
-        res.render('paginas/documentosUsuario', { documents, dni });
+        res.render('paginas/documentosUsuario', { documents, dni }); // Pasas el `dni` como variable al renderizar
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: 'Error al obtener los documentos del usuario' });
     }
 });
+
 
 // Ruta para cargar un nuevo documento para un usuario específico
 router.post('/usuario/:dni/documentos/upload', upload.single('documento'), async (req, res) => {
