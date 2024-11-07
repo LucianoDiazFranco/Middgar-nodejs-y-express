@@ -16,8 +16,7 @@ const storage = multer.diskStorage({
         cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-        const date = new Date().toISOString().split('T')[0];
-        const newFileName = `${date}-${file.originalname}`;
+        const newFileName = file.originalname; 
         cb(null, newFileName);
     }
 });
@@ -42,7 +41,7 @@ router.post('/usuario/:dni/documentos/upload', upload.single('documento'), async
 
     try {
         await pool.query('INSERT INTO documentosUsuario (dni, nombre_documento) VALUES (?, ?)', [dni, filename]);
-        res.redirect(`paginas/documentosUsuario/${dni}`);
+        res.redirect(`/documentosUsuario/${dni}`);
     } catch (err) {
         res.status(500).json({ message: 'Error al cargar el documento' });
     }
