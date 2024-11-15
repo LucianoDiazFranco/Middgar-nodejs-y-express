@@ -44,6 +44,16 @@
     border: 2.5px solid #045a02;
 
 }
+#tablaPlanilla3{
+    background-color: #2d75e2;
+    border: 2.5px solid #1c52a3;
+
+}
+#tablaPlanilla4{
+    background-color: #f14545;
+    border: 2.5px solid #ab3535;
+
+}
 .textoss{
     font-family: "Palanquin Dark", sans-serif;
     font-weight: 300;

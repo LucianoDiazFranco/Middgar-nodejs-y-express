@@ -79,29 +79,59 @@ router.get('/listPlanillasManada', async (req, res) => {
 });
 
 // Listar planillas de riesgo para Unidad
+// Listar planillas de riesgo para Unidad con búsqueda
 router.get('/listPlanillasUnidad', async (req, res) => {
     try {
-        const [planillas] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Unidad"');
+        const { search } = req.query;
+        let query = 'SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Unidad"';
+        let params = [];
+
+        // Si hay un término de búsqueda, ajusta la consulta para buscar por lugar o fecha
+        if (search) {
+            query += ' AND (lugar_actividad LIKE ? OR fecha_actividad LIKE ?)';
+            params.push(`%${search}%`, `%${search}%`);
+        }
+
+        const [planillas] = await pool.query(query, params);
+
+        // Formatea la fecha antes de pasarla al template
         const planillasFormateadas = planillas.map(planilla => ({
             ...planilla,
             fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')
         }));
+
         res.render('paginas/listPlanillasUnidad', { planillas: planillasFormateadas, rama: "Unidad" });
     } catch (err) {
+        console.error('Error al obtener las planillas de riesgo:', err);
         res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
     }
 });
 
+
 // Listar planillas de riesgo para Caminantes
 router.get('/listPlanillasCaminantes', async (req, res) => {
     try {
-        const [planillas] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Caminantes"');
+        const { search } = req.query;
+        let query = 'SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Caminantes"';
+        let params = [];
+
+        // Si hay un término de búsqueda, ajusta la consulta
+        if (search) {
+            query += ' AND (lugar_actividad LIKE ? OR fecha_actividad LIKE ?)';
+            params.push(`%${search}%`, `%${search}%`);
+        }
+
+        const [planillas] = await pool.query(query, params);
+
+        // Formatea las fechas antes de pasarlas al template
         const planillasFormateadas = planillas.map(planilla => ({
             ...planilla,
             fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')
         }));
-        res.render('paginas/listPlanillas', { planillas: planillasFormateadas, rama: "Caminantes" });
+
+        res.render('paginas/listPlanillasCaminantes', { planillas: planillasFormateadas, rama: "Caminantes" });
     } catch (err) {
+        console.error('Error al obtener las planillas de riesgo:', err);
         res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
     }
 });
@@ -109,13 +139,27 @@ router.get('/listPlanillasCaminantes', async (req, res) => {
 // Listar planillas de riesgo para Rovers
 router.get('/listPlanillasRovers', async (req, res) => {
     try {
-        const [planillas] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Rovers"');
+        const { search } = req.query;
+        let query = 'SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Rovers"';
+        let params = [];
+
+        // Si hay un término de búsqueda, ajusta la consulta
+        if (search) {
+            query += ' AND (lugar_actividad LIKE ? OR fecha_actividad LIKE ?)';
+            params.push(`%${search}%`, `%${search}%`);
+        }
+
+        const [planillas] = await pool.query(query, params);
+
+        // Formatea las fechas antes de pasarlas al template
         const planillasFormateadas = planillas.map(planilla => ({
             ...planilla,
             fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')
         }));
-        res.render('paginas/listPlanillas', { planillas: planillasFormateadas, rama: "Rovers" });
+
+        res.render('paginas/listPlanillasRovers', { planillas: planillasFormateadas, rama: "Rovers" });
     } catch (err) {
+        console.error('Error al obtener las planillas de riesgo:', err);
         res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
     }
 });

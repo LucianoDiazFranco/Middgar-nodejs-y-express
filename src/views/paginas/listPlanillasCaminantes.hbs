@@ -1,19 +1,19 @@
 <main>
-    <section class="banner1">
+    <section class="banner2">
         <h1>Listado de Planillas de Riesgo</h1>
     </section>
     <div class="search-container1">
-        <input type="text" id="search" placeholder="Buscar por lugar o fecha...">
-        <button id="boton2" class="icon-button ml-3" onclick="searchPlanilla()"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <input type="text" id="search"  placeholder="Buscar por lugar o fecha...">
+        <button id="boton3" class="icon-button ml-3" onclick="searchPlanilla()"><i class="fa-solid fa-magnifying-glass"></i></button>
         <div class="buttons">
-            <a href="/unidad"><button id="boton2" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
-            <a href="/list"><button id="boton2" class="icon-button"><i class="fa-solid fa-user"></i></button></a>
-            <a href="/addPlanillas"><button id="boton2" class="icon-button"><i class="fa-solid fa-file-circle-plus"></i></button></a>           
+            <a href="/caminantes"><button id="boton3"class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
+            <a href="/listaCaminantes"><button id="boton3" class="icon-button"><i class="fa-solid fa-user"></i></button></a>
+            <a href="/addPlanillas"><button id="boton3" class="icon-button"><i class="fa-solid fa-file-circle-plus"></i></button></a>           
         </div>
     </div>
     <section >
         <table class="table text-left">
-            <thead id="tablaPlanilla2" class="textoss">
+            <thead id="tablaPlanilla3" class="textoss">
                 <tr>
                     <th class="textoss">Fecha de Actividad</th>
                     <th class="textoss">Lugar</th>
@@ -35,7 +35,7 @@
                         <td class="textoss2">{{this.accidente_sucedido}}</td>
                         <td>
                             <div class="btn-group">
-                                <button id="boton2" class="btn p-2"  onclick="verDetallesPlanilla({{json this}})" data-bs-toggle="modal" data-bs-target="#modalDetalles"><i class="fa-solid fa-eye"></i>
+                                <button id="boton3" class="btn p-2"  onclick="verDetallesPlanilla({{json this}})" data-bs-toggle="modal" data-bs-target="#modalDetalles"><i class="fa-solid fa-eye"></i>
                                 </button>
                                 <a href="/editarPlanilla/{{id}}" class="btn p-2" id="lapizpase">
                                 <i class="fa-solid fa-pen-to-square"></i></a>
@@ -91,9 +91,8 @@
 
     function searchPlanilla() {
         const searchTerm = document.getElementById("search").value;
-        const url = `/listPlanillasUnidad?search=${encodeURIComponent(searchTerm)}`;
+        const url = `/listPlanillasCaminantes?search=${encodeURIComponent(searchTerm)}`;
         window.location.href = url; // Redirige a la URL con el parámetro de búsqueda
     }
-
 </script>
 
