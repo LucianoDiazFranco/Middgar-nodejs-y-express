@@ -10,21 +10,16 @@
             <div class="buttons">
                 <label for="pdfUploader" id="boton1" class="upload-label icon-button"><i class="fa-solid fa-file-pdf"></i> Cargar PDF</label>
                 <input type="file" id="pdfUploader" name="pdfs" accept="application/pdf" multiple />
-                <a href="/listplanilla"><button id="boton1" class="icon-button"><i class="fa-solid fa-file"></i> Planilla de Riesgo</button></a>
+                <a href="/listPlanillasManada"><button id="boton1" class="icon-button"><i class="fa-solid fa-file"></i> Planilla de Riesgo</button></a>
                 <a href="/listManada"><button id="boton1" class="icon-button"><i class="fa-solid fa-user"></i> Miembros</button></a>
             </div>
             <ul id="pdf-list"></ul>
             <div id="status" class="status-message"></div>
         </div>
-         <!-- Formulario oculto -->
-        <form id="uploadForm" enctype="multipart/form-data" style="display: none;">
-            <input type="file" id="pdfUploaderHidden" name="pdfs" accept="application/pdf" multiple />
-        </form>     
     </section>
 </main>
 
 <script>
-    const form = document.getElementById("uploadForm");
     const pdfUploader = document.getElementById("pdfUploader");
     const pdfList = document.getElementById("pdf-list");
 
@@ -36,25 +31,21 @@
             
             pdfList.innerHTML = ''; // Limpiar la lista antes de cargar nuevos elementos
 
-            // Añadir cada archivo PDF a la lista
             pdfFiles.forEach(file => {
                 const li = document.createElement('li');
                 const link = document.createElement('a');
-                link.href = `/uploads/${file}`;
+                link.href = `/uploads/${encodeURIComponent(file)}`;
                 link.textContent = file;
-                link.target = '_blank'; // Abrir en nueva pestaña
+                link.target = '_blank';
 
-                // Crear botón de eliminar
                 const deleteButton = document.createElement('button');
-                deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>'; // Ícono de borrar de Font Awesome
+                deleteButton.innerHTML = '<i class="fa-solid fa-trash"></i>';
                 deleteButton.className = 'delete-btn';
-                deleteButton.setAttribute('data-filename', file); // Asignar el nombre del archivo al botón
+                deleteButton.setAttribute('data-filename', file);
 
-                
-                // Evento para eliminar el archivo al hacer clic
                 deleteButton.addEventListener('click', async function() {
                     if (confirm(`¿Estás seguro de que quieres eliminar el archivo ${file}?`)) {
-                        await deletePDF(file);  // Llamar a la función de eliminación
+                        await deletePDF(file);
                     }
                 });
 
@@ -74,7 +65,7 @@
                 method: 'DELETE'
             });
             if (response.ok) {
-                loadPDFs();  // Recargar la lista de PDFs después de la eliminación
+                loadPDFs();
             } else {
                 console.error('Error al eliminar el archivo');
             }
@@ -83,53 +74,28 @@
         }
     }
 
-    // Cargar PDFs cuando se carga la página
     window.addEventListener('load', loadPDFs);
 
     pdfUploader.addEventListener("change", async function () {
         const formData = new FormData();
-        const statusMessage = document.getElementById("status");
-
         formData.append("rama", "Manada");
-    // Validar que solo se suban archivos PDF
-    for (let i = 0; i < pdfUploader.files.length; i++) {
-        const file = pdfUploader.files[i];
 
-        if (file.type !== "application/pdf") {
-            statusMessage.innerText = `Error: El archivo ${file.name} no es un PDF. Solo se permiten archivos PDF.`;
-            statusMessage.className = "status-message error"; // Clase de error
-            statusMessage.style.display = "block"; // Mostrar mensaje
-            return; // Detener el proceso si se detecta un archivo no permitido
+        for (let i = 0; i < pdfUploader.files.length; i++) {
+            const file = pdfUploader.files[i];
+            if (file.type === "application/pdf") {
+                formData.append("pdfs", file);
+            }
         }
 
-        formData.append("pdfs", file); // Añadir el archivo directamente sin renombrar
-    }
-
-        // Enviar los archivos al servidor
         const response = await fetch("/pdf/upload", {
             method: "POST",
             body: formData
         });
 
-        if (!response.ok) {
-            const errorMessage = await response.text();
-            statusMessage.innerText = `Error: ${errorMessage}`;
-            statusMessage.className = "status-message error"; // Clase de error
-            statusMessage.style.display = "block"; // Mostrar mensaje
-            return;
+        if (response.ok) {
+            loadPDFs();
+        } else {
+            console.error('Error al cargar archivos');
         }
-
-        const result = await response.text();
-        statusMessage.innerText = result;
-        statusMessage.className = "status-message success"; // Clase de éxito
-        statusMessage.style.display = "block"; // Mostrar mensaje
-
-        // Ocultar el mensaje después de unos segundos
-        setTimeout(() => {
-            statusMessage.style.display = "none"; // Ocultar mensaje
-        }, 3000); // Tiempo en milisegundos
-
-        // Recargar la lista de PDFs después de subir nuevos archivos
-        loadPDFs();
     });
 </script>

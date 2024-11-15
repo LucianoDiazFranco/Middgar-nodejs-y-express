@@ -12,7 +12,7 @@ router.get('/planilla_riesgo', (req, res) => {
 // Agregar una nueva planilla de riesgo
 router.post('/addPlanillas', async (req, res) => {
     try {
-        const { fecha_actividad, lugar_actividad, cantidad_beneficiarios, cantidad_educadores, im_a_cargo, elementos_seguridad, accidente_sucedido, descripcion_accidente } = req.body;
+        const { fecha_actividad, lugar_actividad, cantidad_beneficiarios, cantidad_educadores, im_a_cargo, elementos_seguridad, accidente_sucedido, descripcion_accidente,rama } = req.body;
         
         const nuevaPlanilla = {
             fecha_actividad,
@@ -23,42 +23,98 @@ router.post('/addPlanillas', async (req, res) => {
             elementos_seguridad,
             accidente_sucedido,
             descripcion_accidente,
+            rama,
             activo: 1  // Establecer el campo activo en 1 por defecto   
         };
 
         await pool.query('INSERT INTO planillaDeRiesgo SET ?', [nuevaPlanilla]);
-        res.redirect('/listplanilla');
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Error al crear la planilla de riesgo' });
-    }
+                // Redirigir según la rama seleccionada
+                switch (rama) {
+                    case 'Manada':
+                        res.redirect('/listPlanillasManada');
+                        break;
+                    case 'Unidad':
+                        res.redirect('/listPlanillasUnidad');
+                        break;
+                    case 'Caminantes':
+                        res.redirect('/listPlanillasCaminantes');
+                        break;
+                    case 'Rovers':
+                        res.redirect('/listPlanillasRovers');
+                        break;
+                    default:
+                        res.redirect('/'); // Redirigir a una página de inicio u otra si es necesario
+                        break;
+                }
+            } catch (err) {
+                res.status(500).json({ message: err.message });
+            }
 });
 
-// Listar planillas de riesgo
-router.get('/listplanilla', async (req, res) => {
+// Listar planillas de riesgo para Manada
+router.get('/listPlanillasManada', async (req, res) => {
     try {
-        const [planillas] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE activo = 1');
-        
-        // Formatear la fecha para cada planilla
+        const [planillas] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Manada"');
         const planillasFormateadas = planillas.map(planilla => ({
             ...planilla,
-            fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')  // Formato deseado
+            fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')
         }));
-
-        res.render('paginas/listPlanillas', { planillas: planillasFormateadas });
+        res.render('paginas/listPlanillas', { planillas: planillasFormateadas, rama: "Manada" });
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
     }
 });
-export default router;
+
+// Listar planillas de riesgo para Unidad
+router.get('/listPlanillasUnidad', async (req, res) => {
+    try {
+        const [planillas] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Unidad"');
+        const planillasFormateadas = planillas.map(planilla => ({
+            ...planilla,
+            fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')
+        }));
+        res.render('paginas/listPlanillas', { planillas: planillasFormateadas, rama: "Unidad" });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
+    }
+});
+
+// Listar planillas de riesgo para Caminantes
+router.get('/listPlanillasCaminantes', async (req, res) => {
+    try {
+        const [planillas] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Caminantes"');
+        const planillasFormateadas = planillas.map(planilla => ({
+            ...planilla,
+            fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')
+        }));
+        res.render('paginas/listPlanillas', { planillas: planillasFormateadas, rama: "Caminantes" });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
+    }
+});
+
+// Listar planillas de riesgo para Rovers
+router.get('/listPlanillasRovers', async (req, res) => {
+    try {
+        const [planillas] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Rovers"');
+        const planillasFormateadas = planillas.map(planilla => ({
+            ...planilla,
+            fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')
+        }));
+        res.render('paginas/listPlanillas', { planillas: planillasFormateadas, rama: "Rovers" });
+    } catch (err) {
+        res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
+    }
+});
+
+
 
 // Ruta para ocultar un registro de planilla de riesgo
-router.get('/ocultarPlanilla/:id', async (req, res) => {
+router.get('/ocultarPlanillaManada/:id', async (req, res) => {
     const { id } = req.params;
     try {
         await pool.query('UPDATE planillaDeRiesgo SET activo = 0 WHERE id = ?', [id]);
-        res.redirect('/listplanilla');
+        res.redirect('/listplanillasManada');
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al ocultar la planilla de riesgo' });
@@ -70,14 +126,12 @@ router.get('/editarPlanilla/:id', async (req, res) => {
     const { id } = req.params;
     try {
         const [planilla] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE id = ?', [id]);
-        
         if (planilla.length > 0) {
-            res.render('paginas/editPlanillas', { planilla: planilla[0] });
+            res.render('paginas/editPlanillas', { planilla: planilla[0],hideFooter: true });
         } else {
-            res.redirect('/listplanilla'); // Redirige si no se encuentra el registro
+            res.redirect('/listPlanillasManada'); // Ajusta la redirección según la rama
         }
     } catch (err) {
-        console.error(err);
         res.status(500).json({ message: 'Error al cargar el formulario de edición' });
     }
 });
@@ -97,12 +151,40 @@ router.post('/editarPlanilla/:id', async (req, res) => {
     } = req.body;
 
     try {
-        await pool.query('UPDATE planillaDeRiesgo SET fecha_actividad = ?, lugar_actividad = ?, cantidad_beneficiarios = ?, cantidad_educadores = ?, im_a_cargo = ?, elementos_seguridad = ?, accidente_sucedido = ?, descripcion_accidente = ? WHERE id = ?', 
+        // Actualizamos la planilla
+        await pool.query(
+            'UPDATE planillaDeRiesgo SET fecha_actividad = ?, lugar_actividad = ?, cantidad_beneficiarios = ?, cantidad_educadores = ?, im_a_cargo = ?, elementos_seguridad = ?, accidente_sucedido = ?, descripcion_accidente = ? WHERE id = ?',
             [fecha_actividad, lugar_actividad, cantidad_beneficiarios, cantidad_educadores, im_a_cargo, elementos_seguridad, accidente_sucedido, descripcion_accidente, id]
         );
-        res.redirect('/listplanillas');
+
+        // Obtenemos la rama actual de la planilla para redirigir correctamente
+        const [result] = await pool.query('SELECT rama FROM planillaDeRiesgo WHERE id = ?', [id]);
+        const rama = result[0]?.rama;
+
+        // Redirigir según la rama
+        switch (rama) {
+            case 'Manada':
+                res.redirect('/listPlanillasManada');
+                break;
+            case 'Unidad':
+                res.redirect('/listPlanillasUnidad');
+                break;
+            case 'Caminantes':
+                res.redirect('/listPlanillasCaminantes');
+                break;
+            case 'Rovers':
+                res.redirect('/listPlanillasRovers');
+                break;
+            default:
+                res.redirect('/'); // Redirigir a una página de inicio u otra si es necesario
+                break;
+        }
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: 'Error al actualizar la planilla de riesgo' });
     }
 });
+
+
+
+export default router;

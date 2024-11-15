@@ -27,12 +27,11 @@ router.get('/documentosUsuario/:dni', async (req, res) => {
     const { dni } = req.params;
     try {
         const [documents] = await pool.query('SELECT * FROM documentosUsuario WHERE dni = ?', [dni]);
-        res.render('paginas/documentosUsuario', { documents, dni }); // Pasas el `dni` como variable al renderizar
+        res.render('paginas/documentosUsuario', { documents, dni, hideFooter: true }); // Pasas el `dni` como variable al renderizar
     } catch (err) {
         res.status(500).json({ message: 'Error al obtener los documentos del usuario' });
     }
 });
-
 
 // Ruta para cargar un nuevo documento para un usuario específico
 router.post('/usuario/:dni/documentos/upload', upload.single('documento'), async (req, res) => {
@@ -66,5 +65,40 @@ router.delete('/usuario/:dni/documentos/:id', async (req, res) => {
         res.status(500).json({ message: 'Error al eliminar el documento' });
     }
 });
+
+router.post('/documentosUsuario/:dni/redirectToRama', async (req, res) => {
+    const { dni } = req.params;
+    try {
+        // Obtener la rama del usuario a partir de su DNI
+        const [[user]] = await pool.query('SELECT Rama FROM persona WHERE DNI = ?', [dni]);
+
+        if (!user) {
+            return res.redirect('/'); // Redirigir a la página de inicio si no se encuentra el usuario
+        }
+
+        // Redirigir según la rama del usuario
+        switch (user.Rama) {
+            case 'Manada':
+                res.redirect('/listManada');
+                break;
+            case 'Unidad':
+                res.redirect('/lista');
+                break;
+            case 'Caminantes':
+                res.redirect('/listaCaminantes');
+                break;
+            case 'Rovers':
+                res.redirect('/listaRovers');
+                break;
+            default:
+                res.redirect('/'); // Redirigir a la página de inicio si la rama no coincide
+                break;
+        }
+    } catch (err) {
+        console.error('Error al redirigir según la rama:', err);
+        res.status(500).json({ message: 'Error al redirigir a la rama correspondiente' });
+    }
+});
+
 
 export default router;

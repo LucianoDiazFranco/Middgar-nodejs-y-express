@@ -13,11 +13,11 @@
             <input type="file" name="documento" accept="application/pdf" required class="form-control">
             <button type="submit" class="btn btn-primary">Cargar Documento</button>
         </form>
-        <a href="/listManada">
-            <button type="button" class="btn btn-primary">
+        <form action="/documentosUsuario/{{dni}}/redirectToRama" method="POST" class="d-inline">
+            <button type="submit" class="btn btn-primary">
                 <i class="fa-solid fa-user"></i>
             </button>
-        </a>
+        </form>
         </div>
     </div>
 

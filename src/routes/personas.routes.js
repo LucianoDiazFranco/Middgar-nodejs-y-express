@@ -5,8 +5,7 @@ import moment from 'moment';
 const router = Router();
 
 
-router.get('/add', (req, res)=>{
-    res.render('usuarios/add')  
+router.get('/add', (req, res)=>{res.render('usuarios/add', { hideFooter: true })
 })
 router.get('/listBaja', (req, res)=>{
     res.render('usuarios/listBaja')  
@@ -206,7 +205,7 @@ router.get('/edit/:DNI', async(req, res)=>{
             ...persona[0],
             fecha_nac: moment(persona[0].fecha_nac).format('YYYY-MM-DD') // Formateamos la fecha
         };
-        res.render('usuarios/edit', {persona: personaEdit});
+        res.render('usuarios/edit', {persona: personaEdit, hideFooter: true});
     }
     catch(err){
         console.error(err);
@@ -232,16 +231,39 @@ router.post('/edit/:DNI', async (req, res) => {
                 });
             }
         }
+
         // Si no hubo cambio en el DNI o el nuevo DNI es válido, proceder con la actualización
         await pool.query('UPDATE persona SET DNI = ?, nombre = ?, apellido = ?, correo = ?, fecha_nac = ? WHERE DNI = ?', 
                         [nuevoDNI, nombre, apellido, correo, fecha_nac, DNI]);
 
-        res.redirect('/list');
+        // Obtener la rama actualizada del usuario para redirigir a la lista correcta
+        const [updatedUser] = await pool.query('SELECT Rama FROM persona WHERE DNI = ?', [nuevoDNI]);
+        const rama = updatedUser[0]?.Rama;
+
+        // Redirigir según la rama
+        switch (rama) {
+            case 'Manada':
+                res.redirect('/listManada');
+                break;
+            case 'Unidad':
+                res.redirect('/lista');
+                break;
+            case 'Caminantes':
+                res.redirect('/listaCaminantes');
+                break;
+            case 'Rovers':
+                res.redirect('/listaRovers');
+                break;
+            default:
+                res.redirect('/'); // Redirigir a una página de inicio u otra si es necesario
+                break;
+        }
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: err.message });
     }
 });
+
 
 router.get('/delete/:DNI', async (req, res) => { /// OCULTAR USUARIO MANADA
     try {

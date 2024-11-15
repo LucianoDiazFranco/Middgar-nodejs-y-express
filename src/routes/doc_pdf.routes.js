@@ -2,21 +2,20 @@
 import { Router } from 'express';
 import multer from 'multer';
 import { join } from 'path';
-import fs from 'fs';
 import { unlink } from 'fs/promises';
+import fs from 'fs';
 import pool from '../database.js';
 
 const router = Router();
-const uploadsDir = join(process.cwd(), 'uploads');  // Ruta a la carpeta 'uploads'
+const uploadDir = join(process.cwd(), 'uploads'); // Directorio de carga
 
 // Configuración de Multer para cargar archivos PDF
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, uploadDir);
     },
     filename: (req, file, cb) => {
-        const date = new Date().toISOString().split('T')[0]; // Formato de fecha YYYY-MM-DD
-        const newFileName = `${date}-${file.originalname}`;
+        const newFileName = file.originalname; // Almacenar solo el nombre original del archivo
         cb(null, newFileName);
     }
 });
@@ -26,11 +25,9 @@ const upload = multer({ storage });
 router.post('/upload', upload.array('pdfs', 10), async (req, res) => {
     try {
         const { rama } = req.body;
-        const date = new Date().toISOString().split('T')[0]; // Formato de fecha para el campo `fecha`
-        
+
         for (const file of req.files) {
-            // Insertar solo el nombre original en la base de datos sin la fecha prefijada
-            await pool.query('INSERT INTO Doc_PDF (nombre, fecha, rama) VALUES (?, ?, ?)', [file.originalname, date,rama]);
+            await pool.query('INSERT INTO Doc_PDF (nombre, rama) VALUES (?, ?)', [file.originalname, rama]);
         }
         
         res.status(200).send('Archivos cargados y registrados en la base de datos exitosamente.');
@@ -40,7 +37,7 @@ router.post('/upload', upload.array('pdfs', 10), async (req, res) => {
     }
 });
 
-// Ruta para listar archivos PDF en la carpeta 'uploads'
+// Ruta para listar archivos PDF
 router.get('/list-pdfs/:rama', async (req, res) => {
     const { rama } = req.params;
     try {
@@ -55,13 +52,19 @@ router.get('/list-pdfs/:rama', async (req, res) => {
 
 // Ruta para eliminar un archivo PDF
 router.delete('/delete-pdf/:filename', async (req, res) => {
-    const filename = req.params.filename;
-    const filePath = join(uploadsDir, filename);
+    const filename = decodeURIComponent(req.params.filename);
+    const filePath = join(uploadDir, filename);
 
     try {
-        await unlink(filePath);
-        res.status(200).send(`Archivo ${filename} eliminado.`);
+        if (fs.existsSync(filePath)) {
+            await unlink(filePath);
+            await pool.query('DELETE FROM Doc_PDF WHERE nombre = ?', [filename]);
+            res.status(200).send(`Archivo ${filename} eliminado.`);
+        } else {
+            res.status(404).json({ error: 'Archivo no encontrado' });
+        }
     } catch (error) {
+        console.error('Error al eliminar el archivo:', error);
         res.status(500).json({ error: 'Error al eliminar el archivo' });
     }
 });
