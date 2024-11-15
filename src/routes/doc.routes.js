@@ -51,16 +51,29 @@ router.post('/addPlanillas', async (req, res) => {
             }
 });
 
-// Listar planillas de riesgo para Manada
+// Listar planillas de riesgo para Manada con búsqueda
 router.get('/listPlanillasManada', async (req, res) => {
     try {
-        const [planillas] = await pool.query('SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Manada"');
+        const { search } = req.query;
+        let query = `SELECT * FROM planillaDeRiesgo WHERE activo = 1 AND rama = "Manada"`;
+        const params = [];
+
+        if (search) {
+            query += ` AND (lugar_actividad LIKE ? OR fecha_actividad LIKE ?)`;
+            const searchValue = `%${search}%`;
+            params.push(searchValue, searchValue);
+        }
+
+        const [planillas] = await pool.query(query, params);
+
         const planillasFormateadas = planillas.map(planilla => ({
             ...planilla,
             fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')
         }));
+
         res.render('paginas/listPlanillas', { planillas: planillasFormateadas, rama: "Manada" });
     } catch (err) {
+        console.error('Error al obtener las planillas de riesgo:', err);
         res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
     }
 });
@@ -73,7 +86,7 @@ router.get('/listPlanillasUnidad', async (req, res) => {
             ...planilla,
             fecha_actividad: moment(planilla.fecha_actividad).format('DD/MM/YYYY')
         }));
-        res.render('paginas/listPlanillas', { planillas: planillasFormateadas, rama: "Unidad" });
+        res.render('paginas/listPlanillasUnidad', { planillas: planillasFormateadas, rama: "Unidad" });
     } catch (err) {
         res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
     }
@@ -106,8 +119,6 @@ router.get('/listPlanillasRovers', async (req, res) => {
         res.status(500).json({ message: 'Error al obtener las planillas de riesgo' });
     }
 });
-
-
 
 // Ruta para ocultar un registro de planilla de riesgo
 router.get('/ocultarPlanillaManada/:id', async (req, res) => {
@@ -185,6 +196,23 @@ router.post('/editarPlanilla/:id', async (req, res) => {
     }
 });
 
+// Buscar planillas de riesgo por lugar o fecha
+router.get('/searchPlanilla', async (req, res) => {
+    const searchTerm = req.query.term;
 
+    try {
+        const query = `
+            SELECT * FROM planillaDeRiesgo 
+            WHERE (lugar_actividad LIKE ? OR fecha_actividad LIKE ?) AND activo = 1
+        `;
+        const searchValue = `%${searchTerm}%`;
+        const [results] = await pool.query(query, [searchValue, searchValue]);
+
+        res.json(results);
+    } catch (err) {
+        console.error('Error en la búsqueda de planillas:', err);
+        res.status(500).json({ message: 'Error al buscar las planillas de riesgo' });
+    }
+});
 
 export default router;

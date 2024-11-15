@@ -370,7 +370,6 @@ router.get('/searchUser', async (req, res) => {
     }
 });
 
-
 // Ruta para listar usuarios dados de baja por rama
 router.get('/usuariosInactivos', async (req, res) => {
     try {

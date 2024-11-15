@@ -1,19 +1,19 @@
 <main>
-    <section class="banner">
+    <section class="banner1">
         <h1>Listado de Planillas de Riesgo</h1>
     </section>
     <div class="search-container1">
         <input type="text" id="search" placeholder="Buscar por lugar o fecha...">
-        <button id="boton1" class="icon-button ml-3" onclick="searchPlanilla()"><i class="fa-solid fa-magnifying-glass"></i></button>
+        <button id="boton2" class="icon-button ml-3" onclick="searchPlanilla()"><i class="fa-solid fa-magnifying-glass"></i></button>
         <div class="buttons">
-            <a href="/manada"><button id="boton1" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
-            <a href="/listManada"><button id="boton5" class="icon-button"><i class="fa-solid fa-user"></i></button></a>
-            <a href="/addPlanillas"><button id="boton5" class="icon-button"><i class="fa-solid fa-file-circle-plus"></i></button></a>           
+            <a href="/unidad"><button id="boton2" class="icon-button"><i class="fa-solid fa-file-pdf"></i></button></a>
+            <a href="/list"><button id="boton2" class="icon-button"><i class="fa-solid fa-user"></i></button></a>
+            <a href="/addPlanillas"><button id="boton2" class="icon-button"><i class="fa-solid fa-file-circle-plus"></i></button></a>           
         </div>
     </div>
     <section >
         <table class="table text-left">
-            <thead id="tablaPlanilla" class="textoss">
+            <thead id="tablaPlanilla2" class="textoss">
                 <tr>
                     <th class="textoss">Fecha de Actividad</th>
                     <th class="textoss">Lugar</th>
@@ -91,7 +91,7 @@
 
     function searchPlanilla() {
         const searchTerm = document.getElementById("search").value;
-        const url = `/listPlanillasManada?search=${encodeURIComponent(searchTerm)}`;
+        const url = `/listPlanillasUnidad?search=${encodeURIComponent(searchTerm)}`;
         window.location.href = url; // Redirige a la URL con el parámetro de búsqueda
     }
 </script>
